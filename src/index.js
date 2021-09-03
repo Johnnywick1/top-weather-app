@@ -1,4 +1,5 @@
 import { API_KEY, API_URL } from './config';
+import { hourView } from './views/hourView';
 
 let query;
 
@@ -70,4 +71,6 @@ const getHourlyWeather = async function (locationObj) {
   }
 };
 
-getHourlyWeather(manilaLoc);
+const sampleData = getHourlyWeather(manilaLoc);
+
+hourView.displayHourlyWeather(sampleData);
