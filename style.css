@@ -1,0 +1,48 @@
+* {
+  vertical-align: baseline;
+  font-family: sans-serif;
+  font-style: inherit;
+  font-size: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(121, 206, 228);
+  height: 100vh;
+}
+
+.sub-container {
+  padding: 1rem;
+  min-width: 300px;
+}
+
+.cw--location {
+  font-size: 1.25rem;
+}
+
+.cw--weather-status {
+  font-size: 2rem;
+}
+
+.cw--temperature {
+  font-size: 2.4rem;
+}
+
+.weather-condition {
+  padding: 0.5rem 0;
+}
+
+.forecast-container {
+  height: 50vh;
+}
+
+.forecast {
+  padding: 0.5rem;
+}
