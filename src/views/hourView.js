@@ -14,13 +14,13 @@ export const hourView = (function () {
     const toCorrect = +date.getHours() + +index;
     const hourToDisplay = getCorrectHour(toCorrect);
 
-    const hourlyWeatherContainer = document.querySelector('.weather-container');
+    const forecastContainer = document.querySelector('.forecast-container');
 
     const currHourEl = document.createElement('span');
     currHourEl.textContent = hourToDisplay;
-    currHourEl.style.padding = '0.5rem';
+    currHourEl.classList.add('forecast');
 
-    hourlyWeatherContainer.append(currHourEl);
+    forecastContainer.append(currHourEl);
   };
 
   return {
