@@ -4,7 +4,6 @@ export const hourView = (function () {
   const displayHourlyWeather = async function (weather) {
     const hourlyWeather = await weather;
     hourlyWeather.forEach((hour, i) => {
-      console.log(hour);
       _createWeatherDiv(i);
     });
   };

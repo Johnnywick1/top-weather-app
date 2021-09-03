@@ -57,7 +57,16 @@ const getWeather = async function (city) {
   }
 };
 
-const manilaLoc = getWeather('Manila');
+const getCurrentWeather = async function (locationObj) {
+  try {
+    const location = await locationObj;
+    const currentWeather = location.current;
+
+    console.log(currentWeather);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 const getHourlyWeather = async function (locationObj) {
   try {
@@ -71,6 +80,10 @@ const getHourlyWeather = async function (locationObj) {
   }
 };
 
-const sampleData = getHourlyWeather(manilaLoc);
+//  TESTING
 
-hourView.displayHourlyWeather(sampleData);
+const manilaLoc = getWeather('Manila');
+// const sampleData = getHourlyWeather(manilaLoc);
+// hourView.displayHourlyWeather(sampleData);
+
+const sampleData2 = getCurrentWeather(manilaLoc);
