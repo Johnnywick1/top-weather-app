@@ -30,8 +30,7 @@ export const model = (function () {
   };
 
   // Fetches the coordinates to be used for the weather URL
-  const getCoords = function (data) {
-    const city = data;
+  const getCoords = function (city) {
     const lat = +city.coord.lat.toFixed(2);
     const long = +city.coord.lon.toFixed(2);
 
@@ -39,9 +38,7 @@ export const model = (function () {
   };
 
   // Returns the URL for another fetch call
-  const getWeatherURL = function (data) {
-    const coords = data;
-
+  const getWeatherURL = function (coords) {
     const [lat, long] = coords;
 
     return `${API_URL}/onecall?lat=${lat}&lon=${long}&units=metric&exclude=minutely&appid=${API_KEY}`;
@@ -51,6 +48,7 @@ export const model = (function () {
   const getWeather = async function (city) {
     try {
       const data = await getCityData(city);
+
       const coords = getCoords(data);
       const url = getWeatherURL(coords);
 
@@ -67,31 +65,26 @@ export const model = (function () {
 
   //  Gets the current weather data from the aggregate
   const getCurrentWeather = function (locationObj) {
-    // const locationObj = await getWeather(city);
-
-    const location = locationObj;
-
-    const currentWeather = location.current;
-    const timezoneOffset = location.timezone_offset;
-
-    return currentWeather;
+    return locationObj.current;
   };
 
   //  Gets the hourly forecast from the aggregate
   const getHourlyWeather = function (locationObj) {
-    const location = locationObj;
-    const weather48Hrs = location.hourly;
+    const weather48Hrs = locationObj.hourly;
     const weather24Hrs = weather48Hrs.slice(0, 24);
 
     return weather24Hrs;
   };
 
-  const getTimezoneOffset = async function () {};
+  const getTimezoneOffset = function (locationObj) {
+    return locationObj.timezone_offset;
+  };
 
   return {
     getWeather,
     getHourlyWeather,
     getCurrentWeather,
     getCityAndCountry,
+    getTimezoneOffset,
   };
 })();

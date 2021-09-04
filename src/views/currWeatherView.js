@@ -1,4 +1,5 @@
 import { capitalize } from '../helpers';
+import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
   const currWeatherContainer = document.querySelector(
@@ -61,14 +62,37 @@ export const currWeatherView = (function () {
     return tempEl;
   };
 
-  const renderDate = function () {
+  const renderDate = function (offset) {
     // Get an API to render date in proper timezone
 
-    const newDate = new Date();
+    const timeUTC = Date.parse(new Date().toUTCString());
+    // const dateUTC = new Date(+newDate);
+    console.log('timeUTC', timeUTC);
+
+    const convertedTime = +timeUTC + +offset * 1000;
+    console.log('converted', convertedTime);
+
+    const newDate = new Date(convertedTime);
+    console.log('newdate', newDate);
+
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth();
+    const date = newDate.getDate();
+    const day = newDate.getDay();
+    const hour = newDate.getHours();
+    const minute = newDate.getMinutes();
+
+    console.log(hour, minute);
+
+    const toDisplay = format(new Date(year, month, date), 'yyyy MMM dd');
+    console.log(toDisplay);
+
+    console.log({ year, month, day, date });
   };
 
   return {
     renderCurrentWeather,
     renderLocation,
+    renderDate,
   };
 })();
