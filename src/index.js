@@ -4,22 +4,44 @@ import { currWeatherView } from './views/currWeatherView';
 
 //  TESTING
 
-const controlCurrentWeather = async function () {
+// const sampleData = getHourlyWeather(manilaLoc);
+// hourView.displayHourlyWeather(sampleData);
+
+const controlWeatherData = async function (location) {
   try {
-    const city = await model.cityName;
-    const country = await model.countryName;
+  } catch (err) {
+    console.error('controlweatherdata', err);
+  }
+};
 
-    const manilaLoc = model.getWeather('Manila');
-    // const sampleData = getHourlyWeather(manilaLoc);
-    // hourView.displayHourlyWeather(sampleData);
+const controlCurrentWeather = async function (location) {
+  try {
+    console.log(location);
 
-    const sampleData2 = model.getCurrentWeather(manilaLoc);
-    currWeatherView.displayCurrentWeather(sampleData2);
+    // 1 Get the city and country name
+    const [city, country] = await model.getCityAndCountry(location);
 
-    currWeatherView.displayLocation(city, country);
+    // 2 Get the aggregate weather data for the location
+    const locationWeather = await model.getWeather(location);
+
+    // 3 Get the current weather data only
+    const currentWeather = await model.getCurrentWeather(locationWeather);
+
+    console.log('index currentweather', currentWeather);
+
+    //  4 Display the results
+    currWeatherView.renderCurrentWeather(currentWeather);
+    currWeatherView.renderLocation(city, country);
   } catch (err) {
     console.error('controlcurrentweather', err);
   }
 };
 
-controlCurrentWeather();
+const controlPlaceholderWeather = function () {};
+
+const init = function () {
+  controlPlaceholderWeather();
+  controlCurrentWeather('Manila');
+};
+
+init();

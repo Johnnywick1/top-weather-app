@@ -1,30 +1,35 @@
 import { API_KEY, API_URL } from './config';
 
 export const model = (function () {
-  let query;
-  let cityName;
-  let countryName;
+  let weatherData;
 
   const getCityURL = function (city) {
     return `${API_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`;
   };
 
+  // Fetches the location data for the queried city
   const getCityData = async function (city) {
     try {
       const response = await fetch(getCityURL(city));
       const data = await response.json();
 
-      cityName = data.name;
-      countryName = data.sys.country;
-
-      console.log(`${cityName}, ${countryName}`);
-
       return data;
     } catch (err) {
-      console.error('getdata', err.message);
+      console.error('getcitydata', err.message);
     }
   };
 
+  // Fetches the city and country name
+  const getCityAndCountry = async function (city) {
+    try {
+      const data = await getCityData(city);
+      return [data.name, data.sys.country];
+    } catch (err) {
+      console.error('getcityandcountry', err.message);
+    }
+  };
+
+  // Fetches the coordinates to be used for the weather URL
   const getCoords = async function (data) {
     try {
       const city = await data;
@@ -37,6 +42,7 @@ export const model = (function () {
     }
   };
 
+  // Returns the URL for another fetch call
   const getWeatherURL = async function (data) {
     try {
       const coords = await data;
@@ -49,6 +55,7 @@ export const model = (function () {
     }
   };
 
+  // Fetches the aggregate weather data
   const getWeather = async function (city) {
     try {
       const data = await getCityData(city);
@@ -58,14 +65,19 @@ export const model = (function () {
       const response = await fetch(url);
       const weather = await response.json();
 
+      console.log(weather);
+
       return weather;
     } catch (err) {
-      console.error(err.message);
+      console.error('getweather', err.message);
     }
   };
 
+  //  Gets the current weather data from the aggregate
   const getCurrentWeather = async function (locationObj) {
     try {
+      // const locationObj = await getWeather(city);
+
       const location = await locationObj;
       const currentWeather = location.current;
 
@@ -75,8 +87,11 @@ export const model = (function () {
     }
   };
 
-  const getHourlyWeather = async function (locationObj) {
+  //  Gets the hourly forecast from the aggregate
+  const getHourlyWeather = async function (city) {
     try {
+      const locationObj = await getWeather(city);
+
       const location = await locationObj;
       const weather48Hrs = location.hourly;
       const weather24Hrs = weather48Hrs.slice(0, 24);
@@ -91,7 +106,6 @@ export const model = (function () {
     getWeather,
     getHourlyWeather,
     getCurrentWeather,
-    cityName,
-    countryName,
+    getCityAndCountry,
   };
 })();

@@ -1,24 +1,74 @@
+import { capitalize } from '../helpers';
+
 export const currWeatherView = (function () {
-  const locationEl = document.querySelector('.cw--location');
+  const currWeatherContainer = document.querySelector(
+    '.current-weather.sub-container'
+  );
+  // const locationEl = document.querySelector('.cw--location');
   const tempEl = document.querySelector('.cw--temperature');
   const statusEl = document.querySelector('.cw--weather-status');
   const dateEl = document.querySelector('.cw--date');
   const timeEl = document.querySelector('.cw--time');
 
-  const displayCurrentWeather = async function (weather) {
-    const currentWeather = await weather;
-    console.log(currentWeather);
+  const renderCurrentWeather = function (weather) {
+    const currentWeather = weather;
+
+    const weatherStatus = currentWeather.weather[0].description;
+    const weatherStatusMain = currentWeather.weather[0].main;
+    const uvi = currentWeather.uvi;
+    const windSpeed = currentWeather.wind_speed;
+    const heatIndex = currentWeather.feels_like;
+    const humidity = currentWeather.humidity;
+    const temp = currentWeather.temp;
+
+    renderWeatherStatus(weatherStatus);
+    renderTemp(temp);
   };
 
-  const displayLocation = async function (cityName, countryName) {
-    const city = await cityName;
-    const country = await countryName;
+  const renderLocation = function (cityName, countryName) {
+    const city = cityName;
+    const country = countryName;
 
+    const locationEl = document.createElement('div');
+    locationEl.classList.add('cw--location');
     locationEl.textContent = `${city}, ${country}`;
+
+    return locationEl;
+  };
+
+  const renderWeatherStatus = function (status) {
+    const statusEl = document.createElement('div');
+    statusEl.classList.add('cw--weather-status');
+    statusEl.textContent = capitalize(status);
+
+    return statusEl;
+  };
+
+  const renderTemp = function (temp) {
+    const tempEl = document.createElement('div');
+    tempEl.classList.add('cw--temperature');
+
+    const tempValueEl = document.createElement('span');
+    tempValueEl.classList.add('cw--temp-value');
+    tempValueEl.textContent = temp.toFixed(0);
+
+    const tempUnitEl = document.createElement('span');
+    tempUnitEl.classList.add('cw--temp-unit');
+    tempUnitEl.textContent = '°C';
+
+    tempEl.append(tempValueEl, tempUnitEl);
+
+    return tempEl;
+  };
+
+  const renderDate = function () {
+    // Get an API to render date in proper timezone
+
+    const newDate = new Date();
   };
 
   return {
-    displayCurrentWeather,
-    displayLocation,
+    renderCurrentWeather,
+    renderLocation,
   };
 })();
