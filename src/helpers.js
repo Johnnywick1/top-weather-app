@@ -20,3 +20,30 @@ export const capitalize = function (str) {
 
   return capitalizeArr.join(' ');
 };
+
+export const convertDateToUTC = function (date) {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+};
+
+export const getLocalTime = function (offset) {
+  const newDate = new Date();
+  const dateUTC = convertDateToUTC(newDate);
+
+  const convertedTime = +dateUTC + +offset * 1000;
+  const convertedDate = new Date(convertedTime);
+
+  const year = convertedDate.getFullYear();
+  const month = convertedDate.getMonth();
+  const date = convertedDate.getDate();
+  const hour = convertedDate.getHours();
+  const minute = convertedDate.getMinutes();
+
+  return [year, month, date, hour, minute];
+};
