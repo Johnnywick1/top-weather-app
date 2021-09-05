@@ -1,28 +1,26 @@
-import { getCorrectHour } from '../helpers';
+import { getCorrectHour, convertToMilliseconds } from '../helpers';
 
 export const hourView = (function () {
-  const displayHourlyWeather = async function (weather) {
-    const hourlyWeather = await weather;
+  const forecastContainer = document.querySelector('.forecast-container');
+
+  const renderHourlyForecast = function (hourlyWeather) {
     hourlyWeather.forEach((hour, i) => {
-      _createWeatherDiv(i);
+      forecastContainer.append(createForecastElement(hour, i));
     });
   };
 
-  const _createWeatherDiv = function (index) {
-    const date = new Date();
-    const toCorrect = +date.getHours() + +index;
+  const createForecastElement = function (hour, index) {
+    const date = new Date(convertToMilliseconds(hour.dt));
+    const toCorrect = date.getHours();
     const hourToDisplay = getCorrectHour(toCorrect);
 
-    const forecastContainer = document.querySelector('.forecast-container');
-
     const currHourEl = document.createElement('span');
-    currHourEl.textContent = hourToDisplay;
     currHourEl.classList.add('forecast');
 
-    forecastContainer.append(currHourEl);
+    return currHourEl;
   };
 
   return {
-    displayHourlyWeather,
+    renderHourlyForecast,
   };
 })();

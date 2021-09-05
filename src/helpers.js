@@ -11,6 +11,10 @@ export const getCorrectHour = function (hour) {
   return hourPadded;
 };
 
+export const convertToMilliseconds = function (sec) {
+  return sec * 1000;
+};
+
 export const capitalize = function (str) {
   const strArr = str.split(' ');
 
@@ -36,7 +40,7 @@ export const getLocalTime = function (offset) {
   const newDate = new Date();
   const dateUTC = convertDateToUTC(newDate);
 
-  const convertedTime = +dateUTC + +offset * 1000;
+  const convertedTime = +dateUTC + +convertToMilliseconds(offset);
   const convertedDate = new Date(convertedTime);
 
   const year = convertedDate.getFullYear();
