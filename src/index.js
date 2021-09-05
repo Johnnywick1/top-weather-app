@@ -17,7 +17,7 @@ const controlWeatherData = async function (location) {
 const controlCurrentWeather = async function (location) {
   try {
     // 1 Get the city and country name
-    const [city, country] = await model.getCityAndCountry(location);
+    const locationName = await model.getCityAndCountry(location);
 
     // 2 Get the aggregate weather data for the location
     const locationWeather = await model.getWeather(location);
@@ -31,9 +31,11 @@ const controlCurrentWeather = async function (location) {
     console.log('index currentweather', currentWeather);
 
     //  4 Display the results
-    currWeatherView.renderCurrentWeather(currentWeather);
-    currWeatherView.renderLocation(city, country);
-    currWeatherView.renderDate(timezoneOffset);
+    currWeatherView.renderCurrentWeather(
+      currentWeather,
+      locationName,
+      timezoneOffset
+    );
   } catch (err) {
     console.error('controlcurrentweather', err);
   }
@@ -43,7 +45,7 @@ const controlPlaceholderWeather = function () {};
 
 const init = function () {
   controlPlaceholderWeather();
-  controlCurrentWeather('New York');
+  controlCurrentWeather('Manila');
 };
 
 init();
