@@ -147,8 +147,6 @@ export const currWeatherView = (function () {
       unit
     );
 
-    console.log(unitEl);
-
     el.append(iconEl, labelEl, valueEl, unitEl);
 
     return el;
