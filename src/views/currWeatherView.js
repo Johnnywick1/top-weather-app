@@ -1,34 +1,62 @@
-import { capitalize } from '../helpers';
+import { capitalize, getLocalTime } from '../helpers';
 import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
   const currWeatherContainer = document.querySelector(
     '.current-weather.sub-container'
   );
-  // const locationEl = document.querySelector('.cw--location');
-  const tempEl = document.querySelector('.cw--temperature');
-  const statusEl = document.querySelector('.cw--weather-status');
-  const dateEl = document.querySelector('.cw--date');
-  const timeEl = document.querySelector('.cw--time');
 
-  const renderCurrentWeather = function (weather) {
+  const conditionsContainer = document.querySelector(
+    '.weather-conditions.sub-container'
+  );
+
+  const renderCurrentWeather = function (weather, locationName, offset) {
     const currentWeather = weather;
 
     const weatherStatus = currentWeather.weather[0].description;
     const weatherStatusMain = currentWeather.weather[0].main;
     const uvi = currentWeather.uvi;
     const windSpeed = currentWeather.wind_speed;
-    const heatIndex = currentWeather.feels_like;
+    const heatIndex = currentWeather.feels_like.toFixed(0);
     const humidity = currentWeather.humidity;
     const temp = currentWeather.temp;
 
-    renderWeatherStatus(weatherStatus);
-    renderTemp(temp);
+    const locationEl = renderLocation(locationName);
+    const statusEl = renderWeatherStatus(weatherStatus);
+    const tempEl = renderTemp(temp);
+    const dateEl = renderDate(offset);
+    const timeEl = renderTime(offset);
+
+    currWeatherContainer.append(locationEl, statusEl, tempEl, dateEl, timeEl);
+
+    const indexEl = createConditionElement(
+      'heat-index',
+      'Feels like ',
+      heatIndex,
+      '°C'
+    );
+
+    const humEl = createConditionElement(
+      'humidity',
+      'Humidity ',
+      humidity,
+      '%'
+    );
+
+    const speedEl = createConditionElement(
+      'wind-speed',
+      'Wind Speed ',
+      windSpeed,
+      'm/s'
+    );
+
+    const uvEl = createConditionElement('uv-index', 'UV Index ', uvi);
+
+    conditionsContainer.append(indexEl, humEl, speedEl, uvEl);
   };
 
-  const renderLocation = function (cityName, countryName) {
-    const city = cityName;
-    const country = countryName;
+  const renderLocation = function (location) {
+    const [city, country] = location;
 
     const locationEl = document.createElement('div');
     locationEl.classList.add('cw--location');
@@ -63,36 +91,175 @@ export const currWeatherView = (function () {
   };
 
   const renderDate = function (offset) {
-    // Get an API to render date in proper timezone
+    const [year, month, date] = getLocalTime(offset);
 
-    const timeUTC = Date.parse(new Date().toUTCString());
-    // const dateUTC = new Date(+newDate);
-    console.log('timeUTC', timeUTC);
+    const dateToDisplay = format(
+      new Date(year, month, date),
+      'EEEE, do MMM yy'
+    );
 
-    const convertedTime = +timeUTC + +offset * 1000;
-    console.log('converted', convertedTime);
+    const dateEl = document.createElement('div');
+    dateEl.classList.add('cw--date');
+    dateEl.textContent = dateToDisplay;
 
-    const newDate = new Date(convertedTime);
-    console.log('newdate', newDate);
+    return dateEl;
+  };
 
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth();
-    const date = newDate.getDate();
-    const day = newDate.getDay();
-    const hour = newDate.getHours();
-    const minute = newDate.getMinutes();
+  const renderTime = function (offset) {
+    const [year, month, date, hour, minute] = getLocalTime(offset);
 
-    console.log(hour, minute);
+    const timeToDisplay = format(
+      new Date(year, month, date, hour, minute),
+      'h:maaa'
+    );
 
-    const toDisplay = format(new Date(year, month, date), 'yyyy MMM dd');
-    console.log(toDisplay);
+    const timeEl = document.createElement('div');
+    timeEl.classList.add('cw--time');
+    timeEl.textContent = timeToDisplay;
 
-    console.log({ year, month, day, date });
+    return timeEl;
+  };
+
+  const renderHeatIndex = function (index) {
+    const indexEl = document.createElement('div');
+    indexEl.classList.add('weather-condition', 'cw--heat-index');
+
+    const iconEl = createConditionSubElement('div', [
+      'wc--icon',
+      'heat-index--icon',
+    ]);
+
+    const labelEl = createConditionSubElement(
+      'span',
+      ['wc--label', 'heat-index--label'],
+      'Feels like'
+    );
+
+    const valueEl = createConditionSubElement(
+      'span',
+      ['wc--value', 'heat-index--value'],
+      index
+    );
+
+    const unitEl = createConditionSubElement('span', [
+      ['wc--unit', 'heat-index--unit'],
+      '°C',
+    ]);
+
+    indexEl.append(iconEl, labelEl, valueEl, unitEl);
+
+    return indexEl;
+  };
+
+  const renderHumidity = function (humidity) {
+    const humEl = document.createElement('div');
+    humEl.classList.add('weather-condition', 'cw--humidity');
+
+    const iconEl = createConditionSubElement('div', [
+      'wc--icon',
+      'humidity--icon',
+    ]);
+
+    const labelEl = createConditionSubElement(
+      'span',
+      ['wc--label', 'humidity--label'],
+      'Humidity'
+    );
+
+    const valueEl = createConditionSubElement(
+      'span',
+      ['wc--value', 'humidity--value'],
+      humidity
+    );
+
+    const unitEl = createConditionSubElement('span', [
+      ['wc--unit', 'humidity--unit'],
+      '%',
+    ]);
+
+    humEl.append(iconEl, labelEl, valueEl, unitEl);
+
+    return humEl;
+  };
+
+  const renderWindSpeed = function (windSpeed) {
+    const humEl = document.createElement('div');
+    humEl.classList.add('weather-condition', 'cw--humidity');
+
+    const iconEl = createConditionSubElement('div', [
+      'wc--icon',
+      'humidity--icon',
+    ]);
+
+    const labelEl = createConditionSubElement(
+      'span',
+      ['wc--label', 'humidity--label'],
+      'Humidity'
+    );
+
+    const valueEl = createConditionSubElement(
+      'span',
+      ['wc--value', 'humidity--value'],
+      humidity
+    );
+
+    const unitEl = createConditionSubElement('span', [
+      ['wc--unit', 'humidity--unit'],
+      '%',
+    ]);
+
+    humEl.append(iconEl, labelEl, valueEl, unitEl);
+
+    return humEl;
+  };
+
+  const createConditionElement = function (condition, label, value, unit) {
+    const el = document.createElement('div');
+    el.classList.add('weather-condition', `cw--${condition}`);
+
+    const iconEl = createConditionSubElement('div', [
+      'wc--icon',
+      `${condition}--icon`,
+    ]);
+
+    const labelEl = createConditionSubElement(
+      'span',
+      ['wc--label', `${condition}--label`],
+      label
+    );
+
+    const valueEl = createConditionSubElement(
+      'span',
+      ['wc--value', `${condition}--value`],
+      value
+    );
+
+    const unitEl = createConditionSubElement(
+      'span',
+      ['wc--unit', `${condition}--unit`],
+      unit
+    );
+
+    console.log(unitEl);
+
+    el.append(iconEl, labelEl, valueEl, unitEl);
+
+    return el;
+  };
+
+  const createConditionSubElement = function (type, classList, text) {
+    const el = document.createElement(type);
+
+    classList.forEach((classVal) => {
+      el.classList.add(classVal);
+    });
+
+    el.textContent = text;
+
+    return el;
   };
 
   return {
     renderCurrentWeather,
-    renderLocation,
-    renderDate,
   };
 })();
