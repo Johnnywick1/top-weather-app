@@ -110,7 +110,7 @@ export const currWeatherView = (function () {
 
     const timeToDisplay = format(
       new Date(year, month, date, hour, minute),
-      'h:maaa'
+      'h:mmaaa'
     );
 
     const timeEl = document.createElement('div');
