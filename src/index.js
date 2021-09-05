@@ -4,10 +4,9 @@ import { currWeatherView } from './views/currWeatherView';
 
 //  TESTING
 
-// const sampleData = getHourlyWeather(manilaLoc);
-// hourView.displayHourlyWeather(sampleData);
+const location = 'Manila';
 
-const controlWeatherData = async function (location) {
+const getWeatherData = async function (location) {
   try {
   } catch (err) {
     console.error('controlweatherdata', err);
@@ -41,11 +40,28 @@ const controlCurrentWeather = async function (location) {
   }
 };
 
+const controlHourlyForecast = async function (location) {
+  try {
+    const locationWeather = await model.getWeather(location);
+
+    const hourlyWeather = locationWeather.hourly.slice(1, 25);
+
+    const timezoneOffset = locationWeather.timezone_offset;
+
+    console.log('index hourlyweather', hourlyWeather);
+
+    hourView.renderHourlyForecast(hourlyWeather, timezoneOffset);
+  } catch (err) {
+    console.error('controlhourlyforecast', err.message);
+  }
+};
+
 const controlPlaceholderWeather = function () {};
 
 const init = function () {
   controlPlaceholderWeather();
-  controlCurrentWeather('Manila');
+  controlCurrentWeather(location);
+  controlHourlyForecast(location);
 };
 
 init();
