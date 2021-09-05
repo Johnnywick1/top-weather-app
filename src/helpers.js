@@ -36,8 +36,15 @@ export const convertDateToUTC = function (date) {
   );
 };
 
-export const getLocalTime = function (offset) {
-  const newDate = new Date();
+export const getLocalTime = function (offset, dateToConvert) {
+  let newDate;
+
+  if (!dateToConvert) {
+    newDate = new Date();
+  } else {
+    newDate = dateToConvert;
+  }
+
   const dateUTC = convertDateToUTC(newDate);
 
   const convertedTime = +dateUTC + +convertToMilliseconds(offset);
