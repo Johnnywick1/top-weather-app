@@ -10,17 +10,35 @@
 }
 
 .weather-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* align-items: flex-start; */
   align-items: center;
   background-color: rgb(121, 206, 228);
   height: 100vh;
 }
 
+.query-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 2rem;
+  min-width: 120px;
+  /* width: 30%; */
+}
+
+.weather-query {
+  appearance: none;
+  padding: 0.5rem;
+  background-color: transparent;
+  border-bottom: 2px solid black;
+}
+
 .sub-container {
   padding: 1rem;
-  min-width: 300px;
+  min-width: 400px;
 }
 
 .cw--location {
@@ -58,4 +76,22 @@
 
 .forecast-temp {
   font-size: 1.6rem;
+}
+
+.forecast-container--daily {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 50vh;
+  overflow-x: auto;
+}
+
+.forecast-element--daily {
+  padding: 1rem 2rem;
+  width: 14%;
+  min-width: 150px;
+}
+
+.forecast-rain {
+  color: rgb(43, 142, 255);
 }
