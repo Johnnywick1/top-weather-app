@@ -11,19 +11,26 @@
   </head>
   <body>
     <div class="weather-container">
+      <div class="query-wrapper">
+        <form action="" class="weather-form">
+          <input type="search" class="weather-query" />
+          <input type="hidden" class="weather-hidden-input" />
+        </form>
+      </div>
+
       <div class="current-weather sub-container">
-        <div class="cw--location">
+        <!-- <div class="cw--location">
           <span class="location--city">Manila</span>,
           <span class="location--country">Philippines</span>
         </div>
         <div class="cw--weather-status">Clear Sky</div>
         <div class="cw--temperature">29°C</div>
         <div class="cw--date">Friday, 3rd Sep '21</div>
-        <div class="cw--time">7:06pm</div>
+        <div class="cw--time">7:06pm</div> -->
       </div>
 
       <div class="weather-conditions sub-container">
-        <div class="weather-condition cw--heat-index">
+        <!-- <div class="weather-condition cw--heat-index">
           <div class="wc--icon heat-index--icon"></div>
           <span class="wc--label heat-index--label">Feels like</span>
           <span class="wc--value heat-index--value">36</span>
@@ -55,7 +62,7 @@
           <div class="wc--icon uv-index--icon"></div>
           <span class="wc--label uv-index--label">UV Index</span>
           <span class="wc--value uv-index--value">5.67</span>
-        </div>
+        </div> -->
       </div>
 
       <!-- <div class="other-weather sub-container">
@@ -65,7 +72,37 @@
         </div>
       </div> -->
     </div>
-    <div class="forecast-container"></div>
+    <div class="forecast-container">
+      <!-- <div class="forecast-element">
+        <div class="forecast-hour">5pm</div>
+
+        <div class="forecast-temp">
+          <span class="forecast-temp--value">30</span>
+          <span class="forecast-temp--unit">°C</span>
+        </div>
+
+        <div class="forecast-icon"></div>
+      -->
+    </div>
+
+    <div class="forecast-container--daily">
+      <!-- <div class="forecast-element--daily">
+        <div class="forecast-day">Monday</div>
+
+        <div class="forecast-temp">
+          <span class="forecast-temp--value">30</span
+          ><span class="forecast-temp--unit">°C</span>
+        </div>
+
+        <div class="forecast-icon"></div>
+
+        <div class="forecast-rain">
+          <span class="forecast-rain--value">10</span
+          ><span class="forecast-rain--unit">% </span>
+          <div class="forecast-rain--icon"></div>
+        </div>
+      </div> -->
+    </div>
 
     <script src="main.js"></script>
   </body>
