@@ -26,9 +26,11 @@ export const hourView = (function () {
     );
 
     const temp = hour.temp.toFixed(0);
-    const weatherStatus = hour.weather[0].description;
-    const weatherStatusMain = hour.weather[0].main;
-    const weatherStatusID = hour.weather[0].id;
+    const status = hour.weather[0].description;
+    const statusMain = hour.weather[0].main;
+    const statusID = hour.weather[0].id;
+    const iconToDisplay = View.getWeatherIcon(statusMain, statusID);
+    const rainChance = (hour.pop * 100).toFixed(0);
 
     // Create and append elements
 
@@ -39,9 +41,11 @@ export const hourView = (function () {
 
     const tempEl = renderTemp(temp);
 
-    const iconEl = renderIcon(weatherStatus);
+    const iconEl = renderIcon(iconToDisplay);
 
-    forecastEl.append(currHourEl, tempEl, iconEl);
+    const rainEl = renderRainChance(rainChance);
+
+    forecastEl.append(currHourEl, tempEl, iconEl, rainEl);
 
     return forecastEl;
   };
@@ -71,11 +75,33 @@ export const hourView = (function () {
     return tempEl;
   };
 
-  const renderIcon = function (weatherDesc) {
+  const renderIcon = function (iconClass) {
     const iconEl = document.createElement('div');
     iconEl.classList.add('forecast-icon');
 
+    const icon = document.createElement('div');
+    icon.classList.add('wi', iconClass);
+
+    iconEl.append(icon);
+
     return iconEl;
+  };
+
+  const renderRainChance = function (rainChance) {
+    const rainEl = document.createElement('div');
+    rainEl.classList.add('forecast-rain');
+
+    const rainValueEl = document.createElement('span');
+    rainValueEl.classList.add('forecast-rain--value');
+    rainValueEl.textContent = rainChance;
+
+    const rainUnitEl = document.createElement('span');
+    rainUnitEl.classList.add('forecast-rain--unit');
+    rainUnitEl.textContent = '%';
+
+    rainEl.append(rainValueEl, rainUnitEl);
+
+    return rainEl;
   };
 
   return {

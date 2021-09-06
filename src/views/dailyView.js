@@ -27,10 +27,12 @@ export const dailyView = (function () {
     const tempMin = day.temp.min;
     const tempMax = day.temp.max;
 
-    const weatherStatus = day.weather[0].description;
-    const weatherStatusMain = day.weather[0].main;
+    const status = day.weather[0].description;
+    const statusMain = day.weather[0].main;
+    const statusID = day.weather[0].id;
+    const iconToDisplay = View.getWeatherIcon(statusMain, statusID);
 
-    const rainChance = day.pop * 100;
+    const rainChance = (day.pop * 100).toFixed(0);
 
     // Create Elements
 
@@ -41,9 +43,10 @@ export const dailyView = (function () {
 
     const tempEl = renderTemp(tempDay);
 
-    const iconEl = renderIcon(weatherStatus);
+    const iconEl = renderIcon(iconToDisplay);
 
     const rainEl = renderRainChance(rainChance);
+
     forecastEl.append(dayEl, tempEl, iconEl, rainEl);
 
     return forecastEl;
@@ -74,9 +77,14 @@ export const dailyView = (function () {
     return tempEl;
   };
 
-  const renderIcon = function (weatherDesc) {
+  const renderIcon = function (iconClass) {
     const iconEl = document.createElement('div');
     iconEl.classList.add('forecast-icon');
+
+    const icon = document.createElement('div');
+    icon.classList.add('wi', iconClass);
+
+    iconEl.append(icon);
 
     return iconEl;
   };
