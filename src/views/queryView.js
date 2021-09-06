@@ -9,6 +9,8 @@ export const queryView = (function () {
       const query = queryEl.value;
 
       handler(query);
+
+      queryEl.value = '';
     });
   };
 

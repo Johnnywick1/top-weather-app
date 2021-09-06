@@ -1,4 +1,6 @@
+import { View } from './View';
 import { capitalize, getLocalTime } from '../helpers';
+
 import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
@@ -27,6 +29,7 @@ export const currWeatherView = (function () {
     const dateEl = renderDate(offset);
     const timeEl = renderTime(offset);
 
+    View.clearSpace(currWeatherContainer);
     currWeatherContainer.append(locationEl, statusEl, tempEl, dateEl, timeEl);
 
     const indexEl = createConditionElement(
@@ -52,6 +55,7 @@ export const currWeatherView = (function () {
 
     const uvEl = createConditionElement('uv-index', 'UV Index ', uvi);
 
+    View.clearSpace(conditionsContainer);
     conditionsContainer.append(indexEl, humEl, speedEl, uvEl);
   };
 

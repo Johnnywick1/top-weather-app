@@ -1,3 +1,4 @@
+import { View } from './View';
 import { convertToMilliseconds, getLocalTime } from '../helpers';
 
 import format from 'date-fns/format';
@@ -8,6 +9,7 @@ export const dailyView = (function () {
   );
 
   const renderDailyForecast = function (dailyWeather, offset) {
+    View.clearSpace(forecastContainer);
     dailyWeather.forEach((day, i) => {
       forecastContainer.append(createForecastElement(day, i, offset));
     });
@@ -20,7 +22,6 @@ export const dailyView = (function () {
     const [year, month, date, hourToUse] = getLocalTime(offset, timeToConvert);
 
     const dayToDisplay = format(new Date(year, month, date, hourToUse), 'EEEE');
-    // console.log(day);
 
     const tempDay = day.temp.day.toFixed(0);
     const tempMin = day.temp.min;
@@ -43,7 +44,6 @@ export const dailyView = (function () {
     const iconEl = renderIcon(weatherStatus);
 
     const rainEl = renderRainChance(rainChance);
-
     forecastEl.append(dayEl, tempEl, iconEl, rainEl);
 
     return forecastEl;

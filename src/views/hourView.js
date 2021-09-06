@@ -1,3 +1,4 @@
+import { View } from './View';
 import { convertToMilliseconds, getLocalTime } from '../helpers';
 
 import format from 'date-fns/format';
@@ -6,6 +7,8 @@ export const hourView = (function () {
   const forecastContainer = document.querySelector('.forecast-container');
 
   const renderHourlyForecast = function (hourlyWeather, offset) {
+    View.clearSpace(forecastContainer);
+
     hourlyWeather.forEach((hour, i) => {
       forecastContainer.append(createForecastElement(hour, i, offset));
     });
