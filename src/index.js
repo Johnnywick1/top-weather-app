@@ -2,6 +2,7 @@ import { model } from './model';
 import { hourView } from './views/hourView';
 import { currWeatherView } from './views/currWeatherView';
 import { dailyView } from './views/dailyView';
+import { queryView } from './views/queryView';
 
 //  TESTING
 
@@ -69,13 +70,25 @@ const controlDailyForecast = async function (location) {
   }
 };
 
-const controlPlaceholderWeather = function () {};
-
-const init = function () {
-  controlPlaceholderWeather();
+const controlGetQuery = function (location) {
   controlCurrentWeather(location);
   controlHourlyForecast(location);
   controlDailyForecast(location);
+};
+
+const controlAddHandlerQuery = function () {
+  queryView.addHandlerGetQuery(controlGetQuery);
+};
+
+const controlPlaceholderWeather = function (initLoc = 'Manila') {
+  controlCurrentWeather(initLoc);
+  controlHourlyForecast(initLoc);
+  controlDailyForecast(initLoc);
+};
+
+const init = function () {
+  controlPlaceholderWeather(location);
+  controlAddHandlerQuery();
 };
 
 init();
