@@ -1,6 +1,7 @@
 import { model } from './model';
 import { hourView } from './views/hourView';
 import { currWeatherView } from './views/currWeatherView';
+import { dailyView } from './views/dailyView';
 
 //  TESTING
 
@@ -48,11 +49,23 @@ const controlHourlyForecast = async function (location) {
 
     const timezoneOffset = locationWeather.timezone_offset;
 
-    console.log('index hourlyweather', hourlyWeather);
-
     hourView.renderHourlyForecast(hourlyWeather, timezoneOffset);
   } catch (err) {
     console.error('controlhourlyforecast', err.message);
+  }
+};
+
+const controlDailyForecast = async function (location) {
+  try {
+    const locationWeather = await model.getWeather(location);
+
+    const dailyWeather = locationWeather.daily.slice(1);
+
+    const timezoneOffset = locationWeather.timezone_offset;
+
+    dailyView.renderDailyForecast(dailyWeather, timezoneOffset);
+  } catch (err) {
+    console.error('controldailyforecast', err.message);
   }
 };
 
@@ -62,6 +75,7 @@ const init = function () {
   controlPlaceholderWeather();
   controlCurrentWeather(location);
   controlHourlyForecast(location);
+  controlDailyForecast(location);
 };
 
 init();
