@@ -12,6 +12,8 @@ export const hourView = (function () {
   };
 
   const createForecastElement = function (hour, index, offset) {
+    // Organize appropriate data
+
     const timeToConvert = new Date(convertToMilliseconds(hour.dt));
     const [year, month, date, hourToUse] = getLocalTime(offset, timeToConvert);
 
@@ -25,13 +27,31 @@ export const hourView = (function () {
     const weatherStatusMain = hour.weather[0].main;
     const weatherStatusID = hour.weather[0].id;
 
+    // Create and append elements
+
     const forecastEl = document.createElement('div');
     forecastEl.classList.add('forecast-element');
 
+    const currHourEl = renderHour(hourToDisplay);
+
+    const tempEl = renderTemp(temp);
+
+    const iconEl = renderIcon(weatherStatus);
+
+    forecastEl.append(currHourEl, tempEl, iconEl);
+
+    return forecastEl;
+  };
+
+  const renderHour = function (hour) {
     const currHourEl = document.createElement('div');
     currHourEl.classList.add('forecast-hour');
-    currHourEl.textContent = hourToDisplay;
+    currHourEl.textContent = hour;
 
+    return currHourEl;
+  };
+
+  const renderTemp = function (temp) {
     const tempEl = document.createElement('div');
     tempEl.classList.add('forecast-temp');
 
@@ -45,14 +65,14 @@ export const hourView = (function () {
     tempUnitEl.textContent = '°C';
     tempEl.append(tempUnitEl);
 
+    return tempEl;
+  };
+
+  const renderIcon = function (weatherDesc) {
     const iconEl = document.createElement('div');
     iconEl.classList.add('forecast-icon');
 
-    forecastEl.append(currHourEl);
-    forecastEl.append(tempEl);
-    forecastEl.append(iconEl);
-
-    return forecastEl;
+    return iconEl;
   };
 
   return {
