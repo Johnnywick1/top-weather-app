@@ -20,7 +20,7 @@ export const dailyView = (function () {
     const [year, month, date, hourToUse] = getLocalTime(offset, timeToConvert);
 
     const dayToDisplay = format(new Date(year, month, date, hourToUse), 'EEEE');
-    console.log(day);
+    // console.log(day);
 
     const tempDay = day.temp.day.toFixed(0);
     const tempMin = day.temp.min;
