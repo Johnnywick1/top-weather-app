@@ -29,16 +29,40 @@
   /* width: 30%; */
 }
 
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.bi-search {
+  font-size: 1.1rem;
+}
+
 .weather-query {
   appearance: none;
   padding: 0.5rem;
+  padding-right: 2.2rem;
   background-color: transparent;
   border-bottom: 2px solid black;
 }
 
+.weather-query:focus {
+  outline: none;
+  border: 2px solid black;
+}
+
 .sub-container {
+  position: relative;
   padding: 1rem;
   min-width: 400px;
+}
+
+.forecast-icon.cw--icon .wi {
+  position: absolute;
+  right: 10%;
+  font-size: 3.5rem;
 }
 
 .cw--location {
@@ -46,6 +70,7 @@
 }
 
 .cw--weather-status {
+  max-width: 300px;
   font-size: 2rem;
 }
 
@@ -57,17 +82,67 @@
   padding: 0.5rem 0;
 }
 
+/*  FORECAST ELEMENTS */
+
 .forecast-container {
+  position: relative;
   height: 50vh;
+}
+
+.forecast-container--hourly {
   display: flex;
   overflow-x: auto;
+  height: 100%;
+}
+
+.forecast-toggle-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  top: 1rem;
+  left: 1rem;
+}
+
+.forecast-toggle {
+  margin: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+}
+
+.forecast-dot-wrapper {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.forecast-dot {
+  width: 15px;
+  height: 15px;
+  margin: 0 1rem;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.forecast-dot-back,
+.forecast-dot-next {
+  font-size: 2rem;
 }
 
 .forecast-element {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem 2rem;
+  position: relative;
+  padding: 0 2.5rem;
+  width: fit-content;
 }
 
 .forecast-hour {
@@ -81,8 +156,8 @@
 .forecast-container--daily {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  height: 50vh;
+  justify-content: flex-start;
+  height: 100%;
   overflow-x: auto;
 }
 
@@ -90,8 +165,20 @@
   padding: 1rem 2rem;
   width: 14%;
   min-width: 150px;
+  overflow-x: auto;
 }
 
 .forecast-rain {
   color: rgb(43, 142, 255);
+}
+
+.wi {
+  font-size: 3rem;
+  padding: 1rem 0 2rem;
+}
+
+/*  HELPER STYLES */
+
+.hidden {
+  display: none;
 }
