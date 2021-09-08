@@ -43,7 +43,7 @@ export const dailyView = (function () {
 
     const tempEl = renderTemp(tempDay);
 
-    const iconEl = View.renderIcon(iconToDisplay);
+    const iconEl = View.renderIcon(iconToDisplay, status);
 
     const rainEl = renderRainChance(rainChance);
 

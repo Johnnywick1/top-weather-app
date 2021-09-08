@@ -136,12 +136,13 @@ export const View = (function () {
     return el;
   };
 
-  const renderIcon = function (iconClass) {
+  const renderIcon = function (iconClass, status) {
     const iconEl = document.createElement('div');
     iconEl.classList.add('forecast-icon');
 
     const icon = document.createElement('i');
     icon.classList.add('wi', iconClass);
+    icon.setAttribute('aria-label', status);
 
     iconEl.append(icon);
 

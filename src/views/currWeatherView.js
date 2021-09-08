@@ -35,7 +35,7 @@ export const currWeatherView = (function () {
       timeOfDay
     );
 
-    const iconEl = View.renderIcon(iconToDisplay);
+    const iconEl = View.renderIcon(iconToDisplay, weatherStatus);
     iconEl.classList.add('cw--icon');
 
     const locationEl = renderLocation(locationName);

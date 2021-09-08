@@ -44,7 +44,7 @@ export const hourView = (function () {
 
     const tempEl = renderTemp(temp);
 
-    const iconEl = View.renderIcon(iconToDisplay);
+    const iconEl = View.renderIcon(iconToDisplay, status);
 
     const rainEl = renderRainChance(rainChance);
 
