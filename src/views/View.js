@@ -16,8 +16,6 @@ export const View = (function () {
       case 'Rain':
         switch (weatherID) {
           case 500:
-            icon = 'wi-sprinkle';
-            break;
           case 501:
             icon = 'wi-showers';
             break;

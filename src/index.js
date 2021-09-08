@@ -50,7 +50,17 @@ const controlHourlyForecast = async function (location) {
 
     const timezoneOffset = locationWeather.timezone_offset;
 
-    hourView.renderHourlyForecast(hourlyWeather, timezoneOffset);
+    const day1 = [
+      locationWeather.daily[0].sunrise,
+      locationWeather.daily[0].sunset,
+    ];
+
+    const day2 = [
+      locationWeather.daily[1].sunrise,
+      locationWeather.daily[1].sunset,
+    ];
+
+    hourView.renderHourlyForecast(hourlyWeather, timezoneOffset, day1, day2);
   } catch (err) {
     console.error('controlhourlyforecast', err.message);
   }

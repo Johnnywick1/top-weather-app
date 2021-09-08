@@ -1,20 +1,20 @@
 import { View } from './View';
-import { convertToMilliseconds, getLocalTime } from '../helpers';
+import { convertToMilliseconds, getLocalTime, isDay } from '../helpers';
 
 import format from 'date-fns/format';
 
 export const hourView = (function () {
   const forecastContainer = document.querySelector('.forecast-container');
 
-  const renderHourlyForecast = function (hourlyWeather, offset) {
+  const renderHourlyForecast = function (hourlyWeather, offset, day1, day2) {
     View.clearSpace(forecastContainer);
 
-    hourlyWeather.forEach((hour, i) => {
-      forecastContainer.append(createForecastElement(hour, i, offset));
+    hourlyWeather.forEach((hour) => {
+      forecastContainer.append(createForecastElement(hour, offset, day1, day2));
     });
   };
 
-  const createForecastElement = function (hour, index, offset) {
+  const createForecastElement = function (hour, offset, day1, day2) {
     // Organize appropriate data
 
     const timeToConvert = new Date(convertToMilliseconds(hour.dt));
@@ -25,11 +25,12 @@ export const hourView = (function () {
       'haaa'
     );
 
+    const timeOfDay = isDay(hour.dt, day1, day2);
     const temp = hour.temp.toFixed(0);
     const status = hour.weather[0].description;
     const statusMain = hour.weather[0].main;
     const statusID = hour.weather[0].id;
-    const iconToDisplay = View.getWeatherIcon(statusMain, statusID);
+    const iconToDisplay = View.getWeatherIcon(statusMain, statusID, timeOfDay);
     const rainChance = (hour.pop * 100).toFixed(0);
 
     // Create and append elements
@@ -79,7 +80,7 @@ export const hourView = (function () {
     const iconEl = document.createElement('div');
     iconEl.classList.add('forecast-icon');
 
-    const icon = document.createElement('div');
+    const icon = document.createElement('i');
     icon.classList.add('wi', iconClass);
 
     iconEl.append(icon);
@@ -103,6 +104,8 @@ export const hourView = (function () {
 
     return rainEl;
   };
+
+  const renderDetails = function (weather) {};
 
   return {
     renderHourlyForecast,

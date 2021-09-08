@@ -58,3 +58,15 @@ export const getLocalTime = function (offset, dateToConvert) {
 
   return [year, month, date, hour, minute];
 };
+
+export const isDay = function (timeOfDay, day1, day2) {
+  const [sunrise1, sunset1] = day1;
+  const [sunrise2, sunset2] = day2;
+
+  if (
+    (timeOfDay >= sunrise1 && timeOfDay <= sunset1) ||
+    (timeOfDay >= sunrise2 && timeOfDay <= sunset2)
+  ) {
+    return 'day';
+  } else return 'night';
+};
