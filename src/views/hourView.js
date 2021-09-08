@@ -4,7 +4,9 @@ import { convertToMilliseconds, getLocalTime, isDay } from '../helpers';
 import format from 'date-fns/format';
 
 export const hourView = (function () {
-  const forecastContainer = document.querySelector('.forecast-container');
+  const forecastContainer = document.querySelector(
+    '.forecast-container--hourly'
+  );
 
   const renderHourlyForecast = function (hourlyWeather, offset, day1, day2) {
     View.clearSpace(forecastContainer);
@@ -42,7 +44,7 @@ export const hourView = (function () {
 
     const tempEl = renderTemp(temp);
 
-    const iconEl = renderIcon(iconToDisplay);
+    const iconEl = View.renderIcon(iconToDisplay);
 
     const rainEl = renderRainChance(rainChance);
 
@@ -76,18 +78,6 @@ export const hourView = (function () {
     return tempEl;
   };
 
-  const renderIcon = function (iconClass) {
-    const iconEl = document.createElement('div');
-    iconEl.classList.add('forecast-icon');
-
-    const icon = document.createElement('i');
-    icon.classList.add('wi', iconClass);
-
-    iconEl.append(icon);
-
-    return iconEl;
-  };
-
   const renderRainChance = function (rainChance) {
     const rainEl = document.createElement('div');
     rainEl.classList.add('forecast-rain');
@@ -105,7 +95,47 @@ export const hourView = (function () {
     return rainEl;
   };
 
-  const renderDetails = function (weather) {};
+  const renderDetails = function (weather) {
+    const detailsEl = document.createElement('div');
+    detailsEl.classList.add('forecast-details');
+
+    const hourEl = document.createElement('div');
+    hourEl.classList.add('forecast-details--time');
+    hourEl.textContent = weather.hourToDisplay;
+
+    const statusEl = document.createElement('div');
+    statusEl.classList.add('forecast-details--description');
+    statusEl.textContent = weather.status;
+
+    const tempEl = document.createElement('div');
+    tempEl.classList.add('forecast-details--temp');
+
+    const tempValueEl = document.createElement('span');
+    tempValueEl.classList.add('forecast-details--temp-value');
+    tempValueEl.textContent = weather.temp;
+
+    const tempUnitEl = document.createElement('span');
+    tempUnitEl.classList.add('forecast-details--temp-unit');
+    tempUnitEl.textContent = '°C';
+
+    const rainEl = document.createElement('div');
+    rainEl.classList.add('forecast-details--rain-chance');
+    rainEl.textContent = `Chance of rain: ${weather.rainChance}%`;
+
+    const uvEl = document.createElement('div');
+    uvEl.classList.add('forecast-details--uv-index');
+    uvEl.textContent = `UV Index: ${weather.uvi}`;
+
+    const humidityEl = document.createElement('div');
+    humidityEl.classList.add('forecast-details--humidity');
+    humidityEl.textContent = `Humidity: ${weather.humidity}`;
+
+    tempEl.append(tempValueEl, tempUnitEl);
+
+    detailsEl.append(hourEl, statusEl, tempEl, rainEl, uvEl, humidityEl);
+
+    return detailsEl;
+  };
 
   return {
     renderHourlyForecast,

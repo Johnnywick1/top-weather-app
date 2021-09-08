@@ -43,7 +43,7 @@ export const dailyView = (function () {
 
     const tempEl = renderTemp(tempDay);
 
-    const iconEl = renderIcon(iconToDisplay);
+    const iconEl = View.renderIcon(iconToDisplay);
 
     const rainEl = renderRainChance(rainChance);
 
@@ -75,18 +75,6 @@ export const dailyView = (function () {
     tempEl.append(tempValueEl, tempUnitEl);
 
     return tempEl;
-  };
-
-  const renderIcon = function (iconClass) {
-    const iconEl = document.createElement('div');
-    iconEl.classList.add('forecast-icon');
-
-    const icon = document.createElement('div');
-    icon.classList.add('wi', iconClass);
-
-    iconEl.append(icon);
-
-    return iconEl;
   };
 
   const renderRainChance = function (rainChance) {

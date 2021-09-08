@@ -1,4 +1,7 @@
 export const View = (function () {
+  const toggleDaily = document.querySelector('.forecast-toggle--daily');
+  const toggleHourly = document.querySelector('.forecast-toggle--hourly');
+
   const clearSpace = function (parentEl) {
     parentEl.innerHTML = '';
   };
@@ -14,20 +17,22 @@ export const View = (function () {
         icon = 'wi-raindrops';
         break;
       case 'Rain':
-        switch (weatherID) {
-          case 500:
-          case 501:
-            icon = 'wi-showers';
-            break;
-          case 503:
-          case 504:
-          case 522:
-            icon = 'wi-rain-wind';
-            break;
-          default:
-            icon = 'wi-rain';
-            break;
-        }
+        // switch (weatherID) {
+        //   case 500:
+        //   case 501:
+        //     icon = 'wi-showers';
+        //     break;
+        //   case 503:
+        //   case 504:
+        //   case 522:
+        //     icon = 'wi-rain-wind';
+        //     break;
+        //   default:
+        //     icon = 'wi-rain';
+        //     break;
+        // }
+
+        icon = 'wi-rain';
         break;
       case 'Clouds':
         switch (weatherID) {
@@ -87,8 +92,85 @@ export const View = (function () {
     return icon;
   };
 
+  const createConditionElement = function (condition, label, value, unit) {
+    const el = document.createElement('div');
+    el.classList.add('weather-condition', `cw--${condition}`);
+
+    const iconEl = createConditionSubElement('div', [
+      'wc--icon',
+      `${condition}--icon`,
+    ]);
+
+    const labelEl = createConditionSubElement(
+      'span',
+      ['wc--label', `${condition}--label`],
+      label
+    );
+
+    const valueEl = createConditionSubElement(
+      'span',
+      ['wc--value', `${condition}--value`],
+      value
+    );
+
+    const unitEl = createConditionSubElement(
+      'span',
+      ['wc--unit', `${condition}--unit`],
+      unit
+    );
+
+    el.append(iconEl, labelEl, valueEl, unitEl);
+
+    return el;
+  };
+
+  const createConditionSubElement = function (type, classList, text) {
+    const el = document.createElement(type);
+
+    classList.forEach((classVal) => {
+      el.classList.add(classVal);
+    });
+
+    el.textContent = text;
+
+    return el;
+  };
+
+  const renderIcon = function (iconClass) {
+    const iconEl = document.createElement('div');
+    iconEl.classList.add('forecast-icon');
+
+    const icon = document.createElement('i');
+    icon.classList.add('wi', iconClass);
+
+    iconEl.append(icon);
+
+    return iconEl;
+  };
+
+  const addHandlerToggleForecast = function () {
+    const dailyForecast = document.querySelector('.forecast-container--daily');
+    const hourlyForecast = document.querySelector(
+      '.forecast-container--hourly'
+    );
+
+    toggleDaily.addEventListener('click', function () {
+      dailyForecast.classList.remove('hidden');
+      hourlyForecast.classList.add('hidden');
+    });
+
+    toggleHourly.addEventListener('click', function () {
+      dailyForecast.classList.add('hidden');
+      hourlyForecast.classList.remove('hidden');
+    });
+  };
+
   return {
     clearSpace,
     getWeatherIcon,
+    createConditionElement,
+    createConditionSubElement,
+    renderIcon,
+    addHandlerToggleForecast,
   };
 })();

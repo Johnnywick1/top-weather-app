@@ -1,5 +1,5 @@
 import { View } from './View';
-import { capitalize, getLocalTime } from '../helpers';
+import { capitalize, getLocalTime, isDay } from '../helpers';
 
 import format from 'date-fns/format';
 
@@ -17,11 +17,26 @@ export const currWeatherView = (function () {
 
     const weatherStatus = currentWeather.weather[0].description;
     const weatherStatusMain = currentWeather.weather[0].main;
+    const weatherStatusID = currentWeather.weather[0].id;
     const uvi = currentWeather.uvi;
     const windSpeed = currentWeather.wind_speed;
     const heatIndex = currentWeather.feels_like.toFixed(0);
     const humidity = currentWeather.humidity;
     const temp = currentWeather.temp;
+    const timeOfDay = isDay(
+      currentWeather.dt,
+      [currentWeather.sunrise, currentWeather.sunset],
+      []
+    );
+
+    const iconToDisplay = View.getWeatherIcon(
+      weatherStatusMain,
+      weatherStatusID,
+      timeOfDay
+    );
+
+    const iconEl = View.renderIcon(iconToDisplay);
+    iconEl.classList.add('cw--icon');
 
     const locationEl = renderLocation(locationName);
     const statusEl = renderWeatherStatus(weatherStatus);
@@ -30,30 +45,37 @@ export const currWeatherView = (function () {
     const timeEl = renderTime(offset);
 
     View.clearSpace(currWeatherContainer);
-    currWeatherContainer.append(locationEl, statusEl, tempEl, dateEl, timeEl);
+    currWeatherContainer.append(
+      iconEl,
+      locationEl,
+      statusEl,
+      tempEl,
+      dateEl,
+      timeEl
+    );
 
-    const indexEl = createConditionElement(
+    const indexEl = View.createConditionElement(
       'heat-index',
       'Feels like ',
       heatIndex,
       '°C'
     );
 
-    const humEl = createConditionElement(
+    const humEl = View.createConditionElement(
       'humidity',
       'Humidity ',
       humidity,
       '%'
     );
 
-    const speedEl = createConditionElement(
+    const speedEl = View.createConditionElement(
       'wind-speed',
       'Wind Speed ',
       windSpeed,
       'm/s'
     );
 
-    const uvEl = createConditionElement('uv-index', 'UV Index ', uvi);
+    const uvEl = View.createConditionElement('uv-index', 'UV Index ', uvi);
 
     View.clearSpace(conditionsContainer);
     conditionsContainer.append(indexEl, humEl, speedEl, uvEl);
@@ -122,50 +144,6 @@ export const currWeatherView = (function () {
     timeEl.textContent = timeToDisplay;
 
     return timeEl;
-  };
-
-  const createConditionElement = function (condition, label, value, unit) {
-    const el = document.createElement('div');
-    el.classList.add('weather-condition', `cw--${condition}`);
-
-    const iconEl = createConditionSubElement('div', [
-      'wc--icon',
-      `${condition}--icon`,
-    ]);
-
-    const labelEl = createConditionSubElement(
-      'span',
-      ['wc--label', `${condition}--label`],
-      label
-    );
-
-    const valueEl = createConditionSubElement(
-      'span',
-      ['wc--value', `${condition}--value`],
-      value
-    );
-
-    const unitEl = createConditionSubElement(
-      'span',
-      ['wc--unit', `${condition}--unit`],
-      unit
-    );
-
-    el.append(iconEl, labelEl, valueEl, unitEl);
-
-    return el;
-  };
-
-  const createConditionSubElement = function (type, classList, text) {
-    const el = document.createElement(type);
-
-    classList.forEach((classVal) => {
-      el.classList.add(classVal);
-    });
-
-    el.textContent = text;
-
-    return el;
   };
 
   return {
