@@ -17,21 +17,6 @@ export const View = (function () {
         icon = 'wi-raindrops';
         break;
       case 'Rain':
-        // switch (weatherID) {
-        //   case 500:
-        //   case 501:
-        //     icon = 'wi-showers';
-        //     break;
-        //   case 503:
-        //   case 504:
-        //   case 522:
-        //     icon = 'wi-rain-wind';
-        //     break;
-        //   default:
-        //     icon = 'wi-rain';
-        //     break;
-        // }
-
         icon = 'wi-rain';
         break;
       case 'Clouds':
@@ -96,15 +81,29 @@ export const View = (function () {
     const el = document.createElement('div');
     el.classList.add('weather-condition', `cw--${condition}`);
 
-    const iconEl = createConditionSubElement('div', [
+    const iconWrapper = createConditionSubElement('div', [
       'wc--icon',
-      `${condition}--icon`,
+      `${condition}--label`,
     ]);
+
+    const textWrapper = createConditionSubElement(
+      'div',
+      ['wc--description'],
+      ''
+    );
+
+    const valueWrapper = createConditionSubElement('div', [
+      'wc--value-wrapper',
+    ]);
+
+    const iconEl = document.createElement('i');
+    iconEl.classList.add('wi', `wi-${condition}`);
+    iconWrapper.append(iconEl);
 
     const labelEl = createConditionSubElement(
       'span',
       ['wc--label', `${condition}--label`],
-      label
+      ` ${label} `
     );
 
     const valueEl = createConditionSubElement(
@@ -119,7 +118,11 @@ export const View = (function () {
       unit
     );
 
-    el.append(iconEl, labelEl, valueEl, unitEl);
+    valueWrapper.append(valueEl, unitEl);
+
+    textWrapper.append(labelEl, valueWrapper);
+
+    el.append(iconWrapper, textWrapper);
 
     return el;
   };
@@ -149,6 +152,7 @@ export const View = (function () {
     return iconEl;
   };
 
+  /*
   const addHandlerToggleForecast = function () {
     const dailyForecast = document.querySelector('.forecast-container--daily');
     const hourlyForecast = document.querySelector(
@@ -165,6 +169,7 @@ export const View = (function () {
       hourlyForecast.classList.remove('hidden');
     });
   };
+  */
 
   return {
     clearSpace,
@@ -172,6 +177,6 @@ export const View = (function () {
     createConditionElement,
     createConditionSubElement,
     renderIcon,
-    addHandlerToggleForecast,
+    // addHandlerToggleForecast,
   };
 })();
