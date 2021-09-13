@@ -9,32 +9,31 @@
   box-sizing: border-box;
 }
 
-.weather-container {
+.content-container {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* align-items: flex-start; */
-  align-items: center;
-  background-color: rgb(121, 206, 228);
   height: 100vh;
+  overflow-y: hidden;
 }
+
+/*  SEARCH BAR */
 
 .query-wrapper {
-  position: absolute;
-  right: 0;
-  top: 0;
+  /* position: absolute;
+  left: 0;
+  top: 0; */
   margin: 2rem;
   min-width: 120px;
-  /* width: 30%; */
+  background-color: blue;
+  opacity: 0.6;
 }
 
-.search-icon {
+/* .search-icon {
   position: absolute;
   top: 50%;
   right: 5%;
   transform: translateY(-50%);
-}
+} */
 
 .bi-search {
   font-size: 1.1rem;
@@ -51,6 +50,98 @@
 .weather-query:focus {
   outline: none;
   border: 2px solid black;
+}
+
+/*  CURRENT WEATHER */
+
+.weather-container {
+  min-width: 450px;
+}
+
+.current-weather,
+.weather-conditions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  padding-left: 2rem;
+}
+
+.current-weather {
+  border: 1px solid blue;
+}
+
+.cw--icon i {
+  position: absolute;
+  font-size: 6rem;
+  right: 0;
+}
+
+.cw--weather-status {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.cw--temperature {
+  display: flex;
+}
+
+.cw--temp-value {
+  font-size: 3rem;
+}
+
+.cw--temp-unit {
+  font-size: 1.5rem;
+}
+
+.weather-conditions {
+  border: 1px solid red;
+}
+
+.weather-condition {
+  padding: 1rem 0;
+}
+
+/* FORECAST */
+
+.forecast-container--hourly,
+.forecast-container--daily {
+  display: flex;
+}
+
+.forecast-container--daily {
+  flex-direction: column;
+}
+
+.forecast-element {
+  padding: 1rem;
+  border: 1px solid black;
+}
+
+.forecast-element--daily {
+  display: flex;
+  padding: 1rem;
+}
+
+.forecast-day {
+  width: 250px;
+}
+
+.forecast-container--hourly {
+  max-width: 600px;
+  overflow-x: auto;
+}
+
+/*
+.weather-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: flex-start; 
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  height: 100vh;
 }
 
 .sub-container {
@@ -82,8 +173,11 @@
   padding: 0.5rem 0;
 }
 
+*/
+
 /*  FORECAST ELEMENTS */
 
+/*
 .forecast-container {
   position: relative;
   height: 50vh;
@@ -176,6 +270,8 @@
   font-size: 3rem;
   padding: 1rem 0 2rem;
 }
+
+*/
 
 /*  HELPER STYLES */
 
