@@ -38,13 +38,14 @@ export const hourView = (function () {
     // Create and append elements
 
     const forecastEl = document.createElement('div');
-    forecastEl.classList.add('forecast-element');
+    forecastEl.classList.add('forecast-element--hourly');
 
     const currHourEl = renderHour(hourToDisplay);
 
     const tempEl = renderTemp(temp);
 
     const iconEl = View.renderIcon(iconToDisplay, status);
+    iconEl.classList.add('forecast-icon--hourly');
 
     const rainEl = renderRainChance(rainChance);
 
@@ -63,7 +64,7 @@ export const hourView = (function () {
 
   const renderTemp = function (temp) {
     const tempEl = document.createElement('div');
-    tempEl.classList.add('forecast-temp');
+    tempEl.classList.add('forecast-temp', 'forecast-temp--hourly');
 
     const tempValueEl = document.createElement('span');
     tempValueEl.classList.add('forecast-temp--value');
@@ -80,7 +81,7 @@ export const hourView = (function () {
 
   const renderRainChance = function (rainChance) {
     const rainEl = document.createElement('div');
-    rainEl.classList.add('forecast-rain');
+    rainEl.classList.add('forecast-rain--hourly');
 
     const rainValueEl = document.createElement('span');
     rainValueEl.classList.add('forecast-rain--value');

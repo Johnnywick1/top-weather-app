@@ -10,6 +10,7 @@ export const dailyView = (function () {
 
   const renderDailyForecast = function (dailyWeather, offset) {
     View.clearSpace(forecastContainer);
+
     dailyWeather.forEach((day, i) => {
       forecastContainer.append(createForecastElement(day, i, offset));
     });
@@ -44,6 +45,7 @@ export const dailyView = (function () {
     const tempEl = renderTemp(tempDay);
 
     const iconEl = View.renderIcon(iconToDisplay, status);
+    iconEl.classList.add('forecast-icon--daily');
 
     const rainEl = renderRainChance(rainChance);
 
@@ -62,7 +64,7 @@ export const dailyView = (function () {
 
   const renderTemp = function (temp) {
     const tempEl = document.createElement('div');
-    tempEl.classList.add('forecast-temp');
+    tempEl.classList.add('forecast-temp--daily');
 
     const tempValueEl = document.createElement('span');
     tempValueEl.classList.add('forecast-temp--value');
@@ -79,7 +81,7 @@ export const dailyView = (function () {
 
   const renderRainChance = function (rainChance) {
     const rainEl = document.createElement('div');
-    rainEl.classList.add('forecast-rain');
+    rainEl.classList.add('forecast-rain--daily');
 
     const rainValueEl = document.createElement('span');
     rainValueEl.classList.add('forecast-rain--value');

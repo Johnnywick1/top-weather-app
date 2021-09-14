@@ -4,25 +4,23 @@ import { capitalize, getLocalTime, isDay } from '../helpers';
 import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
-  const currWeatherContainer = document.querySelector(
-    '.current-weather.sub-container'
-  );
+  const currWeatherContainer = document.querySelector('.current-weather');
 
-  const conditionsContainer = document.querySelector(
-    '.weather-conditions.sub-container'
-  );
+  const conditionsContainer = document.querySelector('.weather-conditions');
 
-  const renderCurrentWeather = function (weather, locationName, offset) {
-    const currentWeather = weather;
+  const renderCurrentWeather = function (currentWeather, locationName, offset) {
+    console.log(currentWeather);
 
     const weatherStatus = currentWeather.weather[0].description;
     const weatherStatusMain = currentWeather.weather[0].main;
     const weatherStatusID = currentWeather.weather[0].id;
-    const uvi = currentWeather.uvi;
     const windSpeed = currentWeather.wind_speed;
     const heatIndex = currentWeather.feels_like.toFixed(0);
-    const humidity = currentWeather.humidity;
-    const temp = currentWeather.temp;
+    const dewPoint = currentWeather.dew_point;
+    const cloudCover = currentWeather.clouds;
+
+    const { uvi, humidity, temp, pressure, visibility } = currentWeather;
+
     const timeOfDay = isDay(
       currentWeather.dt,
       [currentWeather.sunrise, currentWeather.sunset],
@@ -46,17 +44,17 @@ export const currWeatherView = (function () {
 
     View.clearSpace(currWeatherContainer);
     currWeatherContainer.append(
+      dateEl,
+      timeEl,
       iconEl,
       locationEl,
       statusEl,
-      tempEl,
-      dateEl,
-      timeEl
+      tempEl
     );
 
     const indexEl = View.createConditionElement(
-      'heat-index',
-      'Feels like ',
+      'thermometer',
+      'Feels like  ',
       heatIndex,
       '°C'
     );
@@ -69,16 +67,53 @@ export const currWeatherView = (function () {
     );
 
     const speedEl = View.createConditionElement(
-      'wind-speed',
+      'strong-wind',
       'Wind Speed ',
       windSpeed,
       'm/s'
     );
 
-    const uvEl = View.createConditionElement('uv-index', 'UV Index ', uvi);
+    const uvEl = View.createConditionElement('sunrise', 'UV Index ', uvi, '');
+
+    const cloudEl = View.createConditionElement(
+      'cloudy',
+      'Cloud Cover ',
+      cloudCover,
+      '%'
+    );
+
+    const pressureEl = View.createConditionElement(
+      'barometer',
+      'Pressure ',
+      pressure,
+      'hPa'
+    );
+
+    const dewEl = View.createConditionElement(
+      'raindrop',
+      'Dew Point ',
+      dewPoint,
+      '°C'
+    );
+
+    const visibilityEl = View.createConditionElement(
+      'wind-direction',
+      'Visibility ',
+      visibility,
+      'm'
+    );
 
     View.clearSpace(conditionsContainer);
-    conditionsContainer.append(indexEl, humEl, speedEl, uvEl);
+    conditionsContainer.append(
+      indexEl,
+      humEl,
+      speedEl,
+      uvEl,
+      cloudEl,
+      pressureEl,
+      dewEl,
+      visibilityEl
+    );
   };
 
   const renderLocation = function (location) {
