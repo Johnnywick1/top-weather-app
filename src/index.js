@@ -5,16 +5,9 @@ import { currWeatherView } from './views/currWeatherView';
 import { dailyView } from './views/dailyView';
 import { queryView } from './views/queryView';
 
-//  TESTING
+const defaultLocation = 'London';
 
-const getWeatherData = async function (location) {
-  try {
-  } catch (err) {
-    console.error('controlweatherdata', err);
-  }
-};
-
-const controlCurrentWeather = async function (location) {
+const controlWeatherDisplay = async function (location) {
   try {
     // 1 Get the city and country name
     const locationName = await model.getCityAndCountry(location);
@@ -22,33 +15,15 @@ const controlCurrentWeather = async function (location) {
     // 2 Get the aggregate weather data for the location
     const locationWeather = await model.getWeather(location);
 
-    // 3 Get the current weather data only
+    // 3 Get the appropriate weather data
     const currentWeather = locationWeather.current;
+    const dailyWeather = locationWeather.daily.slice(1);
+    const hourlyWeather = locationWeather.hourly.slice(1, 25);
 
     // 4 Get the timezone offset for displaying date
     const timezoneOffset = locationWeather.timezone_offset;
 
-    //  4 Display the results
-    currWeatherView.renderCurrentWeather(
-      currentWeather,
-      locationName,
-      timezoneOffset
-    );
-
-    View.addHandlerToggleTempUnits();
-  } catch (err) {
-    View.renderError(err.message);
-  }
-};
-
-const controlHourlyForecast = async function (location) {
-  try {
-    const locationWeather = await model.getWeather(location);
-
-    const hourlyWeather = locationWeather.hourly.slice(1, 25);
-
-    const timezoneOffset = locationWeather.timezone_offset;
-
+    // 5 Get the sunrise and sunset data;
     const day1 = [
       locationWeather.daily[0].sunrise,
       locationWeather.daily[0].sunset,
@@ -59,45 +34,33 @@ const controlHourlyForecast = async function (location) {
       locationWeather.daily[1].sunset,
     ];
 
+    //  6 Display the results
+    currWeatherView.renderCurrentWeather(
+      currentWeather,
+      locationName,
+      timezoneOffset
+    );
+
     hourView.renderHourlyForecast(hourlyWeather, timezoneOffset, day1, day2);
-  } catch (err) {}
-};
-
-const controlDailyForecast = async function (location) {
-  try {
-    const locationWeather = await model.getWeather(location);
-
-    const dailyWeather = locationWeather.daily.slice(1);
-
-    const timezoneOffset = locationWeather.timezone_offset;
 
     dailyView.renderDailyForecast(dailyWeather, timezoneOffset);
-  } catch (err) {}
-};
 
-const controlGetQuery = function (location) {
-  controlCurrentWeather(location);
-  controlHourlyForecast(location);
-  controlDailyForecast(location);
+    // 7 Add handlers
+    View.addHandlerToggleTempUnits();
+  } catch (err) {
+    View.renderError(err.message);
+  }
 };
 
 const controlAddHandlerQuery = function () {
-  queryView.addHandlerGetQuery(controlGetQuery);
+  queryView.addHandlerGetQuery(controlWeatherDisplay);
 };
 
-const controlPlaceholderWeather = function () {
-  const defaultLocation = 'London';
-
-  controlCurrentWeather(defaultLocation);
-  controlHourlyForecast(defaultLocation);
-  controlDailyForecast(defaultLocation);
-};
-
-const getLocation = function () {
+const controlGetLocation = function () {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       controlPositionWeather,
-      controlPlaceholderWeather
+      controlWeatherDisplay.bind(null, defaultLocation)
     );
   } else {
     throw new Error('Geolocation is not supported by this browser.');
@@ -109,13 +72,11 @@ const controlPositionWeather = async function (position) {
 
   const location = await model.getPositionName(latitude, longitude);
 
-  controlCurrentWeather(location);
-  controlHourlyForecast(location);
-  controlDailyForecast(location);
+  controlWeatherDisplay(location);
 };
 
 const init = function () {
-  getLocation();
+  controlGetLocation();
   controlAddHandlerQuery();
 };
 

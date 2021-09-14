@@ -9,8 +9,6 @@ export const currWeatherView = (function () {
   const conditionsContainer = document.querySelector('.weather-conditions');
 
   const renderCurrentWeather = function (currentWeather, locationName, offset) {
-    console.log(currentWeather);
-
     const weatherStatus = currentWeather.weather[0].description;
     const weatherStatusMain = currentWeather.weather[0].main;
     const weatherStatusID = currentWeather.weather[0].id;
