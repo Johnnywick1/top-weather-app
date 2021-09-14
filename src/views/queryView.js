@@ -1,8 +1,8 @@
 export const queryView = (function () {
-  const form = document.querySelector('.weather-form');
-  const queryEl = document.querySelector('.weather-query');
-
   const addHandlerGetQuery = function (handler) {
+    const form = document.querySelector('.weather-form');
+    const queryEl = document.querySelector('.weather-query');
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 

@@ -4,11 +4,11 @@ import { convertToMilliseconds, getLocalTime } from '../helpers';
 import format from 'date-fns/format';
 
 export const dailyView = (function () {
-  const forecastContainer = document.querySelector(
-    '.forecast-container--daily'
-  );
-
   const renderDailyForecast = function (dailyWeather, offset) {
+    const forecastContainer = document.querySelector(
+      '.forecast-container--daily'
+    );
+
     View.clearSpace(forecastContainer);
 
     dailyWeather.forEach((day, i) => {

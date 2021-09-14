@@ -4,11 +4,11 @@ import { convertToMilliseconds, getLocalTime, isDay } from '../helpers';
 import format from 'date-fns/format';
 
 export const hourView = (function () {
-  const forecastContainer = document.querySelector(
-    '.forecast-container--hourly'
-  );
-
   const renderHourlyForecast = function (hourlyWeather, offset, day1, day2) {
+    const forecastContainer = document.querySelector(
+      '.forecast-container--hourly'
+    );
+
     View.clearSpace(forecastContainer);
 
     hourlyWeather.forEach((hour) => {

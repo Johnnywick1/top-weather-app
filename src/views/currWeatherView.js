@@ -4,11 +4,11 @@ import { capitalize, getLocalTime, isDay } from '../helpers';
 import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
-  const currWeatherContainer = document.querySelector('.current-weather');
-
-  const conditionsContainer = document.querySelector('.weather-conditions');
-
   const renderCurrentWeather = function (currentWeather, locationName, offset) {
+    const currWeatherContainer = document.querySelector('.current-weather');
+
+    const conditionsContainer = document.querySelector('.weather-conditions');
+
     const weatherStatus = currentWeather.weather[0].description;
     const weatherStatusMain = currentWeather.weather[0].main;
     const weatherStatusID = currentWeather.weather[0].id;

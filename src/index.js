@@ -9,6 +9,11 @@ const defaultLocation = 'London';
 
 const controlWeatherDisplay = async function (location) {
   try {
+    const container = document.querySelector('.content-container');
+
+    // 0 Render spinner
+    View.renderSpinner();
+
     // 1 Get the city and country name
     const locationName = await model.getCityAndCountry(location);
 
@@ -35,6 +40,9 @@ const controlWeatherDisplay = async function (location) {
     ];
 
     //  6 Display the results
+
+    View.appendContainers();
+
     currWeatherView.renderCurrentWeather(
       currentWeather,
       locationName,
@@ -47,13 +55,12 @@ const controlWeatherDisplay = async function (location) {
 
     // 7 Add handlers
     View.addHandlerToggleTempUnits();
+    queryView.addHandlerGetQuery(controlWeatherDisplay);
   } catch (err) {
+    console.error(err);
+
     View.renderError(err.message);
   }
-};
-
-const controlAddHandlerQuery = function () {
-  queryView.addHandlerGetQuery(controlWeatherDisplay);
 };
 
 const controlGetLocation = function () {
@@ -77,7 +84,7 @@ const controlPositionWeather = async function (position) {
 
 const init = function () {
   controlGetLocation();
-  controlAddHandlerQuery();
+  console.log('init');
 };
 
 init();
