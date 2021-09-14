@@ -11,8 +11,8 @@ export const View = (function () {
   const toggleDaily = document.querySelector('.forecast-toggle--daily');
   const toggleHourly = document.querySelector('.forecast-toggle--hourly');
 
-  const clearSpace = function (parentEl) {
-    parentEl.innerHTML = '';
+  const clearSpace = function (...parentEl) {
+    parentEl.forEach((el) => (el.innerHTML = ''));
   };
 
   const getWeatherIcon = function (weatherMain, weatherID, timeOfDay) {
@@ -251,6 +251,86 @@ export const View = (function () {
     return element;
   };
 
+  const renderSpinner = function (parentEl) {
+    const mainContainer = document.querySelector('.content-container');
+
+    const container1 = document.querySelector('.weather-conditions');
+    const container2 = document.querySelector('.current-weather');
+    const container3 = document.querySelector('.forecast-container');
+    const container4 = document.querySelector('.weather-settings');
+
+    clearSpace(container1, container2, container3, container4);
+
+    const spinner = document.createElement('div');
+    spinner.classList.add('spinner');
+
+    for (let i = 0; i < 8; i++) {
+      const spinBubble = document.createElement('div');
+      spinBubble.classList.add(`spin-${i}`);
+      spinner.append(spinBubble);
+    }
+
+    mainContainer.append(spinner);
+  };
+
+  const appendContainers = function () {
+    const container = document.querySelector('.content-container');
+
+    clearSpace(container);
+
+    container.innerHTML = `
+    
+     <div class="weather-container">
+       <div class="query-wrapper">
+        <form action="" class="weather-form">
+          <div class="search-icon">
+            <i class="bi bi-search"></i>
+          </div>
+          <input
+            type="search"
+            class="weather-query"
+            placeholder="Search for location"
+          />
+          <input type="hidden" class="weather-hidden-input" />
+        </form>
+
+        <div class="error-message-wrapper">
+          <span class="error-message hidden">Error</span>
+        </div>
+        </div>
+
+
+
+        <div class="current-weather">
+        </div>
+
+        <div class="weather-conditions">
+        </div>
+
+        <div class="weather-settings">
+         <div class="toggle-units">
+            <span class="toggle-units--label">Temperature unit:</span>
+            <button class="toggle-units--celsius" data-unit="c">°C</button>
+            <span class="toggle-units--separator">/</span>
+            <button class="toggle-units--fahrenheit" data-unit="f">°F</button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="forecast-container">
+        <div class="forecast-daily--label">Weekly Forecast</div>
+        <div class="forecast-container--daily">
+        </div>
+
+        <div class="forecast-hourly--label">Hourly Forecast</div>
+        <div class="forecast-container--hourly">
+        </div>
+      </div>
+    `;
+  };
+
   return {
     clearSpace,
     getWeatherIcon,
@@ -259,5 +339,7 @@ export const View = (function () {
     renderIcon,
     addHandlerToggleTempUnits,
     renderError,
+    renderSpinner,
+    appendContainers,
   };
 })();
