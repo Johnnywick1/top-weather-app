@@ -37,7 +37,7 @@ const controlCurrentWeather = async function (location) {
 
     View.addHandlerToggleTempUnits();
   } catch (err) {
-    console.error('controlcurrentweather', err);
+    View.renderError(err.message);
   }
 };
 
@@ -60,9 +60,7 @@ const controlHourlyForecast = async function (location) {
     ];
 
     hourView.renderHourlyForecast(hourlyWeather, timezoneOffset, day1, day2);
-  } catch (err) {
-    console.error('controlhourlyforecast', err.message);
-  }
+  } catch (err) {}
 };
 
 const controlDailyForecast = async function (location) {
@@ -74,9 +72,7 @@ const controlDailyForecast = async function (location) {
     const timezoneOffset = locationWeather.timezone_offset;
 
     dailyView.renderDailyForecast(dailyWeather, timezoneOffset);
-  } catch (err) {
-    console.error('controldailyforecast', err.message);
-  }
+  } catch (err) {}
 };
 
 const controlGetQuery = function (location) {
@@ -89,10 +85,12 @@ const controlAddHandlerQuery = function () {
   queryView.addHandlerGetQuery(controlGetQuery);
 };
 
-const controlPlaceholderWeather = function (initLoc = 'London') {
-  controlCurrentWeather(initLoc);
-  controlHourlyForecast(initLoc);
-  controlDailyForecast(initLoc);
+const controlPlaceholderWeather = function () {
+  const defaultLocation = 'London';
+
+  controlCurrentWeather(defaultLocation);
+  controlHourlyForecast(defaultLocation);
+  controlDailyForecast(defaultLocation);
 };
 
 const getLocation = function () {
@@ -102,7 +100,7 @@ const getLocation = function () {
       controlPlaceholderWeather
     );
   } else {
-    console.log('Geolocation is not supported by this browser.');
+    throw new Error('Geolocation is not supported by this browser.');
   }
 };
 

@@ -234,6 +234,23 @@ export const View = (function () {
     }
   };
 
+  const renderError = function (message) {
+    const errorEl = document.querySelector('.error-message');
+
+    errorEl.classList.remove('hidden');
+    errorEl.textContent = message;
+
+    setTimeout(makeHidden.bind(null, errorEl), 3000);
+
+    return errorEl;
+  };
+
+  const makeHidden = function (element) {
+    element.classList.add('hidden');
+
+    return element;
+  };
+
   return {
     clearSpace,
     getWeatherIcon,
@@ -241,6 +258,6 @@ export const View = (function () {
     createConditionSubElement,
     renderIcon,
     addHandlerToggleTempUnits,
-    // addHandlerToggleForecast,
+    renderError,
   };
 })();

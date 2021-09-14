@@ -20,7 +20,7 @@ export const model = (function () {
 
       return data;
     } catch (err) {
-      console.error('getcitydata', err.message);
+      throw new Error('Cannot retrieve location data');
     }
   };
 
@@ -30,7 +30,7 @@ export const model = (function () {
       const data = await getCityData(city);
       return [data.name, data.sys.country];
     } catch (err) {
-      console.error('getcityandcountry', err.message);
+      throw new Error('Cannot retrieve location data');
     }
   };
 
@@ -62,7 +62,7 @@ export const model = (function () {
 
       return weather;
     } catch (err) {
-      console.error('getweather', err.message);
+      throw new Error('Cannot retrieve weather data');
     }
   };
 
@@ -83,7 +83,7 @@ export const model = (function () {
 
       return locationName;
     } catch (err) {
-      console.error(err.message);
+      throw new Error('Cannot retrieve location data');
     }
   };
 
