@@ -1,12 +1,11 @@
 import { model } from './model';
+import { View } from './views/View';
 import { hourView } from './views/hourView';
 import { currWeatherView } from './views/currWeatherView';
 import { dailyView } from './views/dailyView';
 import { queryView } from './views/queryView';
 
 //  TESTING
-
-const location = 'Manila';
 
 const getWeatherData = async function (location) {
   try {
@@ -29,14 +28,14 @@ const controlCurrentWeather = async function (location) {
     // 4 Get the timezone offset for displaying date
     const timezoneOffset = locationWeather.timezone_offset;
 
-    console.log('index currentweather', currentWeather);
-
     //  4 Display the results
     currWeatherView.renderCurrentWeather(
       currentWeather,
       locationName,
       timezoneOffset
     );
+
+    View.addHandlerToggleTempUnits();
   } catch (err) {
     console.error('controlcurrentweather', err);
   }
@@ -90,14 +89,35 @@ const controlAddHandlerQuery = function () {
   queryView.addHandlerGetQuery(controlGetQuery);
 };
 
-const controlPlaceholderWeather = function (initLoc = 'Manila') {
+const controlPlaceholderWeather = function (initLoc = 'London') {
   controlCurrentWeather(initLoc);
   controlHourlyForecast(initLoc);
   controlDailyForecast(initLoc);
 };
 
+const getLocation = function () {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      controlPositionWeather,
+      controlPlaceholderWeather
+    );
+  } else {
+    console.log('Geolocation is not supported by this browser.');
+  }
+};
+
+const controlPositionWeather = async function (position) {
+  const { latitude, longitude } = position.coords;
+
+  const location = await model.getPositionName(latitude, longitude);
+
+  controlCurrentWeather(location);
+  controlHourlyForecast(location);
+  controlDailyForecast(location);
+};
+
 const init = function () {
-  controlPlaceholderWeather(location);
+  getLocation();
   controlAddHandlerQuery();
 };
 

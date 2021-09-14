@@ -1,10 +1,15 @@
-import { API_KEY, API_URL } from './config';
+import {
+  WEATHER_API_KEY,
+  WEATHER_API_URL,
+  LOC_API_KEY,
+  LOC_API_URL,
+} from './config';
 
 export const model = (function () {
   let weatherData;
 
   const getCityURL = function (city) {
-    return `${API_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`;
+    return `${WEATHER_API_URL}/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`;
   };
 
   // Fetches the location data for the queried city
@@ -41,7 +46,7 @@ export const model = (function () {
   const getWeatherURL = function (coords) {
     const [lat, long] = coords;
 
-    return `${API_URL}/onecall?lat=${lat}&lon=${long}&units=metric&exclude=minutely&appid=${API_KEY}`;
+    return `${WEATHER_API_URL}/onecall?lat=${lat}&lon=${long}&units=metric&exclude=minutely&appid=${WEATHER_API_KEY}`;
   };
 
   // Fetches the aggregate weather data
@@ -55,36 +60,36 @@ export const model = (function () {
       const response = await fetch(url);
       const weather = await response.json();
 
-      console.log(weather);
-
       return weather;
     } catch (err) {
       console.error('getweather', err.message);
     }
   };
 
-  //  Gets the current weather data from the aggregate
-  const getCurrentWeather = function (locationObj) {
-    return locationObj.current;
+  const getLocationURL = function (coords) {
+    const [lat, long] = coords;
+
+    return `${LOC_API_URL}?key=${LOC_API_KEY}&lat=${lat}&lon=${long}&format=json`;
   };
 
-  //  Gets the hourly forecast from the aggregate
-  const getHourlyWeather = function (locationObj) {
-    const weather48Hrs = locationObj.hourly;
-    const weather24Hrs = weather48Hrs.slice(0, 24);
+  const getPositionName = async function (latitude, longitude) {
+    try {
+      const url = getLocationURL([latitude, longitude]);
 
-    return weather24Hrs;
-  };
+      const response = await fetch(url);
+      const location = await response.json();
 
-  const getTimezoneOffset = function (locationObj) {
-    return locationObj.timezone_offset;
+      const locationName = location.address.city || location.address.town;
+
+      return locationName;
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return {
     getWeather,
-    getHourlyWeather,
-    getCurrentWeather,
     getCityAndCountry,
-    getTimezoneOffset,
+    getPositionName,
   };
 })();
