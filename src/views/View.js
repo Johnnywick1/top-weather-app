@@ -1,3 +1,12 @@
+import {
+  convertToCelsius,
+  convertToFahr,
+  convertToMph,
+  convertToMetersPerSec,
+  convertToKm,
+  convertToMiles,
+} from '../helpers';
+
 export const View = (function () {
   const toggleDaily = document.querySelector('.forecast-toggle--daily');
   const toggleHourly = document.querySelector('.forecast-toggle--hourly');
@@ -152,24 +161,78 @@ export const View = (function () {
     return iconEl;
   };
 
-  /*
-  const addHandlerToggleForecast = function () {
-    const dailyForecast = document.querySelector('.forecast-container--daily');
-    const hourlyForecast = document.querySelector(
-      '.forecast-container--hourly'
-    );
+  const addHandlerToggleTempUnits = function () {
+    const btnCelsius = document.querySelector('.toggle-units--celsius');
+    const btnFahrenheit = document.querySelector('.toggle-units--fahrenheit');
 
-    toggleDaily.addEventListener('click', function () {
-      dailyForecast.classList.remove('hidden');
-      hourlyForecast.classList.add('hidden');
-    });
-
-    toggleHourly.addEventListener('click', function () {
-      dailyForecast.classList.add('hidden');
-      hourlyForecast.classList.remove('hidden');
-    });
+    btnCelsius.addEventListener('click', getFahrenheit);
+    btnFahrenheit.addEventListener('click', getCelsius);
   };
-  */
+
+  const getCelsius = function (e) {
+    const tempValues = document.querySelectorAll('.temp-value');
+    const visDistance = document.querySelector('.wind-direction--value');
+    const windSpeed = document.querySelector('.strong-wind--value');
+
+    if (!tempValues[0].classList.contains('temp-celsius')) return;
+
+    tempValues.forEach((val) => {
+      const tempC = val.textContent;
+      val.textContent = convertToFahr(tempC);
+
+      val.classList.remove('temp-celsius');
+      val.classList.add('temp-fahrenheit');
+    });
+
+    const speed = windSpeed.textContent;
+    windSpeed.textContent = convertToMph(speed);
+
+    const vis = visDistance.textContent;
+    visDistance.textContent = convertToMiles(vis);
+
+    displayUnitUpdate('celsius');
+  };
+
+  const getFahrenheit = function (e) {
+    const tempValues = document.querySelectorAll('.temp-value');
+    const visDistance = document.querySelector('.wind-direction--value');
+    const windSpeed = document.querySelector('.strong-wind--value');
+
+    if (!tempValues[0].classList.contains('temp-fahrenheit')) return;
+
+    tempValues.forEach((val) => {
+      const tempF = val.textContent;
+
+      val.textContent = convertToCelsius(tempF);
+
+      val.classList.remove('temp-fahrenheit');
+      val.classList.add('temp-celsius');
+    });
+
+    const speed = windSpeed.textContent;
+    windSpeed.textContent = convertToMetersPerSec(speed);
+
+    const vis = visDistance.textContent;
+    visDistance.textContent = convertToKm(vis);
+
+    displayUnitUpdate('fahrenheit');
+  };
+
+  const displayUnitUpdate = function (currentUnit) {
+    const tempUnits = document.querySelectorAll('.temp-unit');
+    const visUnit = document.querySelector('.wind-direction--unit');
+    const speedUnit = document.querySelector('.strong-wind--unit');
+
+    if (currentUnit === 'celsius') {
+      tempUnits.forEach((unit) => (unit.textContent = '°F'));
+      visUnit.textContent = 'mi';
+      speedUnit.textContent = 'mph';
+    } else if (currentUnit === 'fahrenheit') {
+      tempUnits.forEach((unit) => (unit.textContent = '°C'));
+      visUnit.textContent = 'km';
+      speedUnit.textContent = 'm/s';
+    }
+  };
 
   return {
     clearSpace,
@@ -177,6 +240,7 @@ export const View = (function () {
     createConditionElement,
     createConditionSubElement,
     renderIcon,
+    addHandlerToggleTempUnits,
     // addHandlerToggleForecast,
   };
 })();

@@ -16,10 +16,11 @@ export const currWeatherView = (function () {
     const weatherStatusID = currentWeather.weather[0].id;
     const windSpeed = currentWeather.wind_speed;
     const heatIndex = currentWeather.feels_like.toFixed(0);
-    const dewPoint = currentWeather.dew_point;
+    const dewPoint = currentWeather.dew_point.toFixed(0);
     const cloudCover = currentWeather.clouds;
+    const visibility = (currentWeather.visibility / 1000).toFixed(0);
 
-    const { uvi, humidity, temp, pressure, visibility } = currentWeather;
+    const { uvi, humidity, temp, pressure } = currentWeather;
 
     const timeOfDay = isDay(
       currentWeather.dt,
@@ -100,7 +101,7 @@ export const currWeatherView = (function () {
       'wind-direction',
       'Visibility ',
       visibility,
-      'm'
+      'km'
     );
 
     View.clearSpace(conditionsContainer);
@@ -114,6 +115,16 @@ export const currWeatherView = (function () {
       dewEl,
       visibilityEl
     );
+
+    indexEl
+      .querySelector('.wc--value')
+      .classList.add('temp-value', 'temp-celsius');
+    indexEl.querySelector('.wc--unit').classList.add('temp-unit');
+
+    dewEl
+      .querySelector('.wc--value')
+      .classList.add('temp-value', 'temp-celsius');
+    dewEl.querySelector('.wc--unit').classList.add('temp-unit');
   };
 
   const renderLocation = function (location) {
@@ -139,11 +150,11 @@ export const currWeatherView = (function () {
     tempEl.classList.add('cw--temperature');
 
     const tempValueEl = document.createElement('span');
-    tempValueEl.classList.add('cw--temp-value');
+    tempValueEl.classList.add('temp-value', 'temp-celsius');
     tempValueEl.textContent = temp.toFixed(0);
 
     const tempUnitEl = document.createElement('span');
-    tempUnitEl.classList.add('cw--temp-unit');
+    tempUnitEl.classList.add('temp-unit');
     tempUnitEl.textContent = '°C';
 
     tempEl.append(tempValueEl, tempUnitEl);

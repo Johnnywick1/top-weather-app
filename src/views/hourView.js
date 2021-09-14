@@ -67,12 +67,12 @@ export const hourView = (function () {
     tempEl.classList.add('forecast-temp', 'forecast-temp--hourly');
 
     const tempValueEl = document.createElement('span');
-    tempValueEl.classList.add('forecast-temp--value');
+    tempValueEl.classList.add('temp-value', 'temp-celsius');
     tempValueEl.textContent = temp;
     tempEl.append(tempValueEl);
 
     const tempUnitEl = document.createElement('span');
-    tempUnitEl.classList.add('forecast-temp--unit');
+    tempUnitEl.classList.add('temp-unit');
     tempUnitEl.textContent = '°C';
     tempEl.append(tempUnitEl);
 
