@@ -167,11 +167,15 @@ export const View = (function () {
   };
 
   const getCelsius = function (e) {
+    const toggleUnits = document.querySelectorAll('.toggle-units > button');
     const tempValues = document.querySelectorAll('.temp-value');
     const visDistance = document.querySelector('.wind-direction--value');
     const windSpeed = document.querySelector('.strong-wind--value');
 
     if (!tempValues[0].classList.contains('temp-celsius')) return;
+
+    toggleUnits.forEach((btn) => btn.classList.remove('toggle-units--active'));
+    this.classList.add('toggle-units--active');
 
     tempValues.forEach((val) => {
       const tempC = val.textContent;
@@ -191,11 +195,15 @@ export const View = (function () {
   };
 
   const getFahrenheit = function (e) {
+    const toggleUnits = document.querySelectorAll('.toggle-units > button');
     const tempValues = document.querySelectorAll('.temp-value');
     const visDistance = document.querySelector('.wind-direction--value');
     const windSpeed = document.querySelector('.strong-wind--value');
 
     if (!tempValues[0].classList.contains('temp-fahrenheit')) return;
+
+    toggleUnits.forEach((btn) => btn.classList.remove('toggle-units--active'));
+    this.classList.add('toggle-units--active');
 
     tempValues.forEach((val) => {
       const tempF = val.textContent;
@@ -321,7 +329,7 @@ export const View = (function () {
         <div class="weather-settings">
          <div class="toggle-units">
             <span class="toggle-units--label">Temperature unit:</span>
-            <button class="toggle-units--celsius" data-unit="c">°C</button>
+            <button class="toggle-units--celsius toggle-units--active" data-unit="c">°C</button>
             <span class="toggle-units--separator">/</span>
             <button class="toggle-units--fahrenheit" data-unit="f">°F</button>
           </div>
