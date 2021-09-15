@@ -9,8 +9,23 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-red: #f05d5e;
+  --primary-green: #0f7173;
+  --primary-white: #e7ecef;
+  --primary-black: #272932;
+  --primary-beige: #d8a47f;
+
+  --light-blue: #9cafb7;
+  --light-celadon: #4281a4;
+  --light-beige: #e6b89c;
+  --light-pink: #fe938c;
+  --light-wheat: #ead2ac;
+}
+
 body {
   position: relative;
+  background-color: #edf2f5;
 }
 
 .content-container {
@@ -21,6 +36,8 @@ body {
   margin: auto;
   display: flex;
   height: 100vh;
+  background-color: var(--primary-white);
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
 }
 
 /*  SEARCH BAR */
@@ -36,6 +53,7 @@ body {
   top: 50%;
   right: 5%;
   transform: translateY(-50%);
+  color: var(--primary-green);
 }
 
 .bi-search {
@@ -45,14 +63,21 @@ body {
 .weather-query {
   appearance: none;
   padding: 0.5rem 2.2rem 0.5rem 1.5rem;
-  background-color: transparent;
+  background-color: var(--primary-white);
   width: 100%;
-  border: 1px solid black;
+  border: 2px solid var(--primary-green);
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--primary-green);
   border-radius: 20px;
 }
 
+.weather-query::placeholder {
+  opacity: 0.85;
+}
+
 .weather-query:focus {
-  outline: 1.5px solid black;
+  outline: 1px solid var(--primary-green);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
 }
 
 .error-message-wrapper {
@@ -69,7 +94,6 @@ body {
 /*  CURRENT WEATHER */
 
 .weather-container {
-  /* margin-top: 6rem; */
   min-width: 450px;
 }
 
@@ -82,6 +106,19 @@ body {
   padding-left: 2rem;
 }
 
+.weather-conditions {
+  padding-top: 1rem;
+}
+
+.cw--date,
+.cw--time {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+.cw--date {
+  font-size: 1.1rem;
+}
+
 .cw--icon i {
   position: absolute;
   font-size: 6rem;
@@ -91,25 +128,33 @@ body {
 }
 
 .cw--location {
+  font-size: 1.15rem;
   margin-top: 2rem;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .cw--weather-status {
-  font-size: 2rem;
+  font-family: 'Questrial', Arial, Helvetica, sans-serif;
+  font-size: 2.75rem;
   font-weight: 700;
   max-width: 300px;
+  margin: 0.5rem 0;
 }
 
 .cw--temperature {
   display: flex;
+  font-family: 'Karla', Arial, Helvetica, sans-serif;
 }
 
 .cw--temperature .temp-value {
-  font-size: 3rem;
+  font-size: 4.5rem;
+  font-family: inherit;
+  text-shadow: 0px 0px 4px var(--light-celadon);
 }
 
 .cw--temperature .temp-unit {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-family: inherit;
 }
 
 .weather-conditions {
@@ -128,8 +173,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 7px;
+  color: white;
+  background-color: var(--primary-green);
+  font-size: 1.25rem;
   width: 50px;
   height: 40px;
   text-align: center;
@@ -141,7 +188,8 @@ body {
 }
 
 .wc--label {
-  font-weight: 700;
+  font-weight: 500;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   font-size: 0.9rem;
 }
 
@@ -150,10 +198,21 @@ body {
   margin-top: 2%;
 }
 
+.wc--value,
+.wc--unit {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Karla', Arial, Helvetica, sans-serif;
+}
+
 .toggle-units {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.toggle-units > * {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .toggle-units--separator {
@@ -166,6 +225,10 @@ body {
   margin: 0 1rem;
   font-size: 1.4rem;
   background-color: transparent;
+}
+
+.toggle-units--active {
+  color: var(--primary-green);
 }
 
 /* FORECAST */
@@ -183,7 +246,6 @@ body {
   position: relative;
   flex-direction: column;
   margin: 1rem 0 1.5rem;
-  border: 1px solid red;
   border-radius: 10px;
 }
 
@@ -191,22 +253,50 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 1.75rem 1rem;
+  margin: 0.65rem 0;
+  padding: 0.75rem 1.2rem;
+  border-radius: 21px;
+  color: white;
+  background-color: var(--primary-green);
 }
 
 .forecast-daily--label,
 .forecast-hourly--label {
   font-weight: 700;
   font-size: 1.5rem;
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
 }
 
 .forecast-day {
   flex-grow: 1;
   font-size: 1.1rem;
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  letter-spacing: 1.25px;
 }
 
-.forecast-temp {
-  width: 60px;
+.forecast-element--daily:hover {
+  transform: scale(1.01);
+  box-shadow: 0px 0px 6px 2px var(--light-celadon);
+}
+
+.forecast-temp--daily {
+  width: 40px;
+}
+
+.forecast-temp--daily *,
+.forecast-temp--hourly * {
+  font-family: 'Karla', Arial, Helvetica, sans-serif;
+}
+
+.forecast-temp--daily * {
+  font-size: 1.1rem;
+}
+
+.forecast-temp--daily .temp-unit,
+.forecast-temp--hourly .temp-unit {
+  font-size: 0.9rem;
+  vertical-align: text-top;
 }
 
 .forecast-icon--daily {
@@ -217,8 +307,12 @@ body {
 }
 
 .forecast-rain--daily {
-  color: rgb(34, 94, 184);
-  width: 80px;
+  width: 70px;
+}
+
+.forecast-rain--icon {
+  font-size: 0.8rem;
+  opacity: 0.5;
 }
 
 .forecast-container--hourly {
@@ -226,17 +320,31 @@ body {
   margin-top: 1rem;
   max-width: 600px;
   overflow: auto;
-  border: 1px solid red;
-  border-radius: 10px;
+  padding: 0.75rem;
+  border-radius: 20px;
+  background-color: var(--primary-green);
+  color: white;
+}
+
+.forecast-hour {
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
 }
 
 .forecast-element--hourly {
   min-width: 100px;
   padding: 1rem;
+  border-radius: 10px;
+  margin: 0 0.5rem;
 }
 
-.forecast-temp--hourly {
-  font-size: 1.2rem;
+.forecast-element--hourly:hover {
+  transform: scale(1.01);
+  box-shadow: 0px 0px 6px 1px rgba(255, 255, 255, 0.65);
+}
+
+.forecast-temp--hourly * {
+  font-size: 1.25rem;
 }
 
 .forecast-icon--hourly {
@@ -244,19 +352,29 @@ body {
   font-size: 2rem;
 }
 
-.forecast-rain--hourly {
-  color: rgb(34, 94, 184);
-}
-
 /*  SPINNER */
 
-.spinner {
-  display: inline-block;
+.spinner-container {
   position: absolute;
+  top: 50%;
+  margin: auto;
+}
+
+.spinner-message {
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary-green);
+}
+
+.spinner {
+  display: block;
+  position: relative;
   width: 80px;
   height: 80px;
   transform: scale(2) translateY(-50%);
-  top: 50%;
+  margin: auto;
 }
 
 .spinner div {
@@ -271,7 +389,7 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgb(133, 71, 71);
+  background: var(--primary-green);
   margin: -4px 0 0 -4px;
 }
 
