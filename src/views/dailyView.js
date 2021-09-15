@@ -17,16 +17,14 @@ export const dailyView = (function () {
   };
 
   const createForecastElement = function (day, index, offset) {
-    // Organize appropriate data
-
     const timeToConvert = new Date(convertToMilliseconds(day.dt));
     const [year, month, date, hourToUse] = getLocalTime(offset, timeToConvert);
 
     const dayToDisplay = format(new Date(year, month, date, hourToUse), 'EEEE');
 
     const tempDay = day.temp.day.toFixed(0);
-    const tempMin = day.temp.min;
-    const tempMax = day.temp.max;
+    const tempMin = day.temp.min.toFixed(0);
+    const tempMax = day.temp.max.toFixed(0);
 
     const status = day.weather[0].description;
     const statusMain = day.weather[0].main;
@@ -89,9 +87,12 @@ export const dailyView = (function () {
 
     const rainUnitEl = document.createElement('span');
     rainUnitEl.classList.add('forecast-rain--unit');
-    rainUnitEl.textContent = '%';
+    rainUnitEl.textContent = '% ';
 
-    rainEl.append(rainValueEl, rainUnitEl);
+    const rainIconEl = document.createElement('span');
+    rainIconEl.classList.add('forecast-rain--icon', 'wi', 'wi-rain');
+
+    rainEl.append(rainValueEl, rainUnitEl, rainIconEl);
 
     return rainEl;
   };

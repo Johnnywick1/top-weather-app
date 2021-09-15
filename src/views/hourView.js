@@ -89,9 +89,12 @@ export const hourView = (function () {
 
     const rainUnitEl = document.createElement('span');
     rainUnitEl.classList.add('forecast-rain--unit');
-    rainUnitEl.textContent = '%';
+    rainUnitEl.textContent = '% ';
 
-    rainEl.append(rainValueEl, rainUnitEl);
+    const rainIconEl = document.createElement('span');
+    rainIconEl.classList.add('forecast-rain--icon', 'wi', 'wi-rain');
+
+    rainEl.append(rainValueEl, rainUnitEl, rainIconEl);
 
     return rainEl;
   };
