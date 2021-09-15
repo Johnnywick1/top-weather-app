@@ -15,198 +15,31 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
     />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit&family=Karla&family=Montserrat&family=Questrial&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <title>Weather App</title>
   </head>
   <body>
     <div class="content-container">
+      <div class="loading">Loading...</div>
       <div class="weather-container">
-        <div class="query-wrapper">
-          <form action="" class="weather-form">
-            <div class="search-icon">
-              SEARCH
-              <i class="bi bi-search"></i>
-            </div>
-            <input type="search" class="weather-query" />
-            <input type="hidden" class="weather-hidden-input" />
-          </form>
-        </div>
-        <div class="current-weather">
-          <!-- <div class="cw--location">
-          <span class="location--city">Manila</span>,
-          <span class="location--country">Philippines</span>
-        </div>
-        <div class="cw--weather-status">Clear Sky</div>
-        <div class="cw--temperature">29°C</div>
-        <div class="cw--date">Friday, 3rd Sep '21</div>
-        <div class="cw--time">7:06pm</div> -->
-        </div>
+        <div class="current-weather"></div>
 
-        <div class="weather-conditions">
-          <!-- <div class="weather-condition cw--heat-index">
-          <div class="wc--icon heat-index--icon"></div>
-          <span class="wc--label heat-index--label">Feels like</span>
-          <span class="wc--value heat-index--value">36</span>
-          <span class="wc--unit heat-index--unit">°C</span>
-        </div>
+        <div class="weather-conditions hidden"></div>
 
-        <div class="weather-condition cw--humidity">
-          <div class="wc--icon humidity--icon"></div>
-          <span class="wc--label humidity--label">Humidity</span>
-          <span class="wc--value humidity--value">67</span>
-          <span class="wc--unit humidity--unit">%</span>
-        </div>
-
-        <div class="weather-condition cw--chance-rain">
-          <div class="wc--icon chance-rain--icon"></div>
-          <span class="wc--label chance-rain--label">Chance of Rain</span>
-          <span class="wc--value chance-rain--value">10</span>
-          <span class="wc--unit chance-rain--unit">%</span>
-        </div>
-
-        <div class="weather-condition cw--wind-speed">
-          <div class="wc--icon wind-speed--icon"></div>
-          <span class="wc--label wind-speed--label">Wind Speed</span>
-          <span class="wc--value wind-speed--value">5</span>
-          <span class="wc--unit wind-speed--unit">kph</span>
-        </div>
-
-        <div class="weather-condition cw--uv-index">
-          <div class="wc--icon uv-index--icon"></div>
-          <span class="wc--label uv-index--label">UV Index</span>
-          <span class="wc--value uv-index--value">5.67</span>
-        </div> -->
-        </div>
+        <div class="weather-settings hidden"></div>
       </div>
 
-      <!-- <div class="other-weather sub-container">
-        <div class="other-condition ow--sunrise">
-          <span class="ow--label sunrise--label">Sunrise</span>
-          <span class="ow--value sunrise--value"></span>
-        </div>
-      </div> -->
+      <div class="forecast-container hidden">
+        <div class="forecast-container--daily hidden"></div>
 
-      <div class="forecast-container">
-        <!-- <div class="forecast-toggle-wrapper">
-          <button
-            class="forecast-toggle forecast-toggle--hourly forecast--active"
-          >
-            Hourly
-          </button>
-          <button class="forecast-toggle forecast-toggle--daily">Daily</button>
-
-          <!-- <div class="forecast-dot-wrapper">
-          <div class="forecast-dot-back">
-            <i class="bi bi-chevron-left"></i>
-          </div>
-          <div class="forecast-dot dot-1" data-index="1"></div>
-          <div class="forecast-dot dot-2" data-index="2"></div>
-          <div class="forecast-dot dot-3" data-index="3"></div>
-          <div class="forecast-dot-next">
-            <i class="bi bi-chevron-right"></i>
-          </div>
-        </div> 
-        </div> -->
-
-        <div class="forecast-container--daily">
-          <!-- <div class="forecast-element--daily">
-            <div class="forecast-day">Monday</div>
-
-            <div class="forecast-temp">
-              <span class="forecast-temp--value">30</span
-              ><span class="forecast-temp--unit">°C</span>
-            </div>
-
-            <div class="forecast-icon"></div>
-
-            <div class="forecast-rain">
-              <span class="forecast-rain--value">10</span
-              ><span class="forecast-rain--unit">% </span>
-              <div class="forecast-rain--icon"></div>
-            </div>
-          </div> -->
-        </div>
-
-        <div class="forecast-container--hourly">
-          <!-- <div class="forecast-element">
-        <div class="forecast-hour">5pm</div>
-
-        <div class="forecast-temp">
-          <span class="forecast-temp--value">30</span>
-          <span class="forecast-temp--unit">°C</span>
-        </div>
-
-        <div class="forecast-icon"></div> -->
-        </div>
+        <div class="forecast-container--hourly hidden"></div>
       </div>
-
-      <!-- <div class="forecast-container-1">
-      <div class="forecast-element">
-        <div class="forecast-hour">5pm</div>
-
-        <div class="forecast-temp">
-          <span class="forecast-temp--value">30</span
-          ><span class="forecast-temp--unit">°C</span>
-        </div>
-
-        <div class="forecast-icon">
-          <div class="wi wi-rain"></div>
-        </div>
-
-        <div class="forecast-rain">
-          <span class="forecast-rain--value">10</span
-          ><span class="forecast-rain--unit">% </span>
-          <div class="forecast-rain--icon"></div>
-        </div>
-
-        <div class="forecast-details">
-          <div class="forecast-detail--description">Clear Sky</div>
-
-          <div class="forecast-detail--temp">
-            <span class="forecast-detail--temp-value">30</span
-            ><span class="forecast-detail--temp-unit">°C</span>
-          </div>
-
-          <div class="forecast-detail--max-temp">
-            <span class="forecast-detail--max-temp-label"
-              >Temperature high:</span
-            >
-            <span class="forecast-detail--max-temp-value">36</span
-            ><span class="forecast-detail--max-temp-unit">°C</span>
-          </div>
-
-          <div class="forecast-detail--min-temp">
-            <span class="forecast-detail--min-temp-label"
-              >Temperature low:</span
-            >
-            <span class="forecast-detail--min-temp-value">24</span
-            ><span class="forecast-detail--min-temp-unit">°C</span>
-          </div>
-
-          <div class="forecast-detail--chance-rain">
-            <span class="forecast-detail--chance-rain-label"
-              >Chance of Rain:</span
-            >
-            <span class="forecast-detail--chance-rain-value">0</span
-            ><span class="forecast-detail--chance-rain-unit">%</span>
-          </div>
-
-          <div class="forecast-detail--uv-index">
-            <span class="forecast-detail--uv-index-label">UV Index:</span>
-            <span class="forecast-detail--uv-index-value">30</span>
-          </div>
-
-          <div class="forecast-detail--sunrise">
-            <span class="forecast-detail--sunrise-label">Sunrise:</span>
-            <dpan class="forecast-detail--sunrise-value">5:18am</dpan>
-          </div>
-
-          <div class="forecast-detail--sunset">
-            <span class="forecast-detail--sunset-label">Sunset:</span>
-            <dpan class="forecast-detail--sunset-value">6:34pm</dpan>
-          </div>
-        </div>
-      </div> 
-    </div>-->
     </div>
     <script src="main.js"></script>
   </body>
