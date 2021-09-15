@@ -55,8 +55,9 @@ export const getLocalTime = function (offset, dateToConvert) {
   const date = convertedDate.getDate();
   const hour = convertedDate.getHours();
   const minute = convertedDate.getMinutes();
+  const second = convertedDate.getSeconds();
 
-  return [year, month, date, hour, minute];
+  return [year, month, date, hour, minute, second];
 };
 
 export const isDay = function (timeOfDay, day1, day2) {

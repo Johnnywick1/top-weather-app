@@ -57,8 +57,6 @@ const controlWeatherDisplay = async function (location) {
     View.addHandlerToggleTempUnits();
     queryView.addHandlerGetQuery(controlWeatherDisplay);
   } catch (err) {
-    console.error(err);
-
     View.renderError(err.message);
   }
 };
@@ -84,7 +82,6 @@ const controlPositionWeather = async function (position) {
 
 const init = function () {
   controlGetLocation();
-  console.log('init');
 };
 
 init();

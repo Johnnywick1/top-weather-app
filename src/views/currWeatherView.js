@@ -4,6 +4,8 @@ import { capitalize, getLocalTime, isDay } from '../helpers';
 import format from 'date-fns/format';
 
 export const currWeatherView = (function () {
+  let startClock;
+
   const renderCurrentWeather = function (currentWeather, locationName, offset) {
     const currWeatherContainer = document.querySelector('.current-weather');
 
@@ -123,6 +125,9 @@ export const currWeatherView = (function () {
       .querySelector('.wc--value')
       .classList.add('temp-value', 'temp-celsius');
     dewEl.querySelector('.wc--unit').classList.add('temp-unit');
+
+    stopClock();
+    startClock = setInterval(renderClock.bind(null, offset), 1000);
   };
 
   const renderLocation = function (location) {
@@ -176,18 +181,38 @@ export const currWeatherView = (function () {
   };
 
   const renderTime = function (offset) {
-    const [year, month, date, hour, minute] = getLocalTime(offset);
-
-    const timeToDisplay = format(
-      new Date(year, month, date, hour, minute),
-      'h:mmaaa'
-    );
-
     const timeEl = document.createElement('div');
     timeEl.classList.add('cw--time');
+
+    const [year, month, date, hour, minute, second] = getLocalTime(offset);
+
+    const timeToDisplay = format(
+      new Date(year, month, date, hour, minute, second),
+      'h:mm:ssaaa'
+    );
+
     timeEl.textContent = timeToDisplay;
 
     return timeEl;
+  };
+
+  const renderClock = function (offset) {
+    const timeEl = document.querySelector('.cw--time');
+
+    if (!timeEl) return;
+
+    const [year, month, date, hour, minute, second] = getLocalTime(offset);
+
+    const timeToDisplay = format(
+      new Date(year, month, date, hour, minute, second),
+      'h:mm:ssaaa'
+    );
+
+    timeEl.textContent = timeToDisplay;
+  };
+
+  const stopClock = function () {
+    clearInterval(startClock);
   };
 
   return {
