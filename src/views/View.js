@@ -8,9 +8,6 @@ import {
 } from '../helpers';
 
 export const View = (function () {
-  const toggleDaily = document.querySelector('.forecast-toggle--daily');
-  const toggleHourly = document.querySelector('.forecast-toggle--hourly');
-
   const clearSpace = function (...parentEl) {
     parentEl.forEach((el) => (el.innerHTML = ''));
   };
@@ -236,11 +233,16 @@ export const View = (function () {
 
   const renderError = function (message) {
     const errorEl = document.querySelector('.error-message');
+    const spinnerEl = document.querySelector('.spinner-container');
 
     errorEl.classList.remove('hidden');
     errorEl.textContent = message;
 
-    setTimeout(makeHidden.bind(null, errorEl), 3000);
+    setTimeout(makeHidden.bind(null, errorEl), 7500);
+
+    if (spinnerEl) {
+      spinnerEl.classList.add('hidden');
+    }
 
     return errorEl;
   };
@@ -261,8 +263,17 @@ export const View = (function () {
 
     clearSpace(container1, container2, container3, container4);
 
+    const spinnerContainer = document.createElement('div');
+    spinnerContainer.classList.add('spinner-container');
+
     const spinner = document.createElement('div');
     spinner.classList.add('spinner');
+
+    const loadingMessage = document.createElement('div');
+    loadingMessage.classList.add('spinner-message');
+    loadingMessage.textContent = 'Retrieving data';
+
+    spinnerContainer.append(spinner, loadingMessage);
 
     for (let i = 0; i < 8; i++) {
       const spinBubble = document.createElement('div');
@@ -270,7 +281,7 @@ export const View = (function () {
       spinner.append(spinBubble);
     }
 
-    mainContainer.append(spinner);
+    mainContainer.append(spinnerContainer);
   };
 
   const appendContainers = function () {
