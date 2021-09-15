@@ -46,8 +46,8 @@ export const currWeatherView = (function () {
     currWeatherContainer.append(
       dateEl,
       timeEl,
-      iconEl,
       locationEl,
+      iconEl,
       statusEl,
       tempEl
     );

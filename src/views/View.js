@@ -167,7 +167,9 @@ export const View = (function () {
   };
 
   const getCelsius = function (e) {
-    const toggleUnits = document.querySelectorAll('.toggle-units > button');
+    const toggleUnits = document.querySelectorAll(
+      '.toggle-units--buttons > button'
+    );
     const tempValues = document.querySelectorAll('.temp-value');
     const visDistance = document.querySelector('.wind-direction--value');
     const windSpeed = document.querySelector('.strong-wind--value');
@@ -195,7 +197,9 @@ export const View = (function () {
   };
 
   const getFahrenheit = function (e) {
-    const toggleUnits = document.querySelectorAll('.toggle-units > button');
+    const toggleUnits = document.querySelectorAll(
+      '.toggle-units--buttons > button'
+    );
     const tempValues = document.querySelectorAll('.temp-value');
     const visDistance = document.querySelector('.wind-direction--value');
     const windSpeed = document.querySelector('.strong-wind--value');
@@ -241,6 +245,7 @@ export const View = (function () {
 
   const renderError = function (message) {
     const errorEl = document.querySelector('.error-message');
+    const container = document.querySelector('.content-container');
     const spinnerEl = document.querySelector('.spinner-container');
 
     errorEl.classList.remove('hidden');
@@ -249,7 +254,7 @@ export const View = (function () {
     setTimeout(makeHidden.bind(null, errorEl), 7500);
 
     if (spinnerEl) {
-      spinnerEl.classList.add('hidden');
+      container.removeChild(spinnerEl);
     }
 
     return errorEl;
@@ -329,9 +334,10 @@ export const View = (function () {
         <div class="weather-settings">
          <div class="toggle-units">
             <span class="toggle-units--label">Temperature unit:</span>
-            <button class="toggle-units--celsius toggle-units--active" data-unit="c">°C</button>
-            <span class="toggle-units--separator">/</span>
-            <button class="toggle-units--fahrenheit" data-unit="f">°F</button>
+            <div class="toggle-units--buttons">
+              <button class="toggle-units--celsius toggle-units--active" data-unit="c">°C</button>
+              <button class="toggle-units--fahrenheit" data-unit="f">°F</button>
+            </div>
           </div>
         </div>
 
