@@ -1,22 +1,40 @@
 {
-  "name": "top-weather-app",
+  "name": "template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "npx webpack --watch",
-    "build": "npx webpack"
+    "build": "webpack --config webpack.prod.js",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "start": "webpack serve --open --config webpack.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renchester/top-weather-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0"
+  "bugs": {
+    "url": "https://github.com/renchester/top-weather-app/issues"
   },
-  "dependencies": {
-    "@icon/bootstrap-icons": "^1.3.0-alpha.0",
-    "date-fns": "^2.23.0"
+  "homepage": "https://github.com/renchester/top-weather-app#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "eslint": "^8.33.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-merge": "^5.8.0"
   }
 }
