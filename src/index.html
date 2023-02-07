@@ -4,7 +4,165 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat&family=Poppins&family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Weather app</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="btn-convert--wrapper">
+        <button class="btn-convert btn-celsius btn-convert--active">
+          °C
+          <span class="btn-conver--subtext">Metric</span>
+        </button>
+        <button class="btn-convert btn-fahrenheit">
+          °F
+          <span class="btn-conver--subtext">Imperial</span>
+        </button>
+      </div>
+
+      <div class="weather--main">
+        <i class="main--icon wi wi-night-sleet"></i>
+        <div class="main--location">Marilao</div>
+        <div class="main--temp">
+          <span class="temp-value temp-value--celsius">30</span>
+          °
+        </div>
+        <div class="main--desc">Mostly Cloudy</div>
+        <div class="main--temp-extreme">
+          <div class="temp-extreme--high">
+            H:<span class="temp-value temp-value--celsius">31</span>°
+          </div>
+          <div class="temp-extreme--low">
+            L:<span class="temp-value temp-value--celsius">27</span>°
+          </div>
+        </div>
+      </div>
+
+      <div class="display-box weather--hourly-forecast">
+        <span class="label hourly--label">Hourly Forecast</span>
+        <div class="hourly--cards-wrapper">
+          <div class="hourly--card">
+            <div class="hourly--hour">17</div>
+            <div class="hourly--icon">
+              <i class="main--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value temp-value--celsius">20</span>°
+            </div>
+          </div>
+          <div class="hourly--card">
+            <div class="hourly--hour">17</div>
+            <div class="hourly--icon">
+              <i class="main--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value temp-value--celsius">20</span>°
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="display-box weather--daily-forecast">
+      <span class="label daily--label">Daily Forecast</span>
+      <div class="daily--cards-wrapper">
+        <div class="daily--card">
+          <div class="daily--day">Today</div>
+          <div class="daily--icon">
+            <i class="main--icon wi wi-night-sleet"></i>
+          </div>
+          <div class="daily--temp">
+            <div class="daily--temp-min">
+              <span class="temp-value temp-value--celsius">20</span>°
+            </div>
+            <div class="daily--temp-slider"></div>
+            <div class="daily--temp-max">
+              <span class="temp-value temp-value--celsius">35</span>°
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="display-box weather--uv-index">
+      <span class="label uv--label">UV Index</span>
+      <div class="uv--value">2</div>
+      <div class="uv--desc">Low</div>
+    </div>
+
+    <div class="display-box weather--sunset-sunrise">
+      <span class="label sun--label">Sunrise</span>
+      <div class="sun--value">06:02</div>
+      <div class="sun--sub-label">Sunset</div>
+      <div class="sun--sub-value">17:56</div>
+    </div>
+
+    <div class="display-box weather--rainfall">
+      <span class="label rain--label">Rainfall</span>
+      <div class="rain--value-wrapper">
+        <span class="rain--value value-metric">3</span
+        ><span class="rain--unit unit-metric">mm</span>
+      </div>
+      <div class="rain--desc">More expected</div>
+    </div>
+
+    <div class="display-box weather--humidity">
+      <span class="label humidity--label">Humidity</span>
+      <div class="humidity--value">88%</div>
+      <div class="humidity--desc">
+        The dew point is
+        <span class="temp-value temp-value--celsius">24</span>° right now.
+      </div>
+    </div>
+
+    <div class="display-box weather--pressure">
+      <span class="label pressure--label">Pressure</span>
+      <div class="pressure--value-wrapper">
+        <span class="pressure--value value-metric">1,006</span
+        ><span class="pressure--unit unit-metric">hPa</span>
+      </div>
+      <div class="pressure--desc">Atmospheric pressure is normal</div>
+    </div>
+
+    <div class="display-box weather--wind">
+      <span class="label wind--label">Wind</span>
+      <div class="wind--value-wrapper">
+        <span class="wind--value value-metric">11</span
+        ><span class="wind--unit unit-metric">km/h</span>
+      </div>
+      <div class="wind--desc">The wind is coming from the north-east</div>
+    </div>
+
+    <div class="display-box weather--heat-index">
+      <span class="label heat-index--label">Feels Like</span>
+      <div class="heat-index--value">
+        <span class="temp-value temp-value--celsius">33</span>°
+      </div>
+      <div class="heat-index--desc">
+        Wind is making it feel colder than usual
+      </div>
+    </div>
+
+    <footer>
+      <a
+        href="https://github.com/renchester"
+        target="_blank"
+        class="footer-link"
+        ><img
+          src="img/github-icon.png"
+          alt="Github icon"
+          width="25"
+          class="footer-img"
+        />
+        <p class="footer-desc">Developed by Renchester Ramos</p></a
+      >
+    </footer>
+  </body>
 </html>
