@@ -110,7 +110,7 @@ const model = (() => {
   const getHourlies = (data) => {
     const hourly = [];
 
-    const targetHours = data.list.slice(0, 12);
+    const targetHours = data.list.slice(0, 9);
 
     targetHours.forEach((hour) => {
       const hourValue = format(new Date(hour.dt * 1000), 'HH');
@@ -142,8 +142,6 @@ const model = (() => {
     const filtered = data.list.map((stamp) => ({
       time: stamp.dt,
       temp: stamp.main.temp,
-      max_temp: stamp.main.temp_max,
-      min_temp: stamp.main.temp_min,
       id: stamp.weather[0].id,
       description: stamp.weather[0].description,
     }));
@@ -160,19 +158,21 @@ const model = (() => {
       if (dayValue === dayNow + 5) day5.push(stamp);
     });
 
-    const getMinTemp = (array) =>
-      array.reduce(
-        (prev, curr) =>
-          prev.min_temp < curr.min_temp ? prev.min_temp : curr.min_temp,
-        0,
+    const getMinTemp = (array) => {
+      const stamp = array.reduce((prev, curr) =>
+        +prev.temp < +curr.temp ? prev : curr,
       );
 
-    const getMaxTemp = (array) =>
-      array.reduce(
-        (prev, curr) =>
-          prev.max_temp > curr.max_temp ? prev.max_temp : curr.max_temp,
-        0,
+      return stamp.temp;
+    };
+
+    const getMaxTemp = (array) => {
+      const stamp = array.reduce((prev, curr) =>
+        +prev.temp > +curr.temp ? prev : curr,
       );
+
+      return stamp.temp;
+    };
 
     const getPredominantWeather = (array) => {
       let store = {};
@@ -187,6 +187,7 @@ const model = (() => {
     [day1, day2, day3, day4, day5].forEach((day) =>
       daily.push({
         time: day[0].time,
+        day: format(new Date(day[0].time * 1000), 'eeee'),
         id: getPredominantWeather(day),
         min_temp: getMinTemp(day),
         max_temp: getMaxTemp(day),
