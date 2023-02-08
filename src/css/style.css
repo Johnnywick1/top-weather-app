@@ -287,7 +287,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  margin-top: 8px;
+  margin: 8px 0;
   padding: 5px 10px;
 }
 
@@ -336,20 +336,35 @@ body {
 .daily--temp {
   display: flex;
   align-items: center;
+  width: 45%;
 }
 
-.daily--temp-slider {
+.daily--temp-slider-wrapper {
   width: 100px;
+  height: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.temp-slider--bg {
+  position: relative;
   height: 7px;
+  background-color: rgba(56, 56, 56, 0.3);
   margin: 0px 10px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.342);
+}
+
+.temp-slider--value {
+  position: absolute;
+  transform: translateY(-15%);
+  height: 8px;
+  border-radius: 5px;
   background: linear-gradient(
     90deg,
-    rgba(255, 188, 0, 0.7) 0%,
-    rgba(255, 165, 0, 0.7) 35%,
-    rgba(255, 72, 0, 0.7) 80%,
-    rgba(255, 0, 0, 0.7) 100%
+    rgba(255, 188, 0, 0.8) 0%,
+    rgba(255, 165, 0, 0.8) 20%,
+    rgba(255, 97, 35, 0.8) 60%,
+    rgba(255, 0, 0, 0.8) 100%
   );
 }
 
