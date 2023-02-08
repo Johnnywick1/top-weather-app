@@ -43,8 +43,23 @@ const ForecastView = (() => {
     View.unhideEl(container);
   };
 
-  const generateMarkup = (data) =>
-    data
+  const generateMarkup = (data) => {
+    const weeklyMin = data.reduce(
+      (prev, curr) => (prev.min_temp < curr.min_temp ? prev : curr),
+      0,
+    );
+
+    const weeklyMax = data.reduce(
+      (prev, curr) => (prev.max_temp > curr.max_temp ? prev : curr),
+      0,
+    );
+
+    const minTemp = +weeklyMin.min_temp;
+    const maxTemp = +weeklyMax.max_temp;
+
+    const range = Math.round(maxTemp - minTemp);
+
+    return data
       .map(
         (day) => `
         <div class="daily--card">
@@ -60,7 +75,7 @@ const ForecastView = (() => {
                 ><span class="db-unit unit-degree">°</span>
               </div>
               <div class="daily--temp-slider-wrapper">
-                    ${generateSliderMarkup(data, day)}
+                    ${generateSliderMarkup(day, minTemp, range)}
               </div>
               <div class="daily--temp-max">
                 <span class="temp-value temp-value--celsius">${Math.round(
@@ -73,21 +88,9 @@ const ForecastView = (() => {
     `,
       )
       .join('');
+  };
 
-  const generateSliderMarkup = (data, self) => {
-    const min = data.reduce((prev, curr) =>
-      prev.temp < curr.temp ? prev : curr,
-    );
-
-    const max = data.reduce((prev, curr) =>
-      prev.temp > curr.temp ? prev : curr,
-    );
-
-    const minTemp = +min.min_temp;
-    const maxTemp = +max.max_temp;
-
-    const range = Math.round(maxTemp - minTemp);
-
+  const generateSliderMarkup = (self, minTemp, range) => {
     const markup = `
             <div class="temp-slider--bg">
                 <div class="temp-slider--value" style="
