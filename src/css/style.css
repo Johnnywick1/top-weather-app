@@ -48,6 +48,17 @@ table {
   border-spacing: 0;
 }
 
+* {
+  vertical-align: baseline;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --font-bebas: 'Bebas Neue', Verdana, Geneva, Tahoma, sans-serif, monospace;
   --font-raleway: 'Raleway', Arial, Helvetica, sans-serif, monospace;
@@ -137,6 +148,7 @@ body {
   padding: 9px 10px 9px 30px;
   border-radius: 30px;
   border: 1px solid rgba(0, 0, 0, 0.61);
+  background-color: rgba(255, 255, 255, 0.9);
   width: 180px;
   transition: 0.15s linear;
 }
@@ -210,7 +222,7 @@ body {
   font-size: 0.75rem;
 }
 
-/* WEATHER DISPLY */
+/* WEATHER DISPLAY */
 
 .weather--main {
   position: relative;
@@ -256,8 +268,83 @@ body {
   grid-area: hourly;
 }
 
+.hourly--cards-wrapper {
+  display: flex;
+  gap: 10px;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.hourly--card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 8px;
+  padding: 5px 10px;
+}
+
+.hourly--hour {
+  font-size: 0.95rem;
+}
+
+.hourly--icon {
+  font-size: 1.65rem;
+}
+
+.hourly--temp {
+  font-size: 1.05rem;
+}
+
 .weather--daily-forecast {
   grid-area: daily;
+  height: 200px;
+}
+
+.daily--cards-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.daily--card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  margin-right: 20px;
+}
+
+.daily--day {
+  width: 35%;
+}
+
+.daily--icon {
+  font-size: 1.5rem;
+}
+
+.daily--temp {
+  display: flex;
+  align-items: center;
+}
+
+.daily--temp-slider {
+  width: 100px;
+  height: 7px;
+  margin: 0px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.342);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 188, 0, 0.7) 0%,
+    rgba(255, 165, 0, 0.7) 35%,
+    rgba(255, 72, 0, 0.7) 80%,
+    rgba(255, 0, 0, 0.7) 100%
+  );
 }
 
 .weather--footer {
