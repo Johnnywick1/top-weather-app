@@ -6,6 +6,9 @@ import weathericonsmin from './css/weather-icons.min.css';
 
 import model from './model';
 import View from './views/View';
+import MainView from './views/mainView';
+import BoxView from './views/boxView';
+import ForecastView from './views/forecastView';
 
 const controlWeatherDisplay = async (coords) => {
   try {
@@ -19,9 +22,10 @@ const controlWeatherDisplay = async (coords) => {
     console.log('display:', weatherData);
 
     // render data
-
-    View.renderWeatherMain(weatherData);
-    View.renderWeatherBoxes(weatherData);
+    MainView.renderWeatherMain(weatherData);
+    BoxView.renderWeatherBoxes(weatherData);
+    ForecastView.renderHourly(forecastData.hourly);
+    ForecastView.renderDaily(forecastData.daily);
   } catch (err) {
     console.error(`ERROR: ${err}`);
   }
@@ -30,7 +34,7 @@ const controlWeatherDisplay = async (coords) => {
 const init = async () => {
   const coords = await model.getUserCoords();
 
-  const data = await controlWeatherDisplay(coords);
+  controlWeatherDisplay(coords);
 };
 
 init();
