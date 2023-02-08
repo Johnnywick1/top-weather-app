@@ -48,9 +48,9 @@
         </div>
       </div>
 
-      <div class="weather--main">
-        <i class="main--icon wi wi-night-sleet"></i>
-        <div class="main--location">Marilao</div>
+      <div class="hidden weather--main">
+        <i class="main--icon wi"></i>
+        <div class="main--location">London</div>
         <div class="main--temp">
           <span class="temp-value temp-value--celsius">30</span
           ><span class="db-unit unit-degree">°</span>
@@ -68,12 +68,23 @@
         </div>
       </div>
 
-      <div class="display-box weather--hourly-forecast">
+      <div class="hidden display-box weather--hourly-forecast">
         <div class="db-label hourly--label">
           <i class="db-label--icon wi wi-time-5"></i>
           Hourly Forecast
         </div>
         <div class="hourly--cards-wrapper">
+          <div class="hourly--card">
+            <div class="hourly--hour">Now</div>
+            <div class="hourly--icon">
+              <i class="hourly--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value temp-value--celsius">20</span
+              ><span class="db-unit unit-degree">°</span>
+            </div>
+          </div>
+
           <div class="hourly--card">
             <div class="hourly--hour">17</div>
             <div class="hourly--icon">
@@ -84,8 +95,31 @@
               ><span class="db-unit unit-degree">°</span>
             </div>
           </div>
+
           <div class="hourly--card">
-            <div class="hourly--hour">17</div>
+            <div class="hourly--hour">18</div>
+            <div class="hourly--icon">
+              <i class="hourly--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value temp-value--celsius">20</span
+              ><span class="db-unit unit-degree">°</span>
+            </div>
+          </div>
+
+          <div class="hourly--card">
+            <div class="hourly--hour">19</div>
+            <div class="hourly--icon">
+              <i class="hourly--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value temp-value--celsius">20</span
+              ><span class="db-unit unit-degree">°</span>
+            </div>
+          </div>
+
+          <div class="hourly--card">
+            <div class="hourly--hour">20</div>
             <div class="hourly--icon">
               <i class="hourly--icon wi wi-night-sleet"></i>
             </div>
@@ -97,7 +131,7 @@
         </div>
       </div>
 
-      <div class="display-box weather--daily-forecast">
+      <div class="hidden display-box weather--daily-forecast">
         <div class="db-label daily--label">Daily Forecast</div>
         <div class="daily--cards-wrapper">
           <div class="daily--card">
@@ -117,22 +151,58 @@
               </div>
             </div>
           </div>
+
+          <div class="daily--card">
+            <div class="daily--day">Monday</div>
+            <div class="daily--icon">
+              <i class="daily--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="daily--temp">
+              <div class="daily--temp-min">
+                <span class="temp-value temp-value--celsius">20</span
+                ><span class="db-unit unit-degree">°</span>
+              </div>
+              <div class="daily--temp-slider"></div>
+              <div class="daily--temp-max">
+                <span class="temp-value temp-value--celsius">35</span
+                ><span class="db-unit unit-degree">°</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="daily--card">
+            <div class="daily--day">Tuesday</div>
+            <div class="daily--icon">
+              <i class="daily--icon wi wi-night-sleet"></i>
+            </div>
+            <div class="daily--temp">
+              <div class="daily--temp-min">
+                <span class="temp-value temp-value--celsius">20</span
+                ><span class="db-unit unit-degree">°</span>
+              </div>
+              <div class="daily--temp-slider"></div>
+              <div class="daily--temp-max">
+                <span class="temp-value temp-value--celsius">35</span
+                ><span class="db-unit unit-degree">°</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="display-box weather--uv-index">
-        <div class="db-label uv--label">
-          <i class="db-label--icon wi wi-day-sunny"></i>
-          UV Index
+      <div class="hidden display-box weather--cloud-cover">
+        <div class="db-label cloud--label">
+          <i class="db-label--icon wi wi-cloud"></i>
+          Cloud Cover
         </div>
-        <div class="uv--value-wrapper">
-          <span class="db-value uv--value">2</span
-          ><span class="db-value uv--unit">Low</span>
+        <div class="cloud--value-wrapper">
+          <span class="db-value cloud--value">50</span
+          ><span class="db-value cloud--unit">%</span>
         </div>
-        <div class="db-desc uv--desc">Use sun protection</div>
+        <div class="db-desc cloud--desc">Use sun protection</div>
       </div>
 
-      <div class="display-box weather--sunset-sunrise">
+      <div class="hidden display-box weather--sunrise-sunset">
         <div class="db-label sun--label">
           <i class="db-label--icon wi wi-horizon-alt"></i>
           Sunrise
@@ -145,7 +215,7 @@
         </div>
       </div>
 
-      <div class="display-box weather--rainfall">
+      <div class="hidden display-box weather--rainfall">
         <div class="db-label rain--label">
           <i class="db-label--icon wi wi-raindrop"></i>
           Rainfall
@@ -157,19 +227,22 @@
         <div class="db-desc rain--desc">More expected</div>
       </div>
 
-      <div class="display-box weather--humidity">
+      <div class="hidden display-box weather--humidity">
         <div class="db-label humidity--label">
           <i class="db-label--icon wi wi-sandstorm"></i>
           Humidity
         </div>
-        <div class="db-value humidity--value">88%</div>
+        <div class="humidity--value-wrapper">
+          <span class="db-value humidity--value">50</span
+          ><span class="db-value humidity--unit">%</span>
+        </div>
         <div class="db-desc humidity--desc">
           The dew point is
           <span class="temp-value temp-value--celsius">24</span>° right now.
         </div>
       </div>
 
-      <div class="display-box weather--pressure">
+      <div class="hidden display-box weather--pressure">
         <div class="db-label pressure--label">
           <i class="db-label--icon wi wi-barometer"></i>
           Pressure
@@ -181,7 +254,7 @@
         <div class="db-desc pressure--desc">Atmospheric pressure is normal</div>
       </div>
 
-      <div class="display-box weather--wind">
+      <div class="hidden display-box weather--wind">
         <div class="db-label wind--label">
           <i class="db-label--icon wi wi-strong-wind"></i>
           Wind
@@ -195,26 +268,26 @@
         </div>
       </div>
 
-      <div class="display-box weather--heat-index">
+      <div class="hidden display-box weather--heat-index">
         <div class="db-label heat-index--label">
           <i class="db-label--icon wi wi-thermometer"></i>
           Feels Like
         </div>
-        <div class="heat-index--value">
+        <div class="heat-index--value-wrapper">
           <span class="db-value temp-value temp-value--celsius">33</span
-          ><span class="db-unit unit-degree">°</span>
+          ><span class="db-value db-unit unit-degree">°</span>
         </div>
         <div class="db-desc heat-index--desc">
           Wind is making it feel colder than usual
         </div>
       </div>
 
-      <div class="display-box weather--visibility">
+      <div class="hidden display-box weather--visibility">
         <div class="db-label visibility--label">
           <i class="db-label--icon wi wi-fog"></i>
           Visibility
         </div>
-        <div class="visibility--value">
+        <div class="visibility--value-wrapper">
           <span class="db-value visibility--value value-metric">32</span
           ><span class="db-value visibility--unit unit-metric">km</span>
         </div>
@@ -223,9 +296,15 @@
         </div>
       </div>
 
-      <span class="weather--footer"
-        >Weather for <span class="footer--location">Marilao</span>
-      </span>
+      <div class="hidden weather--footer">
+        <div class="weather-footer--label">
+          Weather for <span class="weather-footer--location">London</span>
+        </div>
+        <div class="weather-footer--desc">
+          Learn more about
+          <a href="https://openweathermap.org/">weather data</a>
+        </div>
+      </div>
     </div>
 
     <footer>
