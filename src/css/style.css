@@ -136,6 +136,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  font-family: var(--font-nunito-sans);
 }
 
 .search-bar--wrapper {
@@ -240,10 +241,10 @@ body {
 
 .main--icon {
   position: absolute;
-  right: -60%;
-  font-size: 3rem;
+  right: -65%;
+  font-size: 4.5rem;
   transform: translateY(-20%);
-  color: rgb(107, 107, 107);
+  color: rgb(44, 44, 44);
 }
 
 .main--temp .db-unit {
@@ -257,6 +258,11 @@ body {
 
 .main--temp {
   font-size: 5rem;
+}
+
+.main--location,
+.main--desc {
+  text-transform: capitalize;
 }
 
 .main--temp-extreme {
@@ -347,11 +353,28 @@ body {
   );
 }
 
+.wind--icon {
+  font-size: 1.25rem;
+}
+
 .weather--footer {
   grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   text-align: center;
   font-family: var(--font-nunito-sans);
   margin-top: 15px;
+}
+
+.weather-footer--desc {
+  font-size: 0.8rem;
+}
+
+.weather-footer--desc,
+.weather-footer--desc a:visited,
+.weather-footer--desc a:link {
+  color: rgb(83, 83, 83);
 }
 
 /* FOOTER */
@@ -380,4 +403,10 @@ footer {
 .footer-link:visited {
   text-decoration: none;
   color: #424870;
+}
+
+/* HELPERS */
+
+.hidden {
+  display: none;
 }
