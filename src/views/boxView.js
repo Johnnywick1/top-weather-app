@@ -25,11 +25,9 @@ const BoxView = (() => {
     const boxEl = document.querySelector(
       '.display-box.weather--sunrise-sunset',
     );
-    const labelEl = document.querySelector('.sun--label');
+    const labelEl = document.querySelector('.sun--label-text');
     const valueEl = document.querySelector('.sun--value');
     const descEl = document.querySelector('.sunrise-sunset--desc');
-
-    const now = +new Date();
 
     if (timeOfDay === 'night') {
       labelEl.textContent = 'Sunrise';
