@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { convertDateToUTC, getLocalTime } from '../helpers';
 import View from './View';
 
 const BoxView = (() => {
@@ -19,8 +21,14 @@ const BoxView = (() => {
     View.unhideEl(boxEl);
   };
 
-  const renderSunriseSunset = (sunrise, sunset, timeOfDay) => {
+  const renderSunriseSunset = (sunrise, sunset, timeOfDay, tzOffset) => {
     if (!sunrise || !sunset) return;
+
+    const sunriseArr = getLocalTime(tzOffset, sunrise * 1000);
+    const formatSunrise = format(new Date(...sunriseArr), 'HH:mm');
+
+    const sunsetArr = getLocalTime(tzOffset, sunset * 1000);
+    const formatSunset = format(new Date(...sunsetArr), 'HH:mm');
 
     const boxEl = document.querySelector(
       '.display-box.weather--sunrise-sunset',
@@ -31,12 +39,12 @@ const BoxView = (() => {
 
     if (timeOfDay === 'night') {
       labelEl.textContent = 'Sunrise';
-      valueEl.textContent = sunrise;
-      descEl.textContent = `Sunset: ${sunset}`;
+      valueEl.textContent = formatSunrise;
+      descEl.textContent = `Sunset: ${formatSunset}`;
     } else {
       labelEl.textContent = 'Sunset';
-      valueEl.textContent = sunset;
-      descEl.textContent = `Sunrise: ${sunrise}`;
+      valueEl.textContent = formatSunset;
+      descEl.textContent = `Sunrise: ${formatSunrise}`;
     }
 
     View.unhideEl(boxEl);
@@ -165,12 +173,17 @@ const BoxView = (() => {
 
   const renderWeatherBoxes = (data) => {
     renderCloudBox(data.cloud_cover);
-    renderSunriseSunset(data.sunrise, data.sunset, data.timeOfDay);
+    renderSunriseSunset(
+      data.sunrise,
+      data.sunset,
+      data.timeOfDay,
+      data.timezone,
+    );
     renderHumidity(data.humidity);
     renderPressure(data.pressure);
     renderWind(data.wind_speed, data.wind_direction);
     renderVisibility(data.visibility);
-    renderHeatIndex(data.heat_index);
+    renderHeatIndex(data.heat_index, data.temp);
     renderRainfall(data.rain);
   };
 
