@@ -5,11 +5,14 @@ import View from './View';
 
 const BoxView = (() => {
   const renderCloudBox = (cloudCover) => {
-    if (!cloudCover) return;
-
     const boxEl = document.querySelector('.display-box.weather--cloud-cover');
     const valueEl = document.querySelector('.cloud--value');
     const descEl = document.querySelector('.cloud--desc');
+
+    if (!cloudCover) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = cloudCover;
 
@@ -23,8 +26,6 @@ const BoxView = (() => {
   };
 
   const renderSunriseSunset = (sunrise, sunset, timeOfDay, tzOffset) => {
-    if (!sunrise || !sunset) return;
-
     const sunriseArr = getLocalTime(tzOffset, sunrise * 1000);
     const formatSunrise = format(new Date(...sunriseArr), 'HH:mm');
 
@@ -37,6 +38,11 @@ const BoxView = (() => {
     const labelEl = document.querySelector('.sun--label-text');
     const valueEl = document.querySelector('.sun--value');
     const descEl = document.querySelector('.sunrise-sunset--desc');
+
+    if (!sunrise || !sunset) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     if (timeOfDay === 'night') {
       labelEl.textContent = 'Sunrise';
@@ -52,13 +58,16 @@ const BoxView = (() => {
   };
 
   const renderHumidity = (humidity) => {
-    if (!humidity) return;
-
     const boxEl = document.querySelector('.display-box.weather--humidity');
     const valueEl = document.querySelector('.humidity--value');
     const descEl = document.querySelector('.humidity--desc');
 
     valueEl.textContent = humidity;
+
+    if (!humidity) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     if (+humidity < 30) {
       descEl.textContent = `Low humidity, take precautionary measures`;
@@ -72,11 +81,14 @@ const BoxView = (() => {
   };
 
   const renderPressure = (pressure) => {
-    if (!pressure) return;
-
     const boxEl = document.querySelector('.display-box.weather--pressure');
     const valueEl = document.querySelector('.pressure--value');
     const descEl = document.querySelector('.pressure--desc');
+
+    if (!pressure) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = pressure;
 
@@ -90,12 +102,15 @@ const BoxView = (() => {
   };
 
   const renderWind = (speed, direction) => {
-    if (!speed) return;
-
     const boxEl = document.querySelector('.display-box.weather--wind');
 
     const valueEl = document.querySelector('.wind--value');
     const descEl = document.querySelector('.wind--desc');
+
+    if (!speed) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = +speed.toFixed(1);
     descEl.innerHTML = `The wind is coming from ${direction}° 
@@ -106,11 +121,14 @@ const BoxView = (() => {
   };
 
   const renderRainfall = (rain) => {
-    if (!rain) return;
-
     const boxEl = document.querySelector('.display-box.weather--rainfall');
     const valueEl = document.querySelector('.rain--value');
     const descEl = document.querySelector('.rain--desc');
+
+    if (!rain) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = rain;
 
@@ -126,13 +144,16 @@ const BoxView = (() => {
   };
 
   const renderHeatIndex = (heatIndex, temp) => {
-    if (!heatIndex) return;
-
     const boxEl = document.querySelector('.display-box.weather--heat-index');
     const valueEl = document.querySelector(
       '.heat-index--value-wrapper .temp-value',
     );
     const descEl = document.querySelector('.heat-index--desc');
+
+    if (!heatIndex) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = +heatIndex.toFixed(1);
 
@@ -152,11 +173,14 @@ const BoxView = (() => {
   };
 
   const renderVisibility = (visibility) => {
-    if (!visibility) return;
-
     const boxEl = document.querySelector('.display-box.weather--visibility');
     const valueEl = document.querySelector('.visibility--value');
     const descEl = document.querySelector('.visibility--desc');
+
+    if (!visibility) {
+      View.hideEl(boxEl);
+      return;
+    }
 
     valueEl.textContent = (+visibility / 1000).toFixed(1);
 
