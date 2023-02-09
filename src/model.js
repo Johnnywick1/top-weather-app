@@ -1,11 +1,13 @@
 /* eslint-disable consistent-return */
+import format from 'date-fns/format';
+import { getLocalTime } from './helpers';
+
 import {
   API_KEY,
   WEATHER_API_URL,
   GEO_API_URL,
   CITIES_API_URL,
 } from './config';
-import format from 'date-fns/format';
 
 const model = (() => {
   const getUserLocation = () =>
@@ -37,7 +39,6 @@ const model = (() => {
       if (!response.ok) throw new Error('Problem getting location data');
 
       const data = await response.json();
-      console.log(data);
 
       return data[0].name;
     } catch (err) {
@@ -76,8 +77,8 @@ const model = (() => {
             ? 'night'
             : 'day',
         timezone: data.timezone,
-        sunrise: format(new Date(data.sys.sunrise * 1000), 'HH:mm'),
-        sunset: format(new Date(data.sys.sunset * 1000), 'HH:mm'),
+        sunrise: data.sys.sunrise,
+        sunset: data.sys.sunset,
         weather_id: data.weather[0].id,
         wind_direction: data.wind.deg,
         wind_speed: data.wind.speed,
@@ -118,13 +119,17 @@ const model = (() => {
     const targetHours = data.list.slice(0, 9);
 
     targetHours.forEach((hour) => {
-      const hourValue = format(new Date(hour.dt * 1000), 'HH');
+      const hourValue = format(
+        new Date(...getLocalTime(+data.city.timezone, +hour.dt * 1000)),
+        'HH',
+      );
 
       const hourData = {
-        time: hourValue,
+        time: hour.dt,
         temp: hour.main.temp,
         id: hour.weather[0].id,
         description: hour.weather[0].description,
+        timezone: data.city.timezone,
         timeOfDay: hourValue >= 18 || hourValue <= 6 ? 'night' : 'day',
       };
 
@@ -234,24 +239,13 @@ const model = (() => {
     }
   };
 
-  // const init = async () => {
-  //   // Get weather for user
-  //   const [lat, lng] = await getUserCoords();
-
-  //   getWeatherData(lat, lng);
-  //   getLocationName(lat, lng);
-  // };
-
   return {
     getUserCoords,
     getLocationName,
     getWeatherData,
     getForecastData,
     getSearchResults,
-    // init,
   };
 })();
-
-// model.init();
 
 export default model;
