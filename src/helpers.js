@@ -32,15 +32,14 @@ export const getLocalTime = (offset, dateToConvert) => {
   return [year, month, date, hour, minute, second];
 };
 
-export const isDay = function (timeOfDay, day1, day2) {
-  const [sunrise1, sunset1] = day1;
-  const [sunrise2, sunset2] = day2;
+export const convertToCelsius = (fahr) => ((+fahr - 32) * 5) / 9;
 
-  if (
-    (timeOfDay >= sunrise1 && timeOfDay <= sunset1) ||
-    (timeOfDay >= sunrise2 && timeOfDay <= sunset2)
-  ) {
-    return 'day';
-  }
-  return 'night';
-};
+export const convertToFahr = (celsius) => (+celsius * 9) / 5 + 32;
+
+export const convertToMiles = (km) => +km * 1.60934;
+
+export const convertToKm = (mile) => +mile * 0.6214;
+
+export const convertToHPa = (psi) => +psi * 68.9475729318;
+
+export const convertToPSI = (hPa) => +hPa * 0.0145037738;
