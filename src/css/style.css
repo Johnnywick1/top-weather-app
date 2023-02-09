@@ -107,7 +107,7 @@ body {
 
 .db-label {
   font-family: var(--font-open-sans);
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 0.35rem + 0.8889vw, 0.85rem);
   text-transform: uppercase;
   color: rgb(59, 59, 59);
 }
@@ -118,7 +118,7 @@ body {
 }
 
 .db-value {
-  font-size: 2rem;
+  font-size: clamp(1.2rem, 0.56rem + 2.56vw, 2rem);
   margin: 20px 0;
   display: inline-block;
 }
@@ -126,7 +126,7 @@ body {
 .db-desc {
   position: absolute;
   bottom: 20px;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 0.35rem + 0.8889vw, 0.85rem);
   overflow-wrap: break-word;
   max-width: 80%;
 }
@@ -424,6 +424,10 @@ body {
   font-size: 1.25rem;
 }
 
+.pressure--unit {
+  font-size: clamp(1.5rem, -0.5556rem + 4.4444vw, 2rem);
+}
+
 .weather--footer {
   grid-area: footer;
   display: flex;
@@ -434,8 +438,12 @@ body {
   margin-top: 15px;
 }
 
+.weather-footer--label {
+  font-size: clamp(0.85rem, 0.7rem + 0.6857vw, 1rem);
+}
+
 .weather-footer--desc {
-  font-size: 0.8rem;
+  font-size: clamp(0.6rem, 0.4rem + 0.9143vw, 0.8rem);
 }
 
 .weather-footer--desc,
@@ -525,4 +533,76 @@ footer {
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 740px) {
+  .container {
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      ' main main '
+      ' hourly hourly '
+      ' daily daily '
+      ' index humidity '
+      ' index humidity '
+      ' index humidity '
+      ' index humidity '
+      ' footer footer ';
+  }
+
+  .display-box {
+    aspect-ratio: auto;
+    padding: 15px;
+  }
+
+  .db-value {
+    margin: 10px 0;
+  }
+
+  .db-desc {
+    position: static;
+  }
+
+  .daily--cards-wrapper {
+    align-items: center;
+    width: clamp(200px, 90%, 600px);
+    margin: 0 auto;
+  }
+
+  .daily--card {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .weather--main {
+    margin-top: 70px;
+  }
+
+  .main--timestamp {
+    left: 0;
+    top: 100%;
+    font-size: 0.6rem;
+  }
+
+  .btn-convert--wrapper {
+    flex-direction: row;
+  }
+
+  .btn-convert--subtext {
+    display: none;
+  }
+
+  .btn-convert {
+    width: 60px;
+    display: grid;
+    place-items: center;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
 }
