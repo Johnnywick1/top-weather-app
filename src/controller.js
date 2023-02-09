@@ -9,12 +9,10 @@ import View from './views/View';
 import MainView from './views/mainView';
 import BoxView from './views/boxView';
 import ForecastView from './views/forecastView';
+import SearchView from './views/searchView';
 
-const controlWeatherDisplay = async (coords) => {
+const controlWeatherDisplay = async (lat, lng) => {
   try {
-    // Destructure parameter
-    const [lat, lng] = coords;
-
     // Retrieve data to be rendered
     const weatherData = await model.getWeatherData(lat, lng);
     const forecastData = await model.getForecastData(lat, lng);
@@ -31,10 +29,27 @@ const controlWeatherDisplay = async (coords) => {
   }
 };
 
-const init = async () => {
-  const coords = await model.getUserCoords();
+const controlSearchResults = async (query) => {
+  try {
+    if (!query) return;
 
-  controlWeatherDisplay(coords);
+    const results = await model.getSearchResults(query);
+
+    // Render search results
+    SearchView.renderSearchResults(results);
+
+    // Add handler to each result
+    SearchView.addHandlerToEachResult(controlWeatherDisplay);
+  } catch (err) {
+    console.error(`ERROR: ${err}`);
+  }
+};
+
+const init = async () => {
+  const [lat, lng] = await model.getUserCoords();
+
+  controlWeatherDisplay(lat, lng);
+  SearchView.addHandlerLoadSearchResults(controlSearchResults);
 };
 
 init();
