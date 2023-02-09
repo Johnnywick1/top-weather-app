@@ -17,100 +17,84 @@ const model = (() => {
     });
 
   const getUserCoords = async () => {
-    try {
-      const geoLoc = await getUserLocation();
-      const { latitude, longitude } = geoLoc.coords;
+    const geoLoc = await getUserLocation();
+    const { latitude, longitude } = geoLoc.coords;
 
-      if (!geoLoc) throw new Error('Problem getting user location');
+    if (!geoLoc) throw new Error('Problem getting user location');
 
-      return [latitude, longitude];
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    return [latitude, longitude];
   };
 
   const getLocationName = async (lat, lng) => {
-    try {
-      // inaccurate
-      const response = await fetch(
-        `${GEO_API_URL}/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`,
-        { mode: 'cors' },
-      );
-      if (!response.ok) throw new Error('Problem getting location data');
+    const response = await fetch(
+      `${GEO_API_URL}/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`,
+      { mode: 'cors' },
+    );
+    if (!response.ok) throw new Error('Problem getting location data');
 
-      const data = await response.json();
+    const data = await response.json();
 
-      return data[0].name;
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    return data[0].name;
   };
 
   const getWeatherData = async (lat, lng) => {
-    try {
-      const response = await fetch(
-        `${WEATHER_API_URL}weather?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
-        { mode: 'cors' },
-      );
-      if (!response.ok)
-        throw new Error('Problem retrieving current weather data');
+    const response = await fetch(
+      `${WEATHER_API_URL}weather?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
+      { mode: 'cors' },
+    );
+    if (!response.ok)
+      throw new Error('Problem retrieving current weather data');
 
-      const data = await response.json();
-      const now = +new Date();
+    const data = await response.json();
+    const now = +new Date();
 
-      console.log('data:', data);
+    console.log('data:', data);
 
-      return {
-        cloud_cover: data.clouds.all,
-        description: data.weather[0].description,
-        heat_index: data.main.feels_like,
-        humidity: data.main.humidity,
-        id: data.weather[0].id,
-        location: data.name,
-        pressure: data.main.pressure,
-        rain: data.rain ? data.rain['1h'] : null,
-        temp: data.main.temp,
-        temp_max: data.main.temp_max,
-        temp_min: data.main.temp_min,
-        timeOfDay:
-          now < +data.sys.sunrise * 1000 || now > +data.sys.sunset * 1000
-            ? 'night'
-            : 'day',
-        timezone: data.timezone,
-        sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset,
-        weather_id: data.weather[0].id,
-        wind_direction: data.wind.deg,
-        wind_speed: data.wind.speed,
-        visibility: data.visibility,
-      };
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    return {
+      cloud_cover: data.clouds.all,
+      country: data.sys.country,
+      description: data.weather[0].description,
+      heat_index: data.main.feels_like,
+      humidity: data.main.humidity,
+      id: data.weather[0].id,
+      location: data.name,
+      pressure: data.main.pressure,
+      rain: data.rain ? data.rain['1h'] : null,
+      temp: data.main.temp,
+      temp_max: data.main.temp_max,
+      temp_min: data.main.temp_min,
+      timeOfDay:
+        now < +data.sys.sunrise * 1000 || now > +data.sys.sunset * 1000
+          ? 'night'
+          : 'day',
+      timezone: data.timezone,
+      sunrise: data.sys.sunrise,
+      sunset: data.sys.sunset,
+      weather_id: data.weather[0].id,
+      wind_direction: data.wind.deg,
+      wind_speed: data.wind.speed,
+      visibility: data.visibility,
+    };
   };
 
   const getForecastData = async (lat, lng) => {
-    try {
-      const response = await fetch(
-        `${WEATHER_API_URL}forecast?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
-        { mode: 'cors' },
-      );
-      if (!response.ok) throw new Error('Problem getting forecast data');
+    const response = await fetch(
+      `${WEATHER_API_URL}forecast?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
+      { mode: 'cors' },
+    );
+    if (!response.ok) throw new Error('Problem getting forecast data');
 
-      const data = await response.json();
+    const data = await response.json();
 
-      console.log('forecast:', data);
+    console.log('forecast:', data);
 
-      // Filter hourly forecast
-      const hourly = getHourlies(data);
+    // Filter hourly forecast
+    const hourly = getHourlies(data);
 
-      // Filter daily forecast
-      const daily = getDailies(data);
+    // Filter daily forecast
+    const daily = getDailies(data);
 
-      return { hourly, daily };
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    return { hourly, daily };
   };
 
   const getHourlies = (data) => {
@@ -208,35 +192,29 @@ const model = (() => {
   };
 
   const getSearchResults = async (query) => {
-    try {
-      const response = await fetch(
-        `${CITIES_API_URL}?limit=10&sort=-population&namePrefix=${query}`,
-        {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key':
-              'feafa1d619mshe17ed83e5e7db1dp1a5622jsn3b2f188ddc6c',
-            'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-          },
+    const response = await fetch(
+      `${CITIES_API_URL}?limit=10&sort=-population&namePrefix=${query}`,
+      {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key':
+            'feafa1d619mshe17ed83e5e7db1dp1a5622jsn3b2f188ddc6c',
+          'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
         },
-      );
+      },
+    );
 
-      if (!response.ok) throw new Error('Problem getting search results');
+    if (!response.ok) throw new Error('Problem getting search results');
 
-      const data = await response.json();
+    const data = await response.json();
 
-      console.log('search data', data.data);
-
-      return data.data.map((city) => ({
-        name: city.city,
-        region: city.region,
-        country: city.country,
-        latitude: city.latitude,
-        longitude: city.longitude,
-      }));
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    return data.data.map((city) => ({
+      name: city.city,
+      region: city.region,
+      country: city.country,
+      latitude: city.latitude,
+      longitude: city.longitude,
+    }));
   };
 
   return {

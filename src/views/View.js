@@ -112,12 +112,35 @@ const View = (() => {
     document.querySelector('.btn-metric').classList.add('btn-convert--active');
   };
 
+  const renderSpinner = () => {
+    hideEl(document.querySelector('footer'));
+    unhideEl(document.querySelector('.spinner'));
+    unhideEl(document.querySelector('.overlay'));
+  };
+
+  const hideSpinner = () => {
+    unhideEl(document.querySelector('footer'));
+    hideEl(document.querySelector('.spinner'));
+    hideEl(document.querySelector('.overlay'));
+  };
+
+  const renderError = (err) => {
+    const container = document.querySelector('.container');
+
+    container.innerHTML = `<span class="error-message">${err}</span>`;
+
+    hideEl(document.querySelector('footer'));
+  };
+
   return {
     unhideEl,
     hideEl,
     clearEl,
     addHandlerToggleTempUnits,
     resetDisplay,
+    renderSpinner,
+    hideSpinner,
+    renderError,
   };
 })();
 

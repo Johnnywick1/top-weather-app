@@ -14,18 +14,23 @@ import SearchView from './views/searchView';
 
 const controlWeatherDisplay = async (lat, lng) => {
   try {
-    // Retrieve data to be rendered
+    // 1 Render spinner while data is loading
+    View.renderSpinner();
+
+    // 2 Retrieve data to be rendered
     const weatherData = await model.getWeatherData(lat, lng);
     const forecastData = await model.getForecastData(lat, lng);
 
-    // Render data
+    // 3 Render data
     View.resetDisplay();
     MainView.renderWeatherMain(weatherData);
     BoxView.renderWeatherBoxes(weatherData);
     ForecastView.renderHourly(forecastData.hourly);
     ForecastView.renderDaily(forecastData.daily);
+    View.hideSpinner();
   } catch (err) {
     console.error(`ERROR: ${err}`);
+    View.renderError(err);
   }
 };
 

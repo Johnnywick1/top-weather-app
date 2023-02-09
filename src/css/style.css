@@ -137,6 +137,7 @@ body {
   flex-direction: column;
   gap: 12px;
   font-family: var(--font-nunito-sans);
+  z-index: 2;
 }
 
 .search-bar--wrapper {
@@ -259,6 +260,7 @@ body {
   position: relative;
   grid-area: main;
   height: clamp(240px, 35vh, 400px);
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -266,6 +268,15 @@ body {
   align-items: center;
   gap: 8px;
   font-family: var(--font-poppins);
+}
+
+.main--timestamp {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: rgb(78, 78, 78);
 }
 
 .main--temp {
@@ -288,6 +299,7 @@ body {
 
 .main--location {
   font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
 .main--temp {
@@ -432,6 +444,52 @@ body {
   color: rgb(83, 83, 83);
 }
 
+/* SPINNER */
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 5rem auto;
+  text-align: center;
+  font-family: var(--font-montserrat);
+  font-size: 1.2rem;
+  z-index: 10;
+}
+
+svg {
+  height: 6rem;
+  width: 6rem;
+  fill: $color-primary;
+  animation: rotate 2.5s infinite linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  background-color: rgba(54, 54, 54, 0.2);
+  z-index: 8;
+}
+
 /* FOOTER */
 footer {
   position: relative;
@@ -441,6 +499,9 @@ footer {
   margin-top: 2rem;
   padding: 1rem;
   color: #5e67a3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .footer-link {
   display: flex;

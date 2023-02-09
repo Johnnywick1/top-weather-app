@@ -20,6 +20,13 @@
   </head>
   <body>
     <div class="container">
+      <div class="spinner">
+        <svg>
+          <use href="./img/icons.svg#icon-loader"></use>
+        </svg>
+        Loading. . .
+      </div>
+
       <div class="absolute-elements--wrapper">
         <div class="search-bar--wrapper">
           <input
@@ -54,6 +61,10 @@
       </div>
 
       <div class="hidden weather--main">
+        <div class="main--timestamp">
+          Weather in <span class="timestamp--location">London</span> at
+          <span class="timestamp--time">16:00</span> local time
+        </div>
         <div class="main--location">London</div>
         <div class="main--temp">
           <span class="main--temp-value">30</span
@@ -202,6 +213,8 @@
         </div>
       </div>
     </div>
+
+    <div class="overlay hidden"></div>
 
     <footer>
       <a

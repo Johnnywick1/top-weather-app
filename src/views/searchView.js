@@ -43,24 +43,13 @@ const SearchView = (() => {
         View.hideEl(searchResults);
       }),
     );
-    results.forEach((res) =>
-      res.addEventListener('keyup', (e) => {
-        if (e.key !== 'Enter') return;
-        const { latitude, longitude } = res.dataset;
-
-        handler(+latitude, +longitude);
-
-        View.clearEl(searchResults);
-        View.hideEl(searchResults);
-      }),
-    );
   };
 
   const renderSearchResults = (data) => {
     if (!data || !data.length) {
       searchResults.insertAdjacentHTML(
         'afterbegin',
-        `<div class="search-result">No search results available</div>`,
+        `<div style="padding:10px;">No search results available</div>`,
       );
       View.unhideEl(searchResults);
       return;
@@ -69,7 +58,7 @@ const SearchView = (() => {
     const markup = data
       .map(
         (city) => `
-        <div class="search-result" data-latitude="${city.latitude}" data-longitude="${city.longitude}">${city.name}, ${city.region}, ${city.country}</div>
+        <div class="search-result" data-latitude="${city.latitude}" data-longitude="${city.longitude}" tabIndex="0">${city.name}, ${city.region}, ${city.country}</div>
         `,
       )
       .join('');
