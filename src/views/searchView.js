@@ -24,7 +24,7 @@ const SearchView = (() => {
     });
 
     // Hide results on focus out
-    container.addEventListener('blur', () => {
+    container.addEventListener('focusout', () => {
       View.clearEl(searchResults);
       View.hideEl(searchResults);
     });
@@ -34,7 +34,7 @@ const SearchView = (() => {
     const results = [...searchResults.querySelectorAll('.search-result')];
 
     results.forEach((res) =>
-      res.addEventListener('click', () => {
+      res.addEventListener('mousedown', () => {
         const { latitude, longitude } = res.dataset;
 
         handler(+latitude, +longitude);
