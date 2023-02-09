@@ -26,9 +26,7 @@ const ForecastView = (() => {
         }"></i>
             </div>
             <div class="hourly--temp">
-              <span class="temp-value temp-value--celsius">${+hour.temp.toFixed(
-                1,
-              )}</span
+              <span class="temp-value">${+hour.temp.toFixed(1)}</span
               ><span class="db-unit unit-degree">°</span>
             </div>
         </div>`,
@@ -77,18 +75,14 @@ const ForecastView = (() => {
             </div>
             <div class="daily--temp">
               <div class="daily--temp-min">
-                <span class="temp-value temp-value--celsius">${Math.round(
-                  +day.min_temp,
-                )}</span
+                <span class="temp-value">${+day.min_temp.toFixed(1)}</span
                 ><span class="db-unit unit-degree">°</span>
               </div>
               <div class="daily--temp-slider-wrapper">
                     ${generateSliderMarkup(day, minTemp, range)}
               </div>
               <div class="daily--temp-max">
-                <span class="temp-value temp-value--celsius">${Math.round(
-                  +day.max_temp,
-                )}</span
+                <span class="temp-value">${+day.max_temp.toFixed(1)}</span
                 ><span class="db-unit unit-degree">°</span>
               </div>
             </div>
