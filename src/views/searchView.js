@@ -53,14 +53,14 @@ const SearchView = (() => {
   };
 
   const renderSearchResults = (data) => {
-    const container = document.querySelector('.search-results');
+    const resultsContainer = document.querySelector('.search-results');
 
     if (!data || !data.length) {
-      container.insertAdjacentHTML(
+      resultsContainer.insertAdjacentHTML(
         'afterbegin',
         `<div class="search-result">No search results available</div>`,
       );
-      View.unhideEl(container);
+      View.unhideEl(resultsContainer);
       return;
     }
 

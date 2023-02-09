@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
-import { convertDateToUTC, getLocalTime } from '../helpers';
+import { getLocalTime } from '../helpers';
+
 import View from './View';
 
 const BoxView = (() => {

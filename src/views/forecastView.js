@@ -1,4 +1,6 @@
-import { vi } from 'date-fns/locale';
+import { format } from 'date-fns';
+import { getLocalTime } from '../helpers';
+
 import View from './View';
 
 const ForecastView = (() => {
@@ -12,9 +14,16 @@ const ForecastView = (() => {
       .map(
         (hour) => `
         <div class="hourly--card">
-            <div class="hourly--hour">${hour.time}</div>
+            <div class="hourly--hour">
+            ${format(
+              new Date(...getLocalTime(+hour.timezone, +hour.time * 1000)),
+              'HH',
+            )}
+          </div>
             <div class="hourly--icon">
-                <i class="hourly--icon wi wi-owm-${hour.id}"></i>
+                <i class="hourly--icon wi wi-owm-${hour.timeOfDay}-${
+          hour.id
+        }"></i>
             </div>
             <div class="hourly--temp">
               <span class="temp-value temp-value--celsius">${+hour.temp.toFixed(
@@ -35,7 +44,6 @@ const ForecastView = (() => {
     const wrapper = document.querySelector('.daily--cards-wrapper');
 
     View.clearEl(wrapper);
-    console.log(data);
 
     const markup = generateMarkup(data);
 
