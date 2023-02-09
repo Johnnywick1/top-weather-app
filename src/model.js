@@ -1,5 +1,10 @@
 /* eslint-disable consistent-return */
-import { API_KEY, WEATHER_API_URL, GEO_API_URL } from './config';
+import {
+  API_KEY,
+  WEATHER_API_URL,
+  GEO_API_URL,
+  CITIES_API_URL,
+} from './config';
 import format from 'date-fns/format';
 
 const model = (() => {
@@ -52,7 +57,7 @@ const model = (() => {
       const data = await response.json();
       const now = +new Date();
 
-      // console.log('data:', data);
+      console.log('data:', data);
 
       return {
         cloud_cover: data.clouds.all,
@@ -197,6 +202,38 @@ const model = (() => {
     return daily;
   };
 
+  const getSearchResults = async (query) => {
+    try {
+      const response = await fetch(
+        `${CITIES_API_URL}?limit=10&sort=-population&namePrefix=${query}`,
+        {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key':
+              'feafa1d619mshe17ed83e5e7db1dp1a5622jsn3b2f188ddc6c',
+            'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+          },
+        },
+      );
+
+      if (!response.ok) throw new Error('Problem getting search results');
+
+      const data = await response.json();
+
+      console.log('search data', data.data);
+
+      return data.data.map((city) => ({
+        name: city.city,
+        region: city.region,
+        country: city.country,
+        latitude: city.latitude,
+        longitude: city.longitude,
+      }));
+    } catch (err) {
+      console.error(`ERROR: ${err}`);
+    }
+  };
+
   // const init = async () => {
   //   // Get weather for user
   //   const [lat, lng] = await getUserCoords();
@@ -210,6 +247,7 @@ const model = (() => {
     getLocationName,
     getWeatherData,
     getForecastData,
+    getSearchResults,
     // init,
   };
 })();
