@@ -19,7 +19,12 @@ const MainView = (() => {
     tempMaxEl.textContent = +data.temp_max.toFixed(1);
     tempMinEl.textContent = +data.temp_min.toFixed(1);
     footerLocEl.textContent = data.location;
-    iconEl.classList.add(`wi-owm-${data.timeOfDay}-${data.id}`);
+    iconEl.removeAttribute('class');
+    iconEl.classList.add(
+      'main--icon',
+      'wi',
+      `wi-owm-${data.timeOfDay}-${data.id}`,
+    );
 
     View.unhideEl(containerEl);
     View.unhideEl(footerEl);
