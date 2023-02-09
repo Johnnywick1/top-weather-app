@@ -85,7 +85,7 @@ body {
     'footer footer footer footer';
   gap: 18px;
   max-width: 1000px;
-  margin: 0 auto 80px;
+  margin: 0 auto 50px;
 }
 
 .display-box {
@@ -140,18 +140,27 @@ body {
 }
 
 .search-bar--wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 180px;
+  transition: 0.15s linear;
+}
+
+.search-bar--wrapper:focus,
+.search-bar--wrapper:focus-within,
+.search-bar--wrapper:hover,
+.search-bar--wrapper:active {
+  width: 300px;
 }
 
 .search-bar {
-  padding: 9px 10px 9px 30px;
+  padding: 9px 35px 9px 30px;
   border-radius: 30px;
   border: 1px solid rgba(0, 0, 0, 0.61);
   background-color: rgba(255, 255, 255, 0.9);
-  width: 180px;
-  transition: 0.15s linear;
+  width: 100%;
 }
 
 .search-bar::placeholder {
@@ -162,10 +171,6 @@ body {
 .search-bar:hover {
   border: 1px solid rgb(137, 137, 255);
   outline: none;
-}
-
-.search-bar:focus {
-  width: 300px;
 }
 
 .btn-search {
@@ -190,6 +195,31 @@ body {
   font-size: 1rem;
   margin-top: 4px;
   color: white;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 5px 20px;
+  width: 90%;
+  border-radius: 10px;
+  color: rgb(80, 80, 80);
+  z-index: 1;
+}
+
+.search-result {
+  padding: 10px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.search-result:hover,
+.search-result:focus {
+  color: black;
 }
 
 .btn-convert--wrapper {
@@ -230,7 +260,6 @@ body {
   grid-area: main;
   height: clamp(240px, 35vh, 400px);
   margin: 0 auto;
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -239,11 +268,16 @@ body {
   font-family: var(--font-poppins);
 }
 
+.main--temp {
+  position: relative;
+}
+
 .main--icon {
   position: absolute;
-  right: -65%;
+  top: 50%;
+  left: calc(100% + 30px);
   font-size: 4.5rem;
-  transform: translateY(-20%);
+  transform: translateY(-50%);
   color: rgb(44, 44, 44);
 }
 
@@ -289,6 +323,7 @@ body {
   gap: 20px;
   margin: 8px 0;
   padding: 5px 10px;
+  width: 55px;
 }
 
 .hourly--hour {
@@ -337,6 +372,11 @@ body {
   display: flex;
   align-items: center;
   width: 45%;
+}
+
+.daily--temp-min,
+.daily--temp-max {
+  width: 40px;
 }
 
 .daily--temp-slider-wrapper {
@@ -394,11 +434,11 @@ body {
 
 /* FOOTER */
 footer {
-  position: fixed;
+  position: relative;
   bottom: 0;
   margin: auto;
   width: 100%;
-  margin-top: 2.4rem;
+  margin-top: 2rem;
   padding: 1rem;
   color: #5e67a3;
 }
