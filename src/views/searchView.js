@@ -11,11 +11,15 @@ const SearchView = (() => {
     searchBar.addEventListener('keyup', (e) => {
       if (e.key !== 'Enter') return;
 
+      View.clearEl(searchResults);
+      View.hideEl(searchResults);
       handler(searchBar.value);
     });
 
     // Btn click event
     searchBtn.addEventListener('click', () => {
+      View.clearEl(searchResults);
+      View.hideEl(searchResults);
       handler(searchBar.value);
     });
 
@@ -53,14 +57,12 @@ const SearchView = (() => {
   };
 
   const renderSearchResults = (data) => {
-    const resultsContainer = document.querySelector('.search-results');
-
     if (!data || !data.length) {
-      resultsContainer.insertAdjacentHTML(
+      searchResults.insertAdjacentHTML(
         'afterbegin',
         `<div class="search-result">No search results available</div>`,
       );
-      View.unhideEl(resultsContainer);
+      View.unhideEl(searchResults);
       return;
     }
 
@@ -72,8 +74,8 @@ const SearchView = (() => {
       )
       .join('');
 
-    container.insertAdjacentHTML('afterbegin', markup);
-    View.unhideEl(container);
+    searchResults.insertAdjacentHTML('afterbegin', markup);
+    View.unhideEl(searchResults);
   };
 
   return {
