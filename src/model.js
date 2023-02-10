@@ -8,6 +8,7 @@ import {
   CITIES_API_URL,
   RAPID_API_HOST,
   RAPID_API_KEY,
+  DEFAULT_COORDINATES,
 } from './config';
 
 const model = (() => {
@@ -17,14 +18,14 @@ const model = (() => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
     });
 
-  const getUserCoords = async () => {
-    const geoLoc = await getUserLocation();
-    const { latitude, longitude } = geoLoc.coords;
+  const getUserCoords = async () =>
+    getUserLocation()
+      .then((data) => {
+        const { latitude, longitude } = data.coords;
 
-    if (!geoLoc) throw new Error('Problem getting user location');
-
-    return [latitude, longitude];
-  };
+        return [latitude, longitude];
+      })
+      .catch(() => DEFAULT_COORDINATES);
 
   const getWeatherData = async (lat, lng) => {
     const response = await fetch(
