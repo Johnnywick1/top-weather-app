@@ -155,15 +155,17 @@ const model = (() => {
       return Object.keys(store).sort((a, b) => store[b] - store[a])[0];
     };
 
-    [day1, day2, day3, day4, day5].forEach((day) =>
+    [day1, day2, day3, day4, day5].forEach((day) => {
+      if (!day[0]) return;
+
       daily.push({
         time: day[0].time,
         day: format(new Date(day[0].time * 1000), 'eeee'),
         id: getPredominantWeather(day),
         min_temp: getMinTemp(day),
         max_temp: getMaxTemp(day),
-      }),
-    );
+      });
+    });
 
     return daily;
   };
