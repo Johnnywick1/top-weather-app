@@ -69,7 +69,9 @@ table {
 }
 
 body {
-  background-color: #cfd4fa;
+  background-color: #dde2ff;
+  background-size: cover;
+  background-position: center;
 }
 
 /* CONTAINER */
@@ -96,7 +98,8 @@ body {
   padding: 20px;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
-  background-color: rgba(80, 47, 201, 0.15);
+  background-color: rgba(48, 48, 48, 0.4);
+  color: white;
   font-family: var(--font-poppins);
 }
 
@@ -109,11 +112,11 @@ body {
   font-family: var(--font-open-sans);
   font-size: clamp(0.75rem, 0.35rem + 0.8889vw, 0.85rem);
   text-transform: uppercase;
-  color: rgb(59, 59, 59);
+  color: rgb(255, 255, 255);
 }
 
 .db-label--icon {
-  color: rgba(59, 59, 59, 0.726);
+  color: rgba(231, 231, 231, 0.75);
   font-size: 0.95rem;
 }
 
@@ -238,16 +241,16 @@ body {
   border: none;
   border-radius: 30px;
   width: 110px;
-  color: rgb(51, 51, 51);
+  color: inherit;
 }
 
 .btn-convert--active {
-  background-color: rgba(61, 79, 117, 0.788);
+  background-color: rgba(61, 79, 117);
   color: white;
 }
 
 .btn-convert--label {
-  font-size: 1.2rem;
+  font-size: clamp(0.8rem, -0.1846rem + 4.9231vw, 1.2rem);
 }
 
 .btn-convert--subtext {
@@ -287,9 +290,8 @@ body {
   position: absolute;
   top: 50%;
   left: calc(100% + 30px);
-  font-size: 4.5rem;
+  font-size: clamp(2.4rem, -2.7692rem + 25.8462vw, 4.5rem);
   transform: translateY(-50%);
-  color: rgb(44, 44, 44);
 }
 
 .main--temp .db-unit {
@@ -298,12 +300,12 @@ body {
 }
 
 .main--location {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 0.4615rem + 3.6923vw, 1.5rem);
   margin-bottom: 10px;
 }
 
 .main--temp {
-  font-size: 5rem;
+  font-size: clamp(3.75rem, 0.6731rem + 15.3846vw, 5rem);
 }
 
 .main--location,
@@ -449,7 +451,7 @@ body {
 .weather-footer--desc,
 .weather-footer--desc a:visited,
 .weather-footer--desc a:link {
-  color: rgb(83, 83, 83);
+  color: inherit;
 }
 
 /* SPINNER */
@@ -506,27 +508,31 @@ footer {
   width: 100%;
   margin-top: 2rem;
   padding: 1rem;
-  color: #5e67a3;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 .footer-link {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.bg-credit,
 .footer-desc {
-  font-family: 'Comfortaa', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
-    sans-serif;
+  font-family: var(--font-nunito-sans);
   padding-left: 1em;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 0.1577rem + 2.4615vw, 0.85rem);
 }
+.bg-credit:link,
+.bg-credit:visited,
 .footer-link:link,
 .footer-link:visited {
   text-decoration: none;
-  color: #424870;
+  color: inherit;
 }
 
 /* HELPERS */
@@ -600,9 +606,37 @@ footer {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .daily--cards-wrapper {
+    width: 100%;
+  }
+
+  .search-bar {
+    padding: 7px 25px;
+  }
+
+  .btn-convert {
+    padding: 4px;
+  }
+}
+
 @media screen and (max-width: 370px) {
   .container {
     display: flex;
     flex-direction: column;
+  }
+
+  .daily--card {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .daily--day {
+    text-align: center;
+  }
+
+  .daily--temp {
+    width: 100%;
+    justify-content: center;
   }
 }
