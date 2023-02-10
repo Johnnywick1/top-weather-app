@@ -5,8 +5,9 @@ import { getLocalTime } from './helpers';
 import {
   API_KEY,
   WEATHER_API_URL,
-  GEO_API_URL,
   CITIES_API_URL,
+  RAPID_API_HOST,
+  RAPID_API_KEY,
 } from './config';
 
 const model = (() => {
@@ -25,18 +26,6 @@ const model = (() => {
     return [latitude, longitude];
   };
 
-  const getLocationName = async (lat, lng) => {
-    const response = await fetch(
-      `${GEO_API_URL}/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`,
-      { mode: 'cors' },
-    );
-    if (!response.ok) throw new Error('Problem getting location data');
-
-    const data = await response.json();
-
-    return data[0].name;
-  };
-
   const getWeatherData = async (lat, lng) => {
     const response = await fetch(
       `${WEATHER_API_URL}weather?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
@@ -47,8 +36,6 @@ const model = (() => {
 
     const data = await response.json();
     const now = +new Date();
-
-    console.log('data:', data);
 
     return {
       cloud_cover: data.clouds.all,
@@ -77,31 +64,12 @@ const model = (() => {
     };
   };
 
-  const getForecastData = async (lat, lng) => {
-    const response = await fetch(
-      `${WEATHER_API_URL}forecast?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
-      { mode: 'cors' },
-    );
-    if (!response.ok) throw new Error('Problem getting forecast data');
-
-    const data = await response.json();
-
-    console.log('forecast:', data);
-
-    // Filter hourly forecast
-    const hourly = getHourlies(data);
-
-    // Filter daily forecast
-    const daily = getDailies(data);
-
-    return { hourly, daily };
-  };
-
   const getHourlies = (data) => {
     const hourly = [];
 
-    const targetHours = data.list.slice(0, 9);
+    const targetHours = data.list.slice(0, 12);
 
+    // Get only the necessary data from aggregate
     targetHours.forEach((hour) => {
       const hourValue = format(
         new Date(...getLocalTime(+data.city.timezone, +hour.dt * 1000)),
@@ -126,13 +94,14 @@ const model = (() => {
   const getDailies = (data) => {
     const daily = [];
 
+    // Prepare arrays for filtering aggregate
     const day1 = [];
     const day2 = [];
     const day3 = [];
     const day4 = [];
     const day5 = [];
 
-    // Get necessary data
+    // Get necessary data from aggregate data
     const filtered = data.list.map((stamp) => ({
       time: stamp.dt,
       temp: stamp.main.temp,
@@ -140,7 +109,7 @@ const model = (() => {
       description: stamp.weather[0].description,
     }));
 
-    // Separate timestamps into day
+    // Separate timestamps into days
     filtered.forEach((stamp) => {
       const dayNow = new Date().getDate();
       const dayValue = +format(new Date(stamp.time * 1000), 'd');
@@ -169,12 +138,14 @@ const model = (() => {
     };
 
     const getPredominantWeather = (array) => {
-      let store = {};
+      const store = {};
 
+      // eslint-disable-next-line no-return-assign
       array.forEach((day) =>
         store[day.id] ? (store[day.id] += 1) : (store[day.id] = 1),
       );
 
+      // Return weather value with most occurrences
       return Object.keys(store).sort((a, b) => store[b] - store[a])[0];
     };
 
@@ -191,15 +162,32 @@ const model = (() => {
     return daily;
   };
 
+  const getForecastData = async (lat, lng) => {
+    const response = await fetch(
+      `${WEATHER_API_URL}forecast?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`,
+      { mode: 'cors' },
+    );
+    if (!response.ok) throw new Error('Problem getting forecast data');
+
+    const data = await response.json();
+
+    // Filter hourly forecast
+    const hourly = getHourlies(data);
+
+    // Filter daily forecast
+    const daily = getDailies(data);
+
+    return { hourly, daily };
+  };
+
   const getSearchResults = async (query) => {
     const response = await fetch(
       `${CITIES_API_URL}?limit=10&sort=-population&namePrefix=${query}`,
       {
         method: 'GET',
         headers: {
-          'X-RapidAPI-Key':
-            'feafa1d619mshe17ed83e5e7db1dp1a5622jsn3b2f188ddc6c',
-          'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+          'X-RapidAPI-Key': RAPID_API_KEY,
+          'X-RapidAPI-Host': RAPID_API_HOST,
         },
       },
     );
@@ -219,7 +207,6 @@ const model = (() => {
 
   return {
     getUserCoords,
-    getLocationName,
     getWeatherData,
     getForecastData,
     getSearchResults,

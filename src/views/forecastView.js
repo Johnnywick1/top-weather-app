@@ -4,52 +4,22 @@ import { getLocalTime } from '../helpers';
 import View from './View';
 
 const ForecastView = (() => {
-  const renderHourly = (data) => {
-    const container = document.querySelector('.weather--hourly-forecast');
-    const wrapper = document.querySelector('.hourly--cards-wrapper');
+  const generateSliderMarkup = (self, minTemp, range) => {
+    const markup = `
+            <div class="temp-slider--bg">
+                <div class="temp-slider--value" style="
+                    left:${Math.round(
+                      ((+self.min_temp - minTemp) / range) * 100,
+                    )}%; width:${Math.round(
+      ((+self.max_temp - +self.min_temp) / range) * 100,
+    )}%;
+                "></div>
+            </div>`;
 
-    View.clearEl(wrapper);
-
-    const markup = data
-      .map(
-        (hour) => `
-        <div class="hourly--card">
-            <div class="hourly--hour">
-            ${format(
-              new Date(...getLocalTime(+hour.timezone, +hour.time * 1000)),
-              'HH',
-            )}
-          </div>
-            <div class="hourly--icon">
-                <i class="hourly--icon wi wi-owm-${hour.timeOfDay}-${
-          hour.id
-        }"></i>
-            </div>
-            <div class="hourly--temp">
-              <span class="temp-value">${+hour.temp.toFixed(1)}</span
-              ><span class="db-unit unit-degree">°</span>
-            </div>
-        </div>`,
-      )
-      .join('');
-
-    wrapper.insertAdjacentHTML(`afterbegin`, markup);
-    View.unhideEl(container);
+    return markup;
   };
 
-  const renderDaily = (data) => {
-    const container = document.querySelector('.weather--daily-forecast');
-    const wrapper = document.querySelector('.daily--cards-wrapper');
-
-    View.clearEl(wrapper);
-
-    const markup = generateMarkup(data);
-
-    wrapper.insertAdjacentHTML(`afterbegin`, markup);
-    View.unhideEl(container);
-  };
-
-  const generateMarkup = (data) => {
+  const generateDailyMarkup = (data) => {
     const weeklyMin = data.reduce(
       (prev, curr) => (prev.min_temp < curr.min_temp ? prev : curr),
       0,
@@ -92,19 +62,49 @@ const ForecastView = (() => {
       .join('');
   };
 
-  const generateSliderMarkup = (self, minTemp, range) => {
-    const markup = `
-            <div class="temp-slider--bg">
-                <div class="temp-slider--value" style="
-                    left:${Math.round(
-                      ((+self.min_temp - minTemp) / range) * 100,
-                    )}%; width:${Math.round(
-      ((+self.max_temp - +self.min_temp) / range) * 100,
-    )}%;
-                "></div>
-            </div>`;
+  const renderDaily = (data) => {
+    const container = document.querySelector('.weather--daily-forecast');
+    const wrapper = document.querySelector('.daily--cards-wrapper');
 
-    return markup;
+    View.clearEl(wrapper);
+
+    const markup = generateDailyMarkup(data);
+
+    wrapper.insertAdjacentHTML(`afterbegin`, markup);
+    View.unhideEl(container);
+  };
+
+  const renderHourly = (data) => {
+    const container = document.querySelector('.weather--hourly-forecast');
+    const wrapper = document.querySelector('.hourly--cards-wrapper');
+
+    View.clearEl(wrapper);
+
+    const markup = data
+      .map(
+        (hour) => `
+        <div class="hourly--card">
+            <div class="hourly--hour">
+            ${format(
+              new Date(...getLocalTime(+hour.timezone, +hour.time * 1000)),
+              'HH',
+            )}
+          </div>
+            <div class="hourly--icon">
+                <i class="hourly--icon wi wi-owm-${hour.timeOfDay}-${
+          hour.id
+        }"></i>
+            </div>
+            <div class="hourly--temp">
+              <span class="temp-value">${+hour.temp.toFixed(1)}</span
+              ><span class="db-unit unit-degree">°</span>
+            </div>
+        </div>`,
+      )
+      .join('');
+
+    wrapper.insertAdjacentHTML(`afterbegin`, markup);
+    View.unhideEl(container);
   };
 
   return {

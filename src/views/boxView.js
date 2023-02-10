@@ -187,9 +187,9 @@ const BoxView = (() => {
     if (+visibility < 100) {
       descEl.textContent =
         'Extremely low visibility. Going outside is not advised';
-    } else if (+visibility < 2000) {
+    } else if (+visibility < 2750) {
       descEl.textContent = 'Low visibility, take caution when driving';
-    } else if (+visibility < 5000) {
+    } else if (+visibility < 8000) {
       descEl.textContent = 'Minor atmospheric particle issues might occur';
     } else descEl.textContent = 'It is clear right now';
 

@@ -20,14 +20,6 @@ const View = (() => {
     el.innerHTML = ``;
   };
 
-  const addHandlerToggleTempUnits = () => {
-    const btnMetric = document.querySelector('.btn-convert.btn-metric');
-    const btnImperial = document.querySelector('.btn-convert.btn-imperial');
-
-    btnMetric.addEventListener('click', convertUnits.bind(this));
-    btnImperial.addEventListener('click', convertUnits.bind(this));
-  };
-
   const convertUnits = (e) => {
     if (
       e.target.closest('.btn-convert').classList.contains('btn-convert--active')
@@ -64,7 +56,7 @@ const View = (() => {
       mainTempValue.textContent = Math.round(convertToFahr(origMainTemp));
 
       const origPressure = pressureVal.textContent;
-      pressureVal.textContent = convertToPSI(origPressure).toFixed(1);
+      pressureVal.textContent = convertToPSI(origPressure).toFixed(0);
       pressureUnit.textContent = 'psi';
 
       const origWind = windVal.textContent;
@@ -72,7 +64,7 @@ const View = (() => {
       windUnit.textContent = 'mi/h';
 
       const origVis = visibilityVal.textContent;
-      visibilityVal.textContent = convertToMiles(origVis).toFixed(1);
+      visibilityVal.textContent = convertToMiles(origVis).toFixed(0);
       visibilityUnit.textContent = 'mi';
     } else if (convertTo === 'metric') {
       tempValues.forEach((temp) => {
@@ -85,7 +77,7 @@ const View = (() => {
       mainTempValue.textContent = Math.round(convertToCelsius(origMainTemp));
 
       const origPressure = pressureVal.textContent;
-      pressureVal.textContent = convertToHPa(origPressure).toFixed(1);
+      pressureVal.textContent = convertToHPa(origPressure).toFixed(0);
       pressureUnit.textContent = 'hPa';
 
       const origWind = windVal.textContent;
@@ -93,9 +85,17 @@ const View = (() => {
       windUnit.textContent = 'kph';
 
       const origVis = visibilityVal.textContent;
-      visibilityVal.textContent = convertToKm(origVis).toFixed(1);
+      visibilityVal.textContent = convertToKm(origVis).toFixed(0);
       visibilityUnit.textContent = 'km';
     }
+  };
+
+  const addHandlerToggleTempUnits = () => {
+    const btnMetric = document.querySelector('.btn-convert.btn-metric');
+    const btnImperial = document.querySelector('.btn-convert.btn-imperial');
+
+    btnMetric.addEventListener('click', convertUnits.bind(this));
+    btnImperial.addEventListener('click', convertUnits.bind(this));
   };
 
   const resetDisplay = () => {
@@ -132,6 +132,14 @@ const View = (() => {
     hideEl(document.querySelector('footer'));
   };
 
+  const changeToDarkText = (...elements) => {
+    elements.forEach((el) => (el.style.color = 'rgb(0,0,0)'));
+  };
+
+  const changeToLightText = (...elements) => {
+    elements.forEach((el) => (el.style.color = 'rgb(255,255,255)'));
+  };
+
   const renderBackground = (data) => {
     function importAll(r) {
       const images = {};
@@ -163,7 +171,9 @@ const View = (() => {
 
     const id = data.id.toString();
 
-    let imgUrl, author, authorUrl;
+    let imgUrl;
+    let author;
+    let authorUrl;
 
     if (id[0] === '2') {
       // Weather: Thunderstorm
@@ -277,14 +287,6 @@ const View = (() => {
     bodyEl.style.backgroundImage = `url(${imgUrl})`;
     creditEl.textContent = `Background image by ${author} on Unsplash`;
     creditEl.setAttribute('href', authorUrl);
-  };
-
-  const changeToDarkText = (...elements) => {
-    elements.forEach((el) => (el.style.color = 'rgb(0,0,0)'));
-  };
-
-  const changeToLightText = (...elements) => {
-    elements.forEach((el) => (el.style.color = 'rgb(255,255,255)'));
   };
 
   return {

@@ -28,6 +28,8 @@ const controlWeatherDisplay = async (lat, lng) => {
     View.renderBackground(weatherData);
     ForecastView.renderHourly(forecastData.hourly);
     ForecastView.renderDaily(forecastData.daily);
+
+    // 4 Hide spinner when done
     View.hideSpinner();
   } catch (err) {
     console.error(`ERROR: ${err}`);
@@ -54,8 +56,13 @@ const controlSearchResults = async (query) => {
 const init = async () => {
   const [lat, lng] = await model.getUserCoords();
 
+  // 1 Display local weather on load
   controlWeatherDisplay(lat, lng);
+
+  // 2 Add handler to search bar
   SearchView.addHandlerLoadSearchResults(controlSearchResults);
+
+  // 3 Add handler to unit togglers
   View.addHandlerToggleTempUnits();
 };
 
