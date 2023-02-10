@@ -132,6 +132,161 @@ const View = (() => {
     hideEl(document.querySelector('footer'));
   };
 
+  const renderBackground = (data) => {
+    function importAll(r) {
+      const images = {};
+      r.keys().forEach((item) => {
+        images[item.replace('./', '')] = r(item);
+      });
+      return images;
+    }
+    const bgImages = importAll(
+      require.context('../img/weather-bg', true, /\.(png|jpe?g|svg)$/),
+    );
+
+    const bodyEl = document.querySelector('body');
+    const mainEl = document.querySelector('.weather--main');
+    const timestampEl = document.querySelector('.main--timestamp');
+    const btnContainer = document.querySelector('.btn-convert--wrapper');
+    const weatherFooterEl = document.querySelector('.weather--footer');
+    const footerEl = document.querySelector('footer');
+    const creditEl = document.querySelector('.bg-credit');
+
+    const textElements = [
+      mainEl,
+      timestampEl,
+      btnContainer,
+      weatherFooterEl,
+      footerEl,
+      creditEl,
+    ];
+
+    const id = data.id.toString();
+
+    let imgUrl, author, authorUrl;
+
+    if (id[0] === '2') {
+      // Weather: Thunderstorm
+      imgUrl = bgImages['thunderstorm.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Ben Owen';
+      authorUrl = 'https://unsplash.com/@circleb';
+    } else if (id[0] === '3' || id === '500') {
+      // Weather: Light Rain
+      imgUrl = bgImages['light-rain.jpg'];
+      changeToDarkText(mainEl, timestampEl, btnContainer);
+      changeToLightText(weatherFooterEl, footerEl, creditEl);
+
+      author = 'Anant Chandra';
+      authorUrl = 'https://unsplash.com/@anant347';
+    } else if (id[0] === '5') {
+      // Weather: Heavy Rain
+      imgUrl = bgImages['heavy-rain.jpg'];
+      changeToDarkText(mainEl, timestampEl, btnContainer);
+      changeToLightText(weatherFooterEl, footerEl, creditEl);
+
+      author = 'Anne Nygard';
+      authorUrl = 'https://unsplash.com/@polarmermaid';
+    } else if (id === '701' || id === '711' || id === '721' || id === '731') {
+      // Weather: Haze
+      imgUrl = bgImages['haze.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Alex Gindin';
+      authorUrl = 'https://unsplash.com/@alexgindin';
+    } else if (id[0] === '6') {
+      // Weather: Snow
+      imgUrl = bgImages['snow.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Adam Chang';
+      authorUrl = 'https://unsplash.com/@sametomorrow';
+    } else if (id === '741') {
+      // Weather: Fog
+      imgUrl = bgImages['fog.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Artem Sapegin';
+      authorUrl = 'https://unsplash.com/@sapegin';
+    } else if (id === '751' || id === '752' || id === '761' || id === '762') {
+      // Weather: Sandstorm
+      imgUrl = bgImages['sandstorm.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Andreas Brun';
+      authorUrl = 'https://unsplash.com/@andreasbrun';
+    } else if (id === '771' || id === '781') {
+      // Weather: Tornado
+      imgUrl = bgImages['tornado.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Andrew Seaman';
+      authorUrl = 'https://unsplash.com/@amseaman';
+    } else if (id === '800' && data.timeOfDay === 'day') {
+      // Weather: Clear Sky in the day
+      imgUrl = bgImages['clear-sky.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Elia Clerici';
+      authorUrl = 'https://unsplash.com/@ielix';
+    } else if (id === '800' && data.timeOfDay === 'night') {
+      // Weather: Clear Sky at night
+      imgUrl = bgImages['clear-night-sky.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Olena Sergienko';
+      authorUrl = 'https://unsplash.com/@olenkasergienko';
+    } else if ((id === '803' || id === '804') && data.timeOfDay === 'night') {
+      // Weather: Overcast Sky at night
+      imgUrl = bgImages['overcast-night.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Antoine Barres';
+      authorUrl = 'https://unsplash.com/@antoinebarres';
+    } else if ((id === '801' || id === '802') && data.timeOfDay === 'night') {
+      // Weather: Scattered Clouds at night
+      imgUrl = bgImages['scattered-clouds-night.jpg'];
+      changeToLightText(...textElements);
+
+      author = 'Magnus Ostberg';
+      authorUrl = 'https://unsplash.com/@magnusostberg';
+    } else if ((id === '801' || id === '802') && data.timeOfDay === 'day') {
+      // Weather: Scattered Clouds
+      imgUrl = bgImages['scattered-clouds.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Priya Bhagtani';
+      authorUrl = 'https://unsplash.com/@priya1007';
+    } else if (id === '804' && data.timeOfDay === 'day') {
+      // Weather: Fully Overcast Sky
+      imgUrl = bgImages['full-overcast.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'Peyman Farmani';
+      authorUrl = 'https://unsplash.com/@peymanfarmani';
+    } else {
+      // Weather: Overcast Sky
+      imgUrl = bgImages['overcast-day.jpg'];
+      changeToDarkText(...textElements);
+
+      author = 'elCarito';
+      authorUrl = 'https://unsplash.com/@elcarito ';
+    }
+
+    bodyEl.style.backgroundImage = `url(${imgUrl})`;
+    creditEl.textContent = `Background image by ${author} on Unsplash`;
+    creditEl.setAttribute('href', authorUrl);
+  };
+
+  const changeToDarkText = (...elements) => {
+    elements.forEach((el) => (el.style.color = 'rgb(0,0,0)'));
+  };
+
+  const changeToLightText = (...elements) => {
+    elements.forEach((el) => (el.style.color = 'rgb(255,255,255)'));
+  };
+
   return {
     unhideEl,
     hideEl,
@@ -141,6 +296,7 @@ const View = (() => {
     renderSpinner,
     hideSpinner,
     renderError,
+    renderBackground,
   };
 })();
 

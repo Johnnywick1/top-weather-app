@@ -25,6 +25,7 @@ const controlWeatherDisplay = async (lat, lng) => {
     View.resetDisplay();
     MainView.renderWeatherMain(weatherData);
     BoxView.renderWeatherBoxes(weatherData);
+    View.renderBackground(weatherData);
     ForecastView.renderHourly(forecastData.hourly);
     ForecastView.renderDaily(forecastData.daily);
     View.hideSpinner();
