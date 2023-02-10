@@ -472,8 +472,8 @@ body {
   border-radius: 10px;
   text-align: center;
   font-family: var(--font-montserrat);
-  font-size: 1.2rem;
-  font-weight: 1000;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: white;
   z-index: 10;
 }
