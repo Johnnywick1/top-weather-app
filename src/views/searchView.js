@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import View from './View';
 
 const SearchView = (() => {
@@ -8,13 +9,16 @@ const SearchView = (() => {
 
   const addHandlerLoadSearchResults = (handler) => {
     // Enter key event
-    searchBar.addEventListener('keyup', (e) => {
-      if (e.key !== 'Enter') return;
+    searchBar.addEventListener(
+      'keyup',
+      debounce((e) => {
+        if (e.key === 'Escape') return;
 
-      View.clearEl(searchResults);
-      View.hideEl(searchResults);
-      handler(searchBar.value);
-    });
+        View.clearEl(searchResults);
+        View.hideEl(searchResults);
+        handler(searchBar.value);
+      }, 400),
+    );
 
     // Btn click event
     searchBtn.addEventListener('click', () => {
@@ -25,6 +29,14 @@ const SearchView = (() => {
 
     // Hide results on focus out
     container.addEventListener('focusout', () => {
+      View.clearEl(searchResults);
+      View.hideEl(searchResults);
+    });
+
+    // Hide results on escape keypress
+    container.addEventListener('keyup', (e) => {
+      if (e.key !== 'Escape') return;
+
       View.clearEl(searchResults);
       View.hideEl(searchResults);
     });
