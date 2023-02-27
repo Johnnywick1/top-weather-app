@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import format from 'date-fns/format';
+import { format, differenceInDays } from 'date-fns';
 import { getLocalTime } from './helpers';
 
 import {
@@ -117,14 +117,16 @@ const model = (() => {
 
     // Separate timestamps into days
     filtered.forEach((stamp) => {
-      const dayNow = new Date().getDate();
-      const dayValue = +format(new Date(stamp.time * 1000), 'd');
+      const diffInDays = differenceInDays(
+        new Date(stamp.time * 1000),
+        new Date(),
+      );
 
-      if (dayValue === dayNow + 1) day1.push(stamp);
-      if (dayValue === dayNow + 2) day2.push(stamp);
-      if (dayValue === dayNow + 3) day3.push(stamp);
-      if (dayValue === dayNow + 4) day4.push(stamp);
-      if (dayValue === dayNow + 5) day5.push(stamp);
+      if (diffInDays === 1) day1.push(stamp);
+      if (diffInDays === 2) day2.push(stamp);
+      if (diffInDays === 3) day3.push(stamp);
+      if (diffInDays === 4) day4.push(stamp);
+      if (diffInDays === 5) day5.push(stamp);
     });
 
     const getMinTemp = (array) => {
