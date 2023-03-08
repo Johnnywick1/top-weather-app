@@ -329,6 +329,19 @@ body {
   overflow-x: auto;
 }
 
+.hourly--cards-wrapper::-webkit-scrollbar {
+  height: 0.35em;
+}
+
+.hourly--cards-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.hourly--cards-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(221, 221, 221, 0.7);
+  border-radius: 5px;
+}
+
 .hourly--card {
   display: flex;
   flex-direction: column;
@@ -363,6 +376,20 @@ body {
   gap: 5px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.daily--cards-wrapper::-webkit-scrollbar {
+  width: 0.35em;
+}
+
+.daily--cards-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.daily--cards-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(221, 221, 221, 0.7);
+  border-radius: 5px;
 }
 
 .daily--card {
